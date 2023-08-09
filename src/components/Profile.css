@@ -1,0 +1,98 @@
+.profile_container {
+  color: black;
+  width: 100%;
+  height: 400vh;
+  padding: 10rem 25%;
+  background-color: #F9FAFC;
+}
+.profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: white;
+  width: 100%;
+  padding: 20px 20px;
+  border: 1px solid #EAEDF3;
+  border-radius: 20px;
+}
+.profile_address {
+  color: #F05285;
+  margin-top: 20px;
+}
+.profile_tokens {
+  font-size: 28px;
+  font-weight: 600;
+  margin-top: 20px;
+}
+.profile_token_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin-top: 30px;
+}
+
+.profile_info_container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 25px;
+}
+
+.profile_description_line {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+.profile_info_title{
+  font-size: 16px;
+  color: grey;
+}
+.profile_info_number{
+  font-size: 22px;
+  color: black;
+}
+
+.profile_token {
+  font-size: 20px;
+  font-weight: 400;
+}
+.profile_button {
+  width: 10rem;
+  color: #F05285;
+  background-color: #F9FAFC;
+  font-size: 20px;
+  padding: 8px 16px;
+  cursor: pointer;
+  border: 1px solid #F05285;
+  border-radius: 25px;
+  box-shadow: 2px 3px #F05285;
+}
+.profile_button:hover {
+  background-color: #F05285;
+  color: white;
+  box-shadow: none;
+}
+.profile_button_container {
+  width: 21rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+@media screen and (max-width: 900px) {
+  .profile_container {
+    padding: 10rem 3%;
+  }
+  .profile_address {
+    font-size: 13px;
+  }
+  .profile_info_number{
+    font-size: 18px;
+  }
+}

@@ -1,0 +1,27 @@
+.confirmed_button {
+  width: 9rem;
+  color: #F05285;
+  background-color: #F9FAFC;
+  font-size: 20px;
+  padding: 12px 16px;
+  cursor: pointer;
+  border: 1px solid #F05285;
+  border-radius: 25px;
+  box-shadow: 2px 3px #F05285;
+  margin-top: 20px;
+}
+.confirmed_button:hover {
+  background-color: #F05285;
+  color: white;
+  box-shadow: none;
+}
+.confirmed_button_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 20rem;
+}
+.confirmed_info {
+  font-size: 20px;
+  margin-top: 20px;
+}

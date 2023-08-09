@@ -1,0 +1,111 @@
+.navbar {
+  width: 100%;
+  height: 55px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  background-color: white;
+  z-index: 2;
+  padding: 0 15px;
+  font-size: 20px;
+  border-bottom: 1px solid #EAEDF3;
+}
+.navbar_icon_container{
+  flex: 1;
+}
+.navbar_dfl {
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.navbar_dfl img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.navbar_menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+  height: 100%;
+  flex: 1;
+}
+.navbar_menu li {
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 200px;
+  text-align: center;
+}
+.navbar_menu li:hover {
+  color:#F05285;
+  transition: 0.2s;
+}
+.navbar_wallet{
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+
+@media screen and (max-width: 1300px) {
+  .navbar {
+    padding: 0 0px;
+  }
+  .navbar_icon_container {
+    display: none;
+  }
+  .navbar_menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style-type: none;
+    height: 100%;
+    padding: 0 30px;
+    flex: 1;
+  }
+  .navbar_menu li {
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  .navbar {
+    width: 100%;
+    height: 110px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    background-color: white;
+    z-index: 2;
+    padding: 0 0px;
+    font-size: 20px;
+    border-bottom: 1px solid #EAEDF3;
+    flex-direction: column;
+  }
+  .navbar_menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style-type: none;
+    padding: 0px 20px;
+    width: 100%;
+  }
+  .navbar_menu li {
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    min-width: 105px;
+  }
+}
