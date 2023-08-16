@@ -19,12 +19,12 @@
   margin-bottom: 25px;
 }
 .pool:hover {
-  border-color: #F05285;
+  border-color: #0074d9;
 }
 .pools_name {
   font-size: 20px;
   font-weight: 600;
-  color: #F05285;
+  color: #0074d9;
 }
 .pools_yield {
   font-size: 16px;

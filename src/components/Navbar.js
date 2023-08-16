@@ -12,13 +12,13 @@ const Navbar = () => {
       
       <div className="navbar_icon_container">
         <div className="navbar_dfl">
-          <img alt='DFL' src={DFL}></img>
+          <img alt='RWAR' src={DFL}></img>
         </div>
       </div>
 
       <ul className='navbar_menu'>
         {/*<Link to={'/home'}><li>Home</li></Link> */}
-        <Link to={'/tokens'}><li>DFL Tokens</li></Link>
+        <Link to={'/tokens'}><li>RWAR Tokens</li></Link>
         <Link to={'/poolPage/Pool 1'}><li>Pool</li></Link>
         <Link to={'/profile'}><li>Profile</li></Link>
       </ul>

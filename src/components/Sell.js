@@ -3,7 +3,7 @@ import './Sell.css';
 import { useState, useEffect } from "react";
 import { LuMoveVertical } from "react-icons/lu";
 import { IconContext } from "react-icons";
-import DeFiLabs from "../DeFiLabs.json";
+import RWAR from "../RWAR.json";
 import tokenerc20 from "../tokenerc20.json";
 import Popup from "./Popup";
 import Alert from "./Alert";
@@ -28,16 +28,16 @@ const Sell = () => {
     try {
 
       const readPrice1 = await readContract({
-        address: DeFiLabs.address,
-        abi: DeFiLabs.abi,
+        address: RWAR.address,
+        abi: RWAR.abi,
         functionName: 'price',
       })
       const readPrice = ethers.utils.formatEther(readPrice1, 18);
       updatePrice(readPrice);
 
       const readBalanceOfMyDflTokens = await readContract({
-        address: DeFiLabs.address,
-        abi: DeFiLabs.abi,
+        address: RWAR.address,
+        abi: RWAR.abi,
         functionName: 'balanceOf',
         args: [address],
       })
@@ -66,8 +66,8 @@ const Sell = () => {
       updatePopup(true);
 
       const { request: config } = await prepareWriteContract({
-        address: DeFiLabs.address,
-        abi: DeFiLabs.abi,
+        address: RWAR.address,
+        abi: RWAR.abi,
         functionName: 'sell',
         args: [ethers.utils.parseUnits(formParams.dfl)],
       });
@@ -94,16 +94,16 @@ const Sell = () => {
   return (
     <div className='sell_container'>
       <div className='sell_description_container'>
-        <p className='sell_name'>DeFi Labs Tokens</p>
+        <p className='sell_name'>RWAR Tokens</p>
         <div className='sell_description'>
           {data ?
             <div className='sell_info_container'>
               <div className='sell_description_line'>
-                <p className='sell_info_title'>1 DFLT</p>
+                <p className='sell_info_title'>1 RWAR</p>
                 <p className='sell_info_number'>{price} USDT</p>
               </div>
               <div className='sell_description_line'>
-                <p className='sell_info_title'>My DFLT</p>
+                <p className='sell_info_title'>My RWAR</p>
                 <p className='sell_info_number'>{dflTokens}</p>
               </div>
               <div className='sell_description_line'>
@@ -121,7 +121,7 @@ const Sell = () => {
         <div className='sell_exchange_container'>
           <div className='sell_input_container'>
             <input className="sell_input" id="dfl" type="number" placeholder="Number of tokens" value={formParams.dfl} onChange={e => updateFormParams({...formParams, dfl: e.target.value, stablecoin: (e.target.valueAsNumber*price).toString() })}></input>
-            <p>DFLT</p>
+            <p>RWAR</p>
           </div>
           <IconContext.Provider value={{ className: "sell_arrows_icon" }}>
             <LuMoveVertical />
@@ -133,7 +133,7 @@ const Sell = () => {
         </div>
         
         {popup ? 
-        <Popup loading={loading} number={formParams.dfl +' DFL Tokens!'} action='sold' updatePopup={updatePopup}>
+        <Popup loading={loading} number={formParams.dfl +' RWAR Tokens!'} action='sold' updatePopup={updatePopup}>
         </Popup>
         : data ?
           <button className="sell_button_exchange" onClick={() => sell()}>
@@ -143,7 +143,7 @@ const Sell = () => {
         }
 
         {alert ? 
-        <Alert action="You don't have enough DFL tokens!" updatePopup={updatePopup} updateLoading={updateLoading} updateAlert={updateAlert}>
+        <Alert action="You don't have enough RWAR tokens!" updatePopup={updatePopup} updateLoading={updateLoading} updateAlert={updateAlert}>
         </Alert>
         : ""
         }

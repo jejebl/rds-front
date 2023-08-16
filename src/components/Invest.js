@@ -3,7 +3,7 @@ import './Invest.css';
 import { useState, useEffect } from "react";
 import { LuMoveVertical } from "react-icons/lu";
 import { IconContext } from "react-icons";
-import DeFiLabs from "../DeFiLabs.json";
+import RWAR from "../RWAR.json";
 import tokenerc20 from "../tokenerc20.json";
 import Popup from "./Popup";
 import Alert from "./Alert";
@@ -30,25 +30,25 @@ const Invest = () => {
   async function getData() {
     try {
       const readPrice1 = await readContract({
-        address: DeFiLabs.address,
-        abi: DeFiLabs.abi,
+        address: RWAR.address,
+        abi: RWAR.abi,
         functionName: 'price',
       })
       const readPrice = ethers.utils.formatEther(readPrice1, 18);
       updatePrice(readPrice);
 
       const readBalanceDFL = await readContract({
-        address: DeFiLabs.address,
-        abi: DeFiLabs.abi,
+        address: RWAR.address,
+        abi: RWAR.abi,
         functionName: 'balanceOf',
-        args: [DeFiLabs.address],
+        args: [RWAR.address],
       })
       const balanceOfDflTokens = ethers.utils.formatEther(readBalanceDFL, 18);
       updateBalanceOfDflTokens(balanceOfDflTokens);
 
       const readBalanceOfMyDflTokens = await readContract({
-        address: DeFiLabs.address,
-        abi: DeFiLabs.abi,
+        address: RWAR.address,
+        abi: RWAR.abi,
         functionName: 'balanceOf',
         args: [address],
       })
@@ -65,8 +65,8 @@ const Invest = () => {
       updatedStableCoin(balanceOfUSDT);
 
       const readTotalSupply = await readContract({
-        address: DeFiLabs.address,
-        abi: DeFiLabs.abi,
+        address: RWAR.address,
+        abi: RWAR.abi,
         functionName: 'totalSupply',
       })
       const totalSupply = ethers.utils.formatEther(readTotalSupply, 18);
@@ -90,7 +90,7 @@ const Invest = () => {
         address: tokenerc20.address,
         abi: tokenerc20.abi,
         functionName: 'approve',
-        args: [DeFiLabs.address, ethers.utils.parseUnits(formParams.stablecoin)],
+        args: [RWAR.address, ethers.utils.parseUnits(formParams.stablecoin)],
       });
       const { hash: approveSent } = await writeContract(config)
 
@@ -136,8 +136,8 @@ const Invest = () => {
 
 
       const { request: requestBuy } = await prepareWriteContract({
-        address: DeFiLabs.address,
-        abi: DeFiLabs.abi,
+        address: RWAR.address,
+        abi: RWAR.abi,
         functionName: 'buy',
         args: [ethers.utils.parseUnits(formParams.stablecoin)],
       });
@@ -157,11 +157,11 @@ const Invest = () => {
       const signer = provider.getSigner();
 
       //Pull the deployed contract instance
-      let contract = new ethers.Contract(DeFiLabs.address, DeFiLabs.abi, signer);
+      let contract = new ethers.Contract(RWAR.address, RWAR.abi, signer);
       
       let contractStableCoin = new ethers.Contract(tokenerc20.address, tokenerc20.abi, signer);
       //let transaction1 = await contractStableCoin.transfer(to, amount);
-      let transaction1 = await contractStableCoin.approve(DeFiLabs.address, ethers.utils.parseUnits(formParams.stablecoin))
+      let transaction1 = await contractStableCoin.approve(RWAR.address, ethers.utils.parseUnits(formParams.stablecoin))
       await transaction1.wait();
 
       if(transaction1) {
@@ -184,20 +184,20 @@ const Invest = () => {
   return (
     <div className='invest_container'>
       <div className='invest_description_container'>
-        <p className='invest_name'>DeFi Labs Tokens</p>
+        <p className='invest_name'>RWAR Tokens</p>
         <div className='invest_description'>
           {data ?
             <div className='invest_info_container'>
               <div className='invest_description_line'>
-                <p className='invest_info_title'>DFLT for sale</p>
+                <p className='invest_info_title'>RWAR for sale</p>
                 <p className='invest_info_number'>{balanceOfDflTokens}/{totalSupply}</p>
               </div>
               <div className='invest_description_line'>
-                <p className='invest_info_title'>1 DFLT</p>
+                <p className='invest_info_title'>1 RWAR</p>
                 <p className='invest_info_number'>{price} USDT</p>
               </div>
               <div className='invest_description_line'>
-                <p className='invest_info_title'>My DFLT</p>
+                <p className='invest_info_title'>My RWAR</p>
                 <p className='invest_info_number'>{dflTokens}</p>
               </div>
               <div className='invest_description_line'>
@@ -222,14 +222,14 @@ const Invest = () => {
           </IconContext.Provider>
           <div className='invest_input_container'>
             <input className="invest_input" id="dfl" type="number" placeholder="Number of tokens" value={formParams.dfl} onChange={e => updateFormParams({dfl: e.target.value, stablecoin: (e.target.valueAsNumber*price/98*100).toString() })}></input>
-            <p>DFLT</p>
+            <p>RWAR</p>
           </div>
           <br></br>
-          <p className='invest_info_title'>2% tax is returned to the team and reinvested in the pool</p>
+          <p className='invest_info_title'>2% tax go to the reserve</p>
         </div>
         
         {popup ? 
-        <Popup loading={loading} number={formParams.dfl +' DFLT!'} action='bought' updatePopup={updatePopup}>
+        <Popup loading={loading} number={formParams.dfl +' RWAR!'} action='bought' updatePopup={updatePopup}>
         </Popup>
         : data ?
           <button className="invest_button_exchange" onClick={() => buy()}>
@@ -239,7 +239,7 @@ const Invest = () => {
         }
 
         {alert ? 
-        <Alert action="You don't have enough stable coins or you don't approve enough stable coins to be used!" updatePopup={updatePopup} updateLoading={updateLoading} updateAlert={updateAlert}>
+        <Alert action="You don't have enough usdt or you don't approve enough usdt to be used!" updatePopup={updatePopup} updateLoading={updateLoading} updateAlert={updateAlert}>
         </Alert>
         : ""
         }

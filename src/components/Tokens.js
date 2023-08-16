@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import {
   Link
 } from "react-router-dom";
-import DeFiLabs from "../DeFiLabs.json";
+import RWAR from "../RWAR.json";
 import { useAccount } from 'wagmi'
 import { readContract  } from '@wagmi/core'
 
@@ -22,25 +22,25 @@ const Tokens = () => {
   async function getData() {
     try {
       const readPrice1 = await readContract({
-        address: DeFiLabs.address,
-        abi: DeFiLabs.abi,
+        address: RWAR.address,
+        abi: RWAR.abi,
         functionName: 'price',
       })
       const readPrice = ethers.utils.formatEther(readPrice1, 18);
       updatePrice(readPrice);
 
       const readBalanceDFL = await readContract({
-        address: DeFiLabs.address,
-        abi: DeFiLabs.abi,
+        address: RWAR.address,
+        abi: RWAR.abi,
         functionName: 'balanceOf',
-        args: [DeFiLabs.address],
+        args: [RWAR.address],
       })
       const balanceOfDflTokens = ethers.utils.formatEther(readBalanceDFL, 18);
       updateBalanceOfDflTokens(balanceOfDflTokens);
 
       const readBalanceOfMyDflTokens = await readContract({
-        address: DeFiLabs.address,
-        abi: DeFiLabs.abi,
+        address: RWAR.address,
+        abi: RWAR.abi,
         functionName: 'balanceOf',
         args: [address],
       })
@@ -48,8 +48,8 @@ const Tokens = () => {
       updatedflTokens(balanceOfMyDflTokens);
 
       const readTotalSupply = await readContract({
-        address: DeFiLabs.address,
-        abi: DeFiLabs.abi,
+        address: RWAR.address,
+        abi: RWAR.abi,
         functionName: 'totalSupply',
       })
       const totalSupply = ethers.utils.formatEther(readTotalSupply, 18);
@@ -68,29 +68,31 @@ const Tokens = () => {
   return (
     <div className='tokens_container'>
       <div className='tokens_description_container'>
-        <p className='tokens_name'>DeFi Labs Tokens</p>
+        <p className='tokens_name'>RWAR Tokens</p>
         <div className='tokens_description'>
           {data ?
             <div className='tokens_info_container'>
               <div className='tokens_description_line'>
-                <p className='tokens_info_title'>DFLT for sale</p>
+                <p className='tokens_info_title'>RWAR for sale</p>
                 <p className='tokens_info_number'>{balanceOfDflTokens}/{totalSupply}</p>
               </div>
               <div className='tokens_description_line'>
-                <p className='tokens_info_title'>1 DFLT</p>
+                <p className='tokens_info_title'>1 RWAR</p>
                 <p className='tokens_info_number'>{price} USDT</p>
               </div>
               <div className='tokens_description_line'>
-                <p className='tokens_info_title'>My DFLT</p>
+                <p className='tokens_info_title'>My RWAR</p>
                 <p className='tokens_info_number'>{dflTokens}</p>
               </div>
             </div>
             : 'Need to be connected'
           }
-          <p className='tokens_text'>The DFL platform stands out in the DeFi landscape with its unique offering of a single token, DFL, 
-            and a single pool to generate yield. The value of DFL is dynamic and is set to evolve over time, influenced by the
-             maximum supply and the demand from those seeking to join the RWA pool. The platform operates on a simple principle:
-              the more DFL tokens you stake, the more passive income you stand to generate.</p>
+          <p className='tokens_text'>To ensure the sustainability of the RWAR ecosystem, we implement a transaction tax system.
+           A 2% tax is applied to every buy operation.
+            This tax is used to maintain the stability of the platform and to provide a safety net for unforeseen circumstances or market volatilities.
+             The entire 2% of this tax goes to the Reserve Wallet.
+              The Reserve Wallet acts as a safeguard, ensuring that during unexpected events or market fluctuations, there are funds set aside to address any immediate needs or challenges.
+               This measure is a testament to our commitment to safeguarding our users' interests and ensuring the long-term viability of the RWAR ecosystem.</p>
           <div className='tokens_button_container'>
             <Link to={'/investPage/DFL Pool'}>
               <button className='tokens_button'>Buy</button>

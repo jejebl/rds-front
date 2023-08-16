@@ -87,10 +87,42 @@ const TransactionToBeConfirmed = (data) => {
             </>
             :''}
 
-            {data.data.name==='transferStableCoins' && !data.data.executed && !data.data.deleted ? 
+            {data.data.name==='changeReserveWallet' && !data.data.executed && !data.data.deleted ? 
             <>
             <div className='confirmed_info'>
-              <p>{'Transfer ' + ethers.utils.formatEther(data.data.value, 18) + ' stable coins to: ' + data.data.destination}</p>
+              <p>{data.data.name + ' to: ' + data.data.destination}</p>
+            </div>
+            <div className='confirmed_button_container'>
+              <button className="confirmed_button" onClick={() => data.confirmTransaction(data.data.id)}>
+                Confirm
+              </button>
+              <button className="confirmed_button" onClick={() => data.deleteTransaction(data.data.id)}>
+                Delete
+              </button>
+            </div>
+            </>
+            :''}
+
+            {data.data.name==='changeSafeUSDTWallet' && !data.data.executed && !data.data.deleted ? 
+            <>
+            <div className='confirmed_info'>
+              <p>{data.data.name + ' to: ' + data.data.destination}</p>
+            </div>
+            <div className='confirmed_button_container'>
+              <button className="confirmed_button" onClick={() => data.confirmTransaction(data.data.id)}>
+                Confirm
+              </button>
+              <button className="confirmed_button" onClick={() => data.deleteTransaction(data.data.id)}>
+                Delete
+              </button>
+            </div>
+            </>
+            :''}
+
+            {data.data.name==='transferUSDT' && !data.data.executed && !data.data.deleted ? 
+            <>
+            <div className='confirmed_info'>
+              <p>{'Transfer ' + ethers.utils.formatEther(data.data.value, 18) + ' usdt to: ' + data.data.destination}</p>
             </div>
             <div className='confirmed_button_container'>
               <button className="confirmed_button" onClick={() => data.confirmTransaction(data.data.id)}>
@@ -103,10 +135,10 @@ const TransactionToBeConfirmed = (data) => {
             </>
             :''}
         
-            {data.data.name==='transferDFL' && !data.data.executed && !data.data.deleted ? 
+            {data.data.name==='transferRWAR' && !data.data.executed && !data.data.deleted ? 
             <>
             <div className='confirmed_info'>
-              <p>{'Transfer ' + ethers.utils.formatEther(data.data.value, 18) + ' DFL tokens to: ' + data.data.destination}</p>
+              <p>{'Transfer ' + ethers.utils.formatEther(data.data.value, 18) + ' RWAR tokens to: ' + data.data.destination}</p>
             </div>
             <div className='confirmed_button_container'>
               <button className="confirmed_button" onClick={() => data.confirmTransaction(data.data.id)}>

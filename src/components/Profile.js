@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import {
   Link
 } from "react-router-dom";
-import DeFiLabs from "../DeFiLabs.json";
+import RWAR from "../RWAR.json";
 import Pool1 from "../Pool1.json";
 import { useAccount } from 'wagmi';
 import { readContract } from '@wagmi/core';
@@ -15,6 +15,8 @@ const Profile = () => {
   const [myStackPool1, updateMyStackPool1] = useState(0);
   const [ownerAddress1,updateOwnerAddress1] = useState('');
   const [ownerAddress2,updateOwnerAddress2] = useState('');
+  const [ownerAddress1Pool1,updateOwnerAddress1Pool1] = useState('');
+  const [ownerAddress2Pool1,updateOwnerAddress2Pool1] = useState('');
   const [myYieldsPool1, updateMyYieldsPool1] = useState(0);
   
   const ethers = require("ethers");
@@ -23,8 +25,8 @@ const Profile = () => {
   async function getData() {
     try {
       const readBalanceOfMyDflTokens = await readContract({
-        address: DeFiLabs.address,
-        abi: DeFiLabs.abi,
+        address: RWAR.address,
+        abi: RWAR.abi,
         functionName: 'balanceOf',
         args: [address],
       })
@@ -41,20 +43,38 @@ const Profile = () => {
       updateMyStackPool1(stack);
 
       const readAddressOwner1 = await readContract({
-        address: DeFiLabs.address,
-        abi: DeFiLabs.abi,
+        address: RWAR.address,
+        abi: RWAR.abi,
         functionName: 'owners',
         args: [0],
       })
       updateOwnerAddress1(readAddressOwner1);
 
       const readAddressOwner2 = await readContract({
-        address: DeFiLabs.address,
-        abi: DeFiLabs.abi,
+        address: RWAR.address,
+        abi: RWAR.abi,
         functionName: 'owners',
         args: [1],
       })
       updateOwnerAddress2(readAddressOwner2);
+
+      //Address owner 1 of the Pool
+      const readAddressOwner1Pool1 = await readContract({
+        address: Pool1.address,
+        abi: Pool1.abi,
+        functionName: 'owners',
+        args: [0],
+      })
+      updateOwnerAddress1Pool1(readAddressOwner1Pool1);
+
+      //Address owner 2 of the Pool
+      const readAddressOwner2Pool1 = await readContract({
+        address: Pool1.address,
+        abi: Pool1.abi,
+        functionName: 'owners',
+        args: [1],
+      })
+      updateOwnerAddress2Pool1(readAddressOwner2Pool1);
 
       const readgetMyYields = await readContract({
         address: Pool1.address,
@@ -72,7 +92,7 @@ const Profile = () => {
       await signer.getAddress();
       const addr = await signer.getAddress();
       updateAddress(addr);
-      let contractDfl = new ethers.Contract(DeFiLabs.address, DeFiLabs.abi, signer);
+      let contractDfl = new ethers.Contract(RWAR.address, RWAR.abi, signer);
 
       let balanceOfDflTokens = await contractDfl.balanceOf(addr);
       balanceOfDflTokens = ethers.utils.formatEther(balanceOfDflTokens, 18);
@@ -109,7 +129,7 @@ useEffect(() => {
             <p className='profile_address'>{address}</p>
             <div className='profile_info_container'>
               <div className='profile_description_line'>
-                <p className='profile_info_title'>My DFLT</p>
+                <p className='profile_info_title'>My RWAR</p>
                 <p className='profile_info_number'>{dflTokens}</p>
               </div>
             </div>
@@ -141,7 +161,7 @@ useEffect(() => {
               </div>
             </div>
             <br></br>
-            {address === ownerAddress1 || address === ownerAddress2 ?
+            {address === ownerAddress1 || address === ownerAddress2 || address === ownerAddress1Pool1 || address === ownerAddress2Pool1 ?
               <Link to={'/adminPage'}>
                 <button className='profile_button'>Admin</button>
               </Link>

@@ -32,8 +32,11 @@ const Popup = (props) => {
               if(props.updateBoolChangePrice)
               props.updateBoolChangePrice(false);
 
-              if(props.updateBoolStableCoinAddress)
-              props.updateBoolStableCoinAddress(false);
+              if(props.updateBoolChangeUsdtAddressRWAR)
+              props.updateBoolChangeUsdtAddressRWAR(false);
+
+              if(props.updateBoolChangeReserveWalletAddressRWAR)
+              props.updateBoolChangeReserveWalletAddressRWAR(false);
 
               if(props.updateBoolConfirmTransaction)
               props.updateBoolConfirmTransaction(false);

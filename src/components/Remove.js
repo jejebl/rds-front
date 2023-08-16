@@ -2,7 +2,7 @@ import React from 'react';
 import './Stack.css';
 import { useState, useEffect } from "react";
 import polygon from '../img/Polygon.png';
-import DeFiLabs from "../DeFiLabs.json";
+import RWAR from "../RWAR.json";
 import Pool1 from "../Pool1.json";
 import PopupUnstack from "./PopupUnstack";
 import Alert from "./Alert";
@@ -29,8 +29,8 @@ const Remove = () => {
     try {
 
       const readBalanceOfMyDflTokens = await readContract({
-        address: DeFiLabs.address,
-        abi: DeFiLabs.abi,
+        address: RWAR.address,
+        abi: RWAR.abi,
         functionName: 'balanceOf',
         args: [address],
       })
@@ -68,7 +68,7 @@ const Remove = () => {
       const signer = provider.getSigner();
       await signer.getAddress();
       const addr = await signer.getAddress();
-      let contractDfl = new ethers.Contract(DeFiLabs.address, DeFiLabs.abi, signer);
+      let contractDfl = new ethers.Contract(RWAR.address, RWAR.abi, signer);
 
       let balanceOfMyDflTokens = await contractDfl.balanceOf(addr);
       balanceOfMyDflTokens = ethers.utils.formatEther(balanceOfMyDflTokens, 18);
@@ -162,21 +162,12 @@ const Remove = () => {
                 <p className='stack_info_number'>{myStack}</p>
               </div>
               <div className='stack_description_line'>
-                <p className='stack_info_title'>My DFLT</p>
+                <p className='stack_info_title'>My RWAR</p>
                 <p className='stack_info_number'>{dflTokens}</p>
               </div>
             </div>
             : 'Need to be connected'
           }
-          <div className='stack_text'>
-            <p>Lock-in Period: After making a deposit, your tokens are locked in for a period of 7 days. This means you cannot unstake or withdraw them during this time.</p>
-            <p>Unstaking Taxes: If you choose to unstake your tokens after the lock-in period but before 30 days have passed, a tax will be applied. These taxes are not just a mechanism to maintain liquidity but also a means to support the project's long-term vision. They discourage short-term plays and ensure that the ecosystem is geared towards genuine, long-term participants.</p>
-            <p>The tax structure is as follows:</p>
-            <p>7 to 14 days: 20%.</p>
-            <p>14 to 21 days: 10%.</p>
-            <p>21 to 30 days: 5%.</p>
-            <p>Full Unstaking: After 30 days from the initial deposit, you can unstake 100% of your tokens without any taxes.</p>
-          </div>
         </div>
       </div>
 
@@ -185,8 +176,10 @@ const Remove = () => {
         <div className='stack_exchange_container'>
           <div className='stack_input_container'>
             <input className="stack_input" id="dfl" type="number" placeholder="Number of tokens" value={formParams.dfl} onChange={e => updateFormParams({...formParams, dfl: e.target.value})}></input>
-            <p>DFLT</p>
+            <p>RWAR</p>
           </div>
+          <br></br>
+          <p className='invest_info_title'>After making a deposit, your tokens are locked in for a period of 30 days. This means you cannot unstake or withdraw them during this time.</p>
         </div>
         
         {popup ? 
@@ -200,7 +193,7 @@ const Remove = () => {
         }
 
         {alert ? 
-        <Alert action="You don't have enough dfl tokens!" updatePopup={updatePopup} updateLoading={updateLoading} updateAlert={updateAlert}>
+        <Alert action="You don't have enough RWAR tokens!" updatePopup={updatePopup} updateLoading={updateLoading} updateAlert={updateAlert}>
         </Alert>
         : ""
         }

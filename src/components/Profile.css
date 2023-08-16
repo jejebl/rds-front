@@ -17,7 +17,7 @@
   border-radius: 20px;
 }
 .profile_address {
-  color: #F05285;
+  color: #0074d9;
   margin-top: 20px;
 }
 .profile_tokens {
@@ -63,17 +63,17 @@
 }
 .profile_button {
   width: 10rem;
-  color: #F05285;
+  color: #0074d9;
   background-color: #F9FAFC;
   font-size: 20px;
   padding: 8px 16px;
   cursor: pointer;
-  border: 1px solid #F05285;
+  border: 1px solid #0074d9;
   border-radius: 25px;
-  box-shadow: 2px 3px #F05285;
+  box-shadow: 2px 3px #0074d9;
 }
 .profile_button:hover {
-  background-color: #F05285;
+  background-color: #0074d9;
   color: white;
   box-shadow: none;
 }

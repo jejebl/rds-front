@@ -2,7 +2,7 @@ import React from 'react';
 import './Stack.css';
 import { useState, useEffect } from "react";
 import polygon from '../img/Polygon.png';
-import DeFiLabs from "../DeFiLabs.json";
+import RWAR from "../RWAR.json";
 import Pool1 from "../Pool1.json";
 import Popup from "./Popup";
 import Alert from "./Alert";
@@ -27,8 +27,8 @@ const Remove = () => {
     try {
 
       const readBalanceOfMyDflTokens = await readContract({
-        address: DeFiLabs.address,
-        abi: DeFiLabs.abi,
+        address: RWAR.address,
+        abi: RWAR.abi,
         functionName: 'balanceOf',
         args: [address],
       })
@@ -59,7 +59,7 @@ const Remove = () => {
       const signer = provider.getSigner();
       await signer.getAddress();
       const addr = await signer.getAddress();
-      let contractDfl = new ethers.Contract(DeFiLabs.address, DeFiLabs.abi, signer);
+      let contractDfl = new ethers.Contract(RWAR.address, RWAR.abi, signer);
 
       let balanceOfMyDflTokens = await contractDfl.balanceOf(addr);
       balanceOfMyDflTokens = ethers.utils.formatEther(balanceOfMyDflTokens, 18);
@@ -116,7 +116,7 @@ const Remove = () => {
       updateLoading(false);
 
     } catch (error) {
-      //alert("You don't have enough DFL!");
+      //alert("You don't have enough RWAR!");
       updateAlert(true);
       console.log("ERROR: " + error)
       
@@ -153,7 +153,7 @@ const Remove = () => {
                 <p className='stack_info_number'>{myStack}</p>
               </div>
               <div className='stack_description_line'>
-                <p className='stack_info_title'>My DFLT</p>
+                <p className='stack_info_title'>My RWAR</p>
                 <p className='stack_info_number'>{dflTokens}</p>
               </div>
             </div>
