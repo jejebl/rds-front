@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/rds-front/static/css/main.b3eb8caf.css",
+    "main.js": "/rds-front/static/js/main.bcc94a6d.js",
+    "static/js/851.8e972882.chunk.js": "/rds-front/static/js/851.8e972882.chunk.js",
+    "static/js/781.b9a04a1d.chunk.js": "/rds-front/static/js/781.b9a04a1d.chunk.js",
+    "static/js/274.1819c7ec.chunk.js": "/rds-front/static/js/274.1819c7ec.chunk.js",
+    "static/js/818.e24387be.chunk.js": "/rds-front/static/js/818.e24387be.chunk.js",
+    "static/js/750.5f90f719.chunk.js": "/rds-front/static/js/750.5f90f719.chunk.js",
+    "static/js/199.08e63870.chunk.js": "/rds-front/static/js/199.08e63870.chunk.js",
+    "static/js/956.6fb1a610.chunk.js": "/rds-front/static/js/956.6fb1a610.chunk.js",
+    "static/js/667.9b9a0f37.chunk.js": "/rds-front/static/js/667.9b9a0f37.chunk.js",
+    "static/media/DefiLabsBlack.png": "/rds-front/static/media/DefiLabsBlack.a33d20aba31f209216e3.png",
+    "static/media/DefiLabs.png": "/rds-front/static/media/DefiLabs.a97f20c05cf8b0615f7c.png",
+    "static/media/home_img.jpg": "/rds-front/static/media/home_img.e2318fdc151cbafb12f2.jpg",
+    "static/media/Polygon.png": "/rds-front/static/media/Polygon.3d4f8ac1fef881a88e52.png",
+    "static/media/realt.jpg": "/rds-front/static/media/realt.818021e8426952be171a.jpg",
+    "index.html": "/rds-front/index.html"
+  },
+  "entrypoints": [
+    "static/css/main.b3eb8caf.css",
+    "static/js/main.bcc94a6d.js"
+  ]
+}
