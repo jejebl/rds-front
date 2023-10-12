@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/rds-front/static/css/main.b3eb8caf.css",
-    "main.js": "/rds-front/static/js/main.e631a579.js",
+    "main.js": "/rds-front/static/js/main.3a9af0cc.js",
     "static/js/851.8e972882.chunk.js": "/rds-front/static/js/851.8e972882.chunk.js",
     "static/js/781.b9a04a1d.chunk.js": "/rds-front/static/js/781.b9a04a1d.chunk.js",
     "static/js/274.1819c7ec.chunk.js": "/rds-front/static/js/274.1819c7ec.chunk.js",
@@ -19,6 +19,6 @@
   },
   "entrypoints": [
     "static/css/main.b3eb8caf.css",
-    "static/js/main.e631a579.js"
+    "static/js/main.3a9af0cc.js"
   ]
 }
