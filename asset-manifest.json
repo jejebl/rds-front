@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/rds-front/static/css/main.034ab2c2.css",
-    "main.js": "/rds-front/static/js/main.75cac43b.js",
-    "static/js/851.fe07a753.chunk.js": "/rds-front/static/js/851.fe07a753.chunk.js",
-    "static/js/781.d1c78a2a.chunk.js": "/rds-front/static/js/781.d1c78a2a.chunk.js",
-    "static/js/274.7b362ad0.chunk.js": "/rds-front/static/js/274.7b362ad0.chunk.js",
-    "static/js/750.f9d2cf8f.chunk.js": "/rds-front/static/js/750.f9d2cf8f.chunk.js",
-    "static/js/199.389142d4.chunk.js": "/rds-front/static/js/199.389142d4.chunk.js",
-    "static/js/956.4033feac.chunk.js": "/rds-front/static/js/956.4033feac.chunk.js",
-    "static/js/667.55dc178e.chunk.js": "/rds-front/static/js/667.55dc178e.chunk.js",
+    "main.css": "/rds-front/static/css/main.536da848.css",
+    "main.js": "/rds-front/static/js/main.292b4539.js",
+    "static/js/851.2e706364.chunk.js": "/rds-front/static/js/851.2e706364.chunk.js",
+    "static/js/781.79af84d3.chunk.js": "/rds-front/static/js/781.79af84d3.chunk.js",
+    "static/js/274.e8bd7bcd.chunk.js": "/rds-front/static/js/274.e8bd7bcd.chunk.js",
+    "static/js/750.819359af.chunk.js": "/rds-front/static/js/750.819359af.chunk.js",
+    "static/js/199.9784cb9a.chunk.js": "/rds-front/static/js/199.9784cb9a.chunk.js",
+    "static/js/956.0b54aadb.chunk.js": "/rds-front/static/js/956.0b54aadb.chunk.js",
+    "static/js/178.5ece1199.chunk.js": "/rds-front/static/js/178.5ece1199.chunk.js",
     "static/media/DefiLabs.png": "/rds-front/static/media/DefiLabs.a97f20c05cf8b0615f7c.png",
     "index.html": "/rds-front/index.html"
   },
   "entrypoints": [
-    "static/css/main.034ab2c2.css",
-    "static/js/main.75cac43b.js"
+    "static/css/main.536da848.css",
+    "static/js/main.292b4539.js"
   ]
 }
