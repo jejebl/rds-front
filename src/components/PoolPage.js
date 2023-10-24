@@ -8,73 +8,189 @@ import {
 import { useState, useEffect} from "react";
 import RWAR from "../RWAR.json";
 import Pool1 from "../Pool1.json";
+import Pool2 from "../Pool2.json";
+import Pool3 from "../Pool3.json";
 import { useParams } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 import { readContract } from '@wagmi/core';
+import Cookies from 'universal-cookie';
 
 const PoolPage = () => {
+
+  const cookies = new Cookies(null, { path: '/' });
+  
+  const [checkbox, updateCheckbox] = React.useState('');
   
   const params = useParams();
   const PoolNb = params.PoolNb;
+  console.log(PoolNb)
+
+  if(cookies.get(PoolNb)!=="Pool 1" && cookies.get(PoolNb)!=="Pool 2" && cookies.get(PoolNb)!=="Pool 3"){
+    window.location.assign("/");
+  }
 
   const [dflTokens, updatedflTokens] = useState(0);
   const [data, updateData] = useState(false);
   const [totalStacked, updateTotalStacked] = useState(0);
   const [maxStack, updateMaxStack] = useState(0);
-  const [myStackPool1, updateMyStackPool1] = useState(0);
-  const [myYieldsPool1, updateMyYieldsPool1] = useState(0);
+  const [myStackPool, updateMyStackPool] = useState(0);
+  const [myYieldsPool, updateMyYieldsPool] = useState(0);
   
   const ethers = require("ethers");
   const { address } = useAccount();
 
   async function getData() {
-    try {
-      const readBalanceOfMyDflTokens = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
-        functionName: 'balanceOf',
-        args: [address],
-      })
-      const balanceOfMyDflTokens = ethers.utils.formatEther(readBalanceOfMyDflTokens, 18);
-      updatedflTokens(balanceOfMyDflTokens);
+    if(PoolNb=='Pool 1'){
+      try {
+        const readBalanceOfMyDflTokens = await readContract({
+          address: RWAR.address,
+          abi: RWAR.abi,
+          functionName: 'balanceOf',
+          args: [address],
+        })
+        const balanceOfMyDflTokens = ethers.utils.formatEther(readBalanceOfMyDflTokens, 18);
+        updatedflTokens(balanceOfMyDflTokens);
 
-      const readgetMyStacks = await readContract({
-        address: Pool1.address,
-        abi: Pool1.abi,
-        functionName: 'getMyStacks',
-        args: [address]
-      })
-      const stack = ethers.utils.formatEther(readgetMyStacks, 18);
-      updateMyStackPool1(stack);
+        const readgetMyStacks = await readContract({
+          address: Pool1.address,
+          abi: Pool1.abi,
+          functionName: 'getMyStacks',
+          args: [address]
+        })
+        const stack = ethers.utils.formatEther(readgetMyStacks, 18);
+        updateMyStackPool(stack);
 
-      const readgetMyYields = await readContract({
-        address: Pool1.address,
-        abi: Pool1.abi,
-        functionName: 'getMyYields',
-        args: [address]
-      })
-      const yields = ethers.utils.formatEther(readgetMyYields, 18);
-      updateMyYieldsPool1(yields);
+        const readgetMyYields = await readContract({
+          address: Pool1.address,
+          abi: Pool1.abi,
+          functionName: 'getMyYields',
+          args: [address]
+        })
+        const yields = ethers.utils.formatEther(readgetMyYields, 18);
+        updateMyYieldsPool(yields);
 
-      const readTotalStacked = await readContract({
-        address: Pool1.address,
-        abi: Pool1.abi,
-        functionName: 'totalStacked',
-      })
-      const totalStacked = ethers.utils.formatEther(readTotalStacked, 18);
-      updateTotalStacked(totalStacked);
+        const readTotalStacked = await readContract({
+          address: Pool1.address,
+          abi: Pool1.abi,
+          functionName: 'totalStacked',
+        })
+        const totalStacked = ethers.utils.formatEther(readTotalStacked, 18);
+        updateTotalStacked(totalStacked);
 
-      const readMaxStack = await readContract({
-        address: Pool1.address,
-        abi: Pool1.abi,
-        functionName: 'maxStack',
-      })
-      const maxStack = ethers.utils.formatEther(readMaxStack, 18);
-      updateMaxStack(maxStack);
+        const readMaxStack = await readContract({
+          address: Pool1.address,
+          abi: Pool1.abi,
+          functionName: 'maxStack',
+        })
+        const maxStack = ethers.utils.formatEther(readMaxStack, 18);
+        updateMaxStack(maxStack);
 
-      updateData(true);
-    } catch (error) {
-      
+        updateData(true);
+      } catch (error) {
+        
+      }
+    }
+
+    else if(PoolNb=='Pool 2'){
+      try {
+        const readBalanceOfMyDflTokens = await readContract({
+          address: RWAR.address,
+          abi: RWAR.abi,
+          functionName: 'balanceOf',
+          args: [address],
+        })
+        const balanceOfMyDflTokens = ethers.utils.formatEther(readBalanceOfMyDflTokens, 18);
+        updatedflTokens(balanceOfMyDflTokens);
+
+        const readgetMyStacks = await readContract({
+          address: Pool2.address,
+          abi: Pool2.abi,
+          functionName: 'getMyStacks',
+          args: [address]
+        })
+        const stack = ethers.utils.formatEther(readgetMyStacks, 18);
+        updateMyStackPool(stack);
+
+        const readgetMyYields = await readContract({
+          address: Pool2.address,
+          abi: Pool2.abi,
+          functionName: 'getMyYields',
+          args: [address]
+        })
+        const yields = ethers.utils.formatEther(readgetMyYields, 18);
+        updateMyYieldsPool(yields);
+
+        const readTotalStacked = await readContract({
+          address: Pool2.address,
+          abi: Pool2.abi,
+          functionName: 'totalStacked',
+        })
+        const totalStacked = ethers.utils.formatEther(readTotalStacked, 18);
+        updateTotalStacked(totalStacked);
+
+        const readMaxStack = await readContract({
+          address: Pool2.address,
+          abi: Pool2.abi,
+          functionName: 'maxStack',
+        })
+        const maxStack = ethers.utils.formatEther(readMaxStack, 18);
+        updateMaxStack(maxStack);
+
+        updateData(true);
+      } catch (error) {
+        
+      }
+    }
+
+    else if(PoolNb=='Pool 3'){
+      try {
+        const readBalanceOfMyDflTokens = await readContract({
+          address: RWAR.address,
+          abi: RWAR.abi,
+          functionName: 'balanceOf',
+          args: [address],
+        })
+        const balanceOfMyDflTokens = ethers.utils.formatEther(readBalanceOfMyDflTokens, 18);
+        updatedflTokens(balanceOfMyDflTokens);
+
+        const readgetMyStacks = await readContract({
+          address: Pool3.address,
+          abi: Pool3.abi,
+          functionName: 'getMyStacks',
+          args: [address]
+        })
+        const stack = ethers.utils.formatEther(readgetMyStacks, 18);
+        updateMyStackPool(stack);
+
+        const readgetMyYields = await readContract({
+          address: Pool3.address,
+          abi: Pool3.abi,
+          functionName: 'getMyYields',
+          args: [address]
+        })
+        const yields = ethers.utils.formatEther(readgetMyYields, 18);
+        updateMyYieldsPool(yields);
+
+        const readTotalStacked = await readContract({
+          address: Pool3.address,
+          abi: Pool3.abi,
+          functionName: 'totalStacked',
+        })
+        const totalStacked = ethers.utils.formatEther(readTotalStacked, 18);
+        updateTotalStacked(totalStacked);
+
+        const readMaxStack = await readContract({
+          address: Pool3.address,
+          abi: Pool3.abi,
+          functionName: 'maxStack',
+        })
+        const maxStack = ethers.utils.formatEther(readMaxStack, 18);
+        updateMaxStack(maxStack);
+
+        updateData(true);
+      } catch (error) {
+        
+      }
     }
   } 
 
@@ -107,45 +223,71 @@ const PoolPage = () => {
             </div>
             <div className='poolpage_description_line'>
               <p className='poolpage_info_title'>My stacks</p>
-              <p className='poolpage_info_number'>{myStackPool1}</p>
+              <p className='poolpage_info_number'>{myStackPool}</p>
             </div>
             <div className='poolpage_description_line'>
-              <p className='poolpage_info_title'>My RWAR</p>
+              <p className='poolpage_info_title'>My Renditus</p>
               <p className='poolpage_info_number'>{dflTokens}</p>
             </div>
             <div className='poolpage_description_line'>
               <p className='poolpage_info_title'>My Yields</p>
-              <p className='poolpage_info_number'>{myYieldsPool1} USDT</p>
+              <p className='poolpage_info_number'>{myYieldsPool}</p>
             </div>
           </div>
           : 'Need to be connected'
           }
         </div>
+        
+        <p className='poolpage_address'>Import the receipt token in your wallet with this address:</p>
+        {PoolNb=='Pool 1' ?
+        <p className='poolpage_address'>{Pool1.address}</p>
+        : PoolNb=='Pool 2' ?
+        <p className='poolpage_address'>{Pool2.address}</p>
+        : PoolNb=='Pool 3' ?
+        <p className='poolpage_address'>{Pool3.address}</p>
+        :''}
 
+        {PoolNb=='Pool 1' ? 
         <div className='poolpage_name_text'>
-          <p>Staking: When you deposit your RWAR tokens into the pool, they are staked to generate yield from real-world assets. This staking mechanism is designed to encourage long-term participation, ensuring the stability and longevity of the pool.</p>
-
-          <p>There is a 2% tax on every deposit. 1.5% goes to the Real-World Asset wallet, directly contributing to the growth of the total value locked (TVL) in the protocol. The remaining 0.5% goes to the affiliate or Marketing Wallet (Please check the Affiliate Program section).</p>
-
-          <p>As with the Transactions Taxes, our reinvestment strategy of the 1.5% tax helps the growth of the TVL by consistently adding real-world assets to the RWA pool. In essence, every staker indirectly benefits from this strategy, which aims to enhance the ecosystem's stability and profitability.</p>
-
+          <p>Staking: When you deposit your RDS tokens into the pool, they are staked to generate yield from real-world assets. This staking mechanism is designed to encourage long-term participation, ensuring the stability and longevity of the pool.</p>
+          <p>There is a 3% tax on every deposit. 2% goes to the Reserve. The remaining 1% goes to the affiliate or Marketing Wallet (Please check the Affiliate Program section).</p>
+          <br></br>
           <p>Lock-in Period: After making a deposit, your tokens are locked in for a period of 30 days. This means you cannot unstake or withdraw them during this time.</p>
-
-          <p>Weekly Rewards: Every Wednesdays, RWAR distributes rewards to its stakers. These rewards are paid in RWAR tokens and are derived from the yield generated by the underlying Real-World Assets. This consistent payout ensures that stakers receive regular returns for their commitment, further enhancing the benefits of being part of the RWAR ecosystem.</p>
+          <br></br>
+          <p>Weekly Rewards: Every 2 weeks, Renditus distributes rewards to its stakers. These rewards are paid in RDS tokens and are derived from the yield generated by the underlying Real-World Assets. This consistent payout ensures that stakers receive regular returns for their commitment, further enhancing the benefits of being part of the Renditus ecosystem.</p>
         </div>
+        : PoolNb=='Pool 2' ? 
+        <div className='poolpage_name_text'>
+          <p>Staking: When you deposit your RDS tokens into the pool, they are staked to generate yield from real-world assets. This staking mechanism is designed to encourage long-term participation, ensuring the stability and longevity of the pool.</p>
+          <p>There is a 3% tax on every deposit. 2% goes to the Reserve. The remaining 1% goes to the affiliate or Marketing Wallet (Please check the Affiliate Program section).</p>
+          <br></br>
+          <p>Lock-in Period: After making a deposit, your tokens are locked in for a period of 30 days. This means you cannot unstake or withdraw them during this time.</p>
+          <br></br>
+          <p>Weekly Rewards: Every 2 weeks, Renditus distributes rewards to its stakers. These rewards are paid in RDS tokens and are derived from the yield generated by the underlying Real-World Assets. This consistent payout ensures that stakers receive regular returns for their commitment, further enhancing the benefits of being part of the Renditus ecosystem.</p>
+        </div>
+        : PoolNb=='Pool 3' ?
+        <div className='poolpage_name_text'>
+          <p>Staking: When you deposit your RDS tokens into the pool, they are staked to generate yield from real-world assets. This staking mechanism is designed to encourage long-term participation, ensuring the stability and longevity of the pool.</p>
+          <p>There is a 3% tax on every deposit. 2% goes to the Reserve. The remaining 1% goes to the affiliate or Marketing Wallet (Please check the Affiliate Program section).</p>
+          <br></br>
+          <p>Lock-in Period: After making a deposit, your tokens are locked in for a period of 30 days. This means you cannot unstake or withdraw them during this time.</p>
+          <br></br>
+          <p>Weekly Rewards: Every 2 weeks, Renditus distributes rewards to its stakers. These rewards are paid in RDS tokens and are derived from the yield generated by the underlying Real-World Assets. This consistent payout ensures that stakers receive regular returns for their commitment, further enhancing the benefits of being part of the Renditus ecosystem.</p>
+        </div>
+        :''}
         
         <div className='poolpage_button_container'>
-          <Link to={'/stackPage/Pool1'}>
+          <Link to={'/stackPage/' + PoolNb}>
             <button className='poolpage_button_invest'>
               Stack
             </button>
           </Link>
-          <Link to={'/removePage/Pool1'}>
+          <Link to={'/removePage/' + PoolNb}>
             <button className='poolpage_button_invest'>
               Unstack
             </button>
           </Link>
-          <Link to={'/claimPage/Pool1'}>
+          <Link to={'/claimPage/' + PoolNb}>
             <button className='poolpage_button_invest'>
               Claim
             </button>

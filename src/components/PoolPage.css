@@ -17,6 +17,9 @@
   padding: 2rem;
   background-color: white;
 }
+.poolpage_address {
+  text-align: left;
+}
 .poolpage_nameandbutton_container {
   width: 100%;
   display: flex;
@@ -46,7 +49,7 @@
 .poolpage_name {
   font-size: 22px;
   font-weight: 600;
-  color:#0074d9;
+  color:#008AFF;
 }
 
 .poolpage_name_text {
@@ -61,18 +64,18 @@
 
 .poolpage_button_invest {
   width: 10rem;
-  color: #0074d9;
+  color: #008AFF;
   background-color: #F9FAFC;
   font-size: 20px;
   padding: 10px 20px;
   cursor: pointer;
-  border: 1px solid #0074d9;
+  border: 1px solid #008AFF;
   border-radius: 25px;
-  box-shadow: 2px 3px #0074d9;
+  box-shadow: 2px 3px #008AFF;
   margin-right: 25px;
 }
 .poolpage_button_invest:hover {
-  background-color: #0074d9;
+  background-color: #008AFF;
   color: white;
   box-shadow: none;
 }
@@ -209,6 +212,9 @@
     width: 100%;
     padding: 20px;
     background-color: white;
+  }
+  .poolpage_address {
+    font-size: 11px;
   }
   .poolpage_allocation_1_container {
     border: 1px solid #EAEDF3;

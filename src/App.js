@@ -33,15 +33,12 @@ function App() {
     <div className="App">
         <Navbar />
           <Routes>
-            <Route path="*" element={<PoolPage/>}></Route>
-            <Route exact path="/tokens" element={<Tokens/>}></Route>
+            <Route path="*" element={<Pools/>}></Route>
             <Route exact path="/pools" element={<Pools/>}></Route>
             <Route exact path="/docs" element={<Docs/>}></Route>
             <Route exact path="/profile" element={<Profile/>}></Route>
             <Route exact path="/adminPage" element={<Admin/>}></Route>
-            <Route path="/poolPage/:PoolNb" element={<PoolPage />}/>   
-            <Route path="/investPage/:name" element={<Invest />}/>     
-            <Route path="/sellPage/:name" element={<Sell />}/>      
+            <Route path="/poolPage/:PoolNb" element={<PoolPage />}/>
             <Route path="/stackPage/:name" element={<Stack />}/>      
             <Route path="/removePage/:name" element={<Remove />}/>       
             <Route path="/claimPage/:name" element={<Claim />}/>   

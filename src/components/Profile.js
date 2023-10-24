@@ -6,6 +6,8 @@ import {
 } from "react-router-dom";
 import RWAR from "../RWAR.json";
 import Pool1 from "../Pool1.json";
+import Pool2 from "../Pool2.json";
+import Pool3 from "../Pool3.json";
 import { useAccount } from 'wagmi';
 import { readContract } from '@wagmi/core';
 
@@ -13,11 +15,19 @@ const Profile = () => {
   
   const [dflTokens, updatedflTokens] = useState(0);
   const [myStackPool1, updateMyStackPool1] = useState(0);
+  const [myStackPool2, updateMyStackPool2] = useState(0);
+  const [myStackPool3, updateMyStackPool3] = useState(0);
   const [ownerAddress1,updateOwnerAddress1] = useState('');
   const [ownerAddress2,updateOwnerAddress2] = useState('');
-  const [ownerAddress1Pool1,updateOwnerAddress1Pool1] = useState('');
-  const [ownerAddress2Pool1,updateOwnerAddress2Pool1] = useState('');
   const [myYieldsPool1, updateMyYieldsPool1] = useState(0);
+  const [myYieldsPool2, updateMyYieldsPool2] = useState(0);
+  const [myYieldsPool3, updateMyYieldsPool3] = useState(0);
+  const [amountRDSAffiliate1, updateAmountRDSAffiliate1] = useState();
+  const [amountRDSAffiliate2, updateAmountRDSAffiliate2] = useState();
+  const [amountRDSAffiliate3, updateAmountRDSAffiliate3] = useState();
+  const [affiliateAddress1, updateAffiliateAddress1] = useState([]);
+  const [affiliateAddress2, updateAffiliateAddress2] = useState([]);
+  const [affiliateAddress3, updateAffiliateAddress3] = useState([]);
   
   const ethers = require("ethers");
   const { address } = useAccount();
@@ -42,6 +52,24 @@ const Profile = () => {
       const stack = ethers.utils.formatEther(readgetMyStacks, 18);
       updateMyStackPool1(stack);
 
+      const readgetMyStacks2 = await readContract({
+        address: Pool2.address,
+        abi: Pool2.abi,
+        functionName: 'getMyStacks',
+        args: [address]
+      })
+      const stack2 = ethers.utils.formatEther(readgetMyStacks2, 18);
+      updateMyStackPool2(stack2);
+
+      const readgetMyStacks3 = await readContract({
+        address: Pool3.address,
+        abi: Pool3.abi,
+        functionName: 'getMyStacks',
+        args: [address]
+      })
+      const stack3 = ethers.utils.formatEther(readgetMyStacks3, 18);
+      updateMyStackPool3(stack3);
+
       const readAddressOwner1 = await readContract({
         address: RWAR.address,
         abi: RWAR.abi,
@@ -58,24 +86,9 @@ const Profile = () => {
       })
       updateOwnerAddress2(readAddressOwner2);
 
-      //Address owner 1 of the Pool
-      const readAddressOwner1Pool1 = await readContract({
-        address: Pool1.address,
-        abi: Pool1.abi,
-        functionName: 'owners',
-        args: [0],
-      })
-      updateOwnerAddress1Pool1(readAddressOwner1Pool1);
+      //Yields
 
-      //Address owner 2 of the Pool
-      const readAddressOwner2Pool1 = await readContract({
-        address: Pool1.address,
-        abi: Pool1.abi,
-        functionName: 'owners',
-        args: [1],
-      })
-      updateOwnerAddress2Pool1(readAddressOwner2Pool1);
-
+      //Pool 1
       const readgetMyYields = await readContract({
         address: Pool1.address,
         abi: Pool1.abi,
@@ -84,32 +97,85 @@ const Profile = () => {
       })
       const yields = ethers.utils.formatEther(readgetMyYields, 18);
       updateMyYieldsPool1(yields);
-      /*
-      const ethers = require("ethers");
-      //After adding your Hardhat network to your metamask, this code will get providers and signers
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      await signer.getAddress();
-      const addr = await signer.getAddress();
-      updateAddress(addr);
-      let contractDfl = new ethers.Contract(RWAR.address, RWAR.abi, signer);
-
-      let balanceOfDflTokens = await contractDfl.balanceOf(addr);
-      balanceOfDflTokens = ethers.utils.formatEther(balanceOfDflTokens, 18);
-      updatedflTokens(balanceOfDflTokens);
       
-      let contractPool1 = new ethers.Contract(Pool1.address, Pool1.abi, signer);
-
-      let stack = await contractPool1.getMyStacks();
-      stack = ethers.utils.formatEther(stack, 18);
-      updateMyStackPool1(stack);
-
-      let addressOwner1 = await contractDfl.owners(0);
-      updateOwnerAddress1(addressOwner1);
+      //Pool 2
+      const readgetMyYields2 = await readContract({
+        address: Pool2.address,
+        abi: Pool2.abi,
+        functionName: 'getMyYields',
+        args: [address]
+      })
+      const yields2 = ethers.utils.formatEther(readgetMyYields2, 18);
+      updateMyYieldsPool2(yields2);
       
-      let addressOwner2 = await contractDfl.owners(1);
-      updateOwnerAddress2(addressOwner2);
-      */
+      //Pool 3
+      const readgetMyYields3 = await readContract({
+        address: Pool3.address,
+        abi: Pool3.abi,
+        functionName: 'getMyYields',
+        args: [address]
+      })
+      const yields3 = ethers.utils.formatEther(readgetMyYields3, 18);
+      updateMyYieldsPool3(yields3);
+
+      //Pool 1
+      const readgetAmountAffiliate1 = await readContract({
+        address: Pool1.address,
+        abi: Pool1.abi,
+        functionName: 'getMyAffiliateInfoAmount',
+        args: [address]
+      })
+      const amountAffiliate1 = ethers.utils.formatEther(readgetAmountAffiliate1, 18);
+      updateAmountRDSAffiliate1(amountAffiliate1);
+      console.log(amountAffiliate1);
+
+      const readgetListAffiliate1 = await readContract({
+        address: Pool1.address,
+        abi: Pool1.abi,
+        functionName: 'getMyAffiliateInfoListAddr',
+        args: [address]
+      })
+      const listAffiliate1 = readgetListAffiliate1;
+      updateAffiliateAddress1(listAffiliate1);
+      console.log(listAffiliate1)
+
+      //Pool 2
+      const readgetAmountAffiliate2 = await readContract({
+        address: Pool2.address,
+        abi: Pool2.abi,
+        functionName: 'getMyAffiliateInfoAmount',
+        args: [address]
+      })
+      const amountAffiliate2 = ethers.utils.formatEther(readgetAmountAffiliate2, 18);
+      updateAmountRDSAffiliate2(amountAffiliate2);
+
+      const readgetListAffiliate2 = await readContract({
+        address: Pool2.address,
+        abi: Pool2.abi,
+        functionName: 'getMyAffiliateInfoListAddr',
+        args: [address]
+      })
+      const listAffiliate2 = readgetListAffiliate2;
+      updateAffiliateAddress2(listAffiliate2);
+
+      //Pool 3
+      const readgetAmountAffiliate3 = await readContract({
+        address: Pool3.address,
+        abi: Pool3.abi,
+        functionName: 'getMyAffiliateInfoAmount',
+        args: [address]
+      })
+      const amountAffiliate3 = ethers.utils.formatEther(readgetAmountAffiliate3, 18);
+      updateAmountRDSAffiliate3(amountAffiliate3);
+
+      const readgetListAffiliate3 = await readContract({
+        address: Pool3.address,
+        abi: Pool3.abi,
+        functionName: 'getMyAffiliateInfoListAddr',
+        args: [address]
+      })
+      const listAffiliate3 = readgetListAffiliate3;
+      updateAffiliateAddress3(listAffiliate3);
 
     } catch (error) {
       
@@ -129,39 +195,88 @@ useEffect(() => {
             <p className='profile_address'>{address}</p>
             <div className='profile_info_container'>
               <div className='profile_description_line'>
-                <p className='profile_info_title'>My RWAR</p>
-                <p className='profile_info_number'>{dflTokens}</p>
+                <p className='profile_info_title'>My Renditus</p>
+                <p className='profile_info_number'>{dflTokens} RDS</p>
               </div>
             </div>
             
             <div className='profile_info_container'>
               <div className='profile_description_line'>
-                <p className='profile_info_title'>My stacks</p>
+                <p className='profile_info_title'>My stacks Pool 1</p>
                 <p className='profile_info_number'>{myStackPool1}</p>
               </div>
-              {/*
               <div className='profile_description_line'>
-                <p className='profile_info_title'>Pool 2 DFLT you stacked</p>
-                <p className='profile_info_number'>0</p>
+                <p className='profile_info_title'>My stacks Pool 2</p>
+                <p className='profile_info_number'>{myStackPool2}</p>
               </div>
               <div className='profile_description_line'>
-                <p className='profile_info_title'>Pool 3 DFLT you stacked</p>
-                <p className='profile_info_number'>0</p>
+                <p className='profile_info_title'>My stacks Pool 3</p>
+                <p className='profile_info_number'>{myStackPool3}</p>
               </div>
-              <div className='profile_description_line'>
-                <p className='profile_info_title'>Pool 4 DFLT you stacked</p>
-                <p className='profile_info_number'>0</p>
-              </div>
-               */}
             </div>
             <div className='profile_info_container'>
               <div className='profile_description_line'>
-                <p className='profile_info_title'>My Yields</p>
+                <p className='profile_info_title'>My Yields Pool 1</p>
                 <p className='profile_info_number'>{myYieldsPool1}</p>
               </div>
+              <div className='profile_description_line'>
+                <p className='profile_info_title'>My Yields Pool 2</p>
+                <p className='profile_info_number'>{myYieldsPool2}</p>
+              </div>
+              <div className='profile_description_line'>
+                <p className='profile_info_title'>My Yields Pool 3</p>
+                <p className='profile_info_number'>{myYieldsPool3}</p>
+              </div>
             </div>
+            
+              <div className='profile_info_container_Affiliate'>
+                <div className='profile_description_line_affiliate'>
+                  <a href='profile'>
+                    <p className='profile_info_title'>RDS with affiliation Pool 1</p>
+                    <p className='profile_info_number'>{amountRDSAffiliate1}</p>
+                  </a>
+                </div>
+                <div className='profile_description_line_affiliate'>
+                  <p className='profile_info_title'>RDS with affiliation Pool 2</p>
+                  <p className='profile_info_number'>{amountRDSAffiliate2}</p>
+                </div>
+                <div className='profile_description_line_affiliate'>
+                  <p className='profile_info_title'>RDS with affiliation Pool 3</p>
+                  <p className='profile_info_number'>{amountRDSAffiliate3}</p>
+                </div>
+              </div>
+              <div className='profile_info_container_Affiliate'>
+                <div className='profile_description_line_affiliate'>
+                  <p className='profile_info_title'>List address affiliated Pool 1</p>
+                  {affiliateAddress1.length!==0 && affiliateAddress1.map((value, index) => {
+                    return <p className='profile_info_listAffiliateAddress'>{value}</p>;
+                  })}
+                  {affiliateAddress1.length===0 ?
+                    <p className='profile_info_number'>none</p>
+                  : '' }
+                </div>
+                <div className='profile_description_line_affiliate'>
+                  <p className='profile_info_title'>List address affiliated Pool 2</p>
+                  {affiliateAddress2.length!==0 && affiliateAddress2.map((value, index) => {
+                    return <p className='profile_info_listAffiliateAddress'>{value}</p>;
+                  })}
+                  {affiliateAddress2.length===0 ?
+                    <p className='profile_info_number'>none</p>
+                  : '' }
+                </div>
+                <div className='profile_description_line_affiliate'>
+                  <p className='profile_info_title'>List address affiliated Pool 3</p>
+                  {affiliateAddress3.length!==0 && affiliateAddress3.map((value, index) => {
+                    return <p className='profile_info_listAffiliateAddress'>{value}</p>;
+                  })}
+                  {affiliateAddress3.length===0 ?
+                    <p className='profile_info_number'>none</p>
+                  : '' }
+                </div>
+              </div>
+            
             <br></br>
-            {address === ownerAddress1 || address === ownerAddress2 || address === ownerAddress1Pool1 || address === ownerAddress2Pool1 ?
+            {address === ownerAddress1 || address === ownerAddress2 ?
               <Link to={'/adminPage'}>
                 <button className='profile_button'>Admin</button>
               </Link>

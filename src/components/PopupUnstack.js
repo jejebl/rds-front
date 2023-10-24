@@ -16,7 +16,7 @@ const PopupUnstack = (props) => {
           </div>
           :
           <ClipLoader
-          color={'#F05285'}
+          color={'#0074d9'}
           size={100}
           aria-label="Loading Spinner"
           data-testid="loader"

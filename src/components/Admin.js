@@ -5,118 +5,166 @@ import RWAR from "../RWAR.json";
 import tokenerc20 from "../tokenerc20.json";
 import Popup from "./Popup";
 import TransactionToBeConfirmed from './TransactionToBeConfirmed';
-import TransactionToBeConfirmedPool from './TransactionToBeConfirmedPool';
+import TransactionToBeConfirmedPool1 from './TransactionToBeConfirmedPool1';
+import SubmitedTransactionsPool1 from './SubmitedTransactionsPool1';
+import TransactionToBeConfirmedPool2 from './TransactionToBeConfirmedPool2';
+import SubmitedTransactionsPool2 from './SubmitedTransactionsPool2';
+import TransactionToBeConfirmedPool3 from './TransactionToBeConfirmedPool3';
+import SubmitedTransactionsPool3 from './SubmitedTransactionsPool3';
 import SubmitedTransactions from './SubmitedTransactions';
-import SubmitedTransactionsPool from './SubmitedTransactionsPool';
 import Pool1 from "../Pool1.json";
+import Pool2 from "../Pool2.json";
+import Pool3 from "../Pool3.json";
 import { useAccount } from 'wagmi';
 import { readContract, writeContract, prepareWriteContract, waitForTransaction } from '@wagmi/core';
 
 const Admin = () => {
 
-  //Address of the Safe Wallet
-  const addressUSDTSafeWallet = "0xcbFD67144Fbc2B32b26D10d59E289D934ea045e2";
-  const addressReserveSafeWallet = "0x0fB9838Ef019a9e546b56bd5726025aC8662eE37";
   const addressTeamSafeWallet = "0x9F5396C7e899ff967222F2Be35BD3f3aB9331031";
   const addressDevelopmentSafeWallet = "0x434b991915465B8175bfCcfD806CB29078680951";
   const addressMarketingSafeWallet = "0x671bbd03D1fbcA8A2aB46eC1a250B19a224Bbf82";
-  const addressPublicRWARSafeWallet = "0x031B67aD424DA58b2c8C9004D0Bf5B964Cf5351d";
-  const addressPrivateRWARSafeWallet = "0x7106944B77ac18ae1f31e63c164e37Ca334E68d1";
+  const addressSafeRWAPool1Wallet = "0xfBD237b6Cc2f00bEe96cBe632a440A6904719B2E";
+  const addressSafeRWAPool2Wallet = "0xcfd1a1Ae32bEe395f9953A65f276F12374cD2F80";
+  const addressSafeRWAPool3Wallet = "0xF470f67Cbac02dA7af79c458986c14eF689ade3a";
 
-  //USDT of the Safe Wallet
-  const [usdtUSDTWalletSafe, updateUsdtWalletSafe] = useState(0);
-  const [usdtReserveWalletSafe, updateUsdtReserveWalletSafe] = useState(0);
-  const [usdtDevelopmentWalletSafe, updateUsdtDevelopmentWalletSafe] = useState(0);
-  const [usdtTeamWalletSafe, updateUsdtTeamWalletSafe] = useState(0);
-
-  //RWAR of the Safe Wallet
-  const [rwarReserveWalletSafe, updateRwarReserveWalletSafe] = useState(0);
-  const [rwarDevelopmentWalletSafe, updateRwarDevelopmentWalletSafe] = useState(0);
-  const [rwarTeamWalletSafe, updateRwarTeamWalletSafe] = useState(0);
-  const [rwarMarketingWalletSafe, updateRwarMarketingWalletSafe] = useState(0);
-  const [rwarPublicRWARWalletSafe, updateRwarPublicRWARWalletSafe] = useState(0);
-  const [rwarPrivateRWARWalletSafe, updateRwarPrivateRWARWalletSafe] = useState(0);
-
+  const [totalSupply, updateTotalSupply] = useState(0);
+  const [maxSupply, updateMaxSupply] = useState(0);
   
   
-  const [RWARTokensContract, updateRWARTokensContract] = useState(0);
-  const [mintRWARTokens, updateMintRWARTokens] = useState(0);
+
+  //rds of the Dev,Merketing and team Wallet
+  const [rdsDevelopmentWalletSafe, updateRdsDevelopmentWalletSafe] = useState(0);
+  const [rdsTeamWalletSafe, updateRdsTeamWalletSafe] = useState(0);
+  const [rdsMarketingWalletSafe, updateRdsMarketingWalletSafe] = useState(0);
+  
+  
+  //const [mintForTeamValue, updateMintForTeamValue] = useState(0);
   const [burnRWARTokens, updateBurnRWARTokens] = useState(0);
-  const [price, updatePrice] = useState(0);
-  const [newPrice, updateNewPrice] = useState(0);
-  const [addressNewOwner1, updateAddressNewOwner1] = useState('');
-  const [addressNewOwner2, updateAddressNewOwner2] = useState('');
+  const [mintRDSTokens, updateMintRDSTokens] = useState(0);
+  const [addressMintRDSTokens, updateAddressMintRDSTokens] = useState('');
+  const [withdrawTokens, updateWithdrawTokens] = useState(0);
+  const [withdrawAddressToken, updateWithdrawAddressToken] = useState('');
+  const [withdrawTo, updateWithdrawTo] = useState('');
+  /*const [addressNewOwner1, updateAddressNewOwner1] = useState('');
+  const [addressNewOwner2, updateAddressNewOwner2] = useState('');*/
   const [ownerAddress1,updateOwnerAddress1] = useState('');
   const [ownerAddress2,updateOwnerAddress2] = useState('');
-  const [owner1AddressPool1, updateOwner1AddressPool1] = useState('');
-  const [newOwner1AddressPool1, updateNewOwner1AddressPool1] = useState('');
-  const [owner2AddressPool1, updateOwner2AddressPool1] = useState('');
-  const [newOwner2AddressPool1, updateNewOwner2AddressPool1] = useState('');
+  const [ownerAddress3,updateOwnerAddress3] = useState('');
+  const [ownerAddress4,updateOwnerAddress4] = useState('');
 
+  //Pool1
+  /*const [newOwner1AddressPool1, updateNewOwner1AddressPool1] = useState('');
+  const [newOwner2AddressPool1, updateNewOwner2AddressPool1] = useState('');*/
+  const [showSafeRDSWalletAddressPool1, updateShowSafeRDSWalletAddressPool1] = useState('');
+  let safeRDSWalletAddressPool1;
+  const [newSafeRDSWalletAddressPool1, updateNewSafeRDSWalletAddressPool1] = useState('');
   
-  const [rwarWalletAddressPool1, updateRWARWalletAddressPool1] = useState('');
-  const [newRWARWalletAddressPool1, updateNewRWARWalletAddressPool1] = useState('');
-  const [marketingWalletAddressPool1, updateMarketingWalletAddressPool1] = useState('');
-  const [newMarketingWalletAddressPool1, updateNewMarketingWalletAddressPool1] = useState('');
+  const [withdrawTokensPool1, updateWithdrawTokensPool1] = useState(0);
+  const [withdrawAddressTokenPool1, updateWithdrawAddressTokenPool1] = useState('');
+  const [withdrawToPool1, updateWithdrawToPool1] = useState('');
 
-
-  const [usdtAddressRWAR, updateUsdtAddressRWAR] = useState('');
-  const [newUsdtAddressRWAR, updateNewUsdtAddressRWAR] = useState('');
-  const [reserveWalletAddressRWAR, updateReserveWalletAddressRWAR] = useState('');
-  const [newReserveWalletAddressRWAR, updateNewReserveWalletAddressRWAR] = useState('');
-  const [safeUSDTWalletAddressRWAR, updateSafeUSDTWalletAddressRWAR] = useState('');
-  const [newSafeUSDTWalletAddressRWAR, updateNewSafeUSDTWalletAddressRWAR] = useState('');
-  
-  const [usdtAddressPool1, updateUsdtAddressPool1] = useState('');
-  const [newUsdtAddressPool1, updateNewUsdtAddressPool1] = useState('');
-  const [usdtPool1, updateUSDTPool1] = useState(0);
-  //const [usdtDontClaimedPool1, updateUsdtDontClaimedPool1] = useState(0);
-  const [addAffiliateAddressPool1, updateAddAffiliateAddressPool1] = useState('');
-  
-  const [transferRWARTokens, updateTransferRWARTokens] = useState('');
-  const [addressTransferRWARTokens, updateAddressTransferRWARTokens] = useState('');
-  const [transferStableCoins, updateTransferStableCoins] = useState('');
-  const [addressTransferStableCoins, updateAddressTransferStableCoins] = useState('');
-  
-  const [balanceRWARPool, updateBalanceRWARPool] = useState(0);
+  const [rdsSafeRDSPool1Wallet, updateRdsSafeRDSPool1Wallet] = useState(0);
+  const [rdsSafeRWAPool1Wallet, updateRdsSafeRWAPool1Wallet] = useState(0);
+  const [usdtSafeRWAPool1Wallet, updateUsdtSafeRWAPool1Wallet] = useState(0);
+  const [balanceRWARPool1, updateBalanceRWARPool1] = useState(0);
   const [rwarTotalStackedPool1, updateRWARTotalStackedPool1] = useState(0);
+  const [totalStacked7DaysPool1, updateTotalStacked7DaysPool1] = useState(0);
+  const [sendYieldPool1, updateSendYieldPool1] = useState('');
+
+  //Pool 2
+  /*const [newOwner1AddressPool2, updateNewOwner1AddressPool2] = useState('');
+  const [newOwner2AddressPool2, updateNewOwner2AddressPool2] = useState('');*/
+  const [showSafeRDSWalletAddressPool2, updateShowSafeRDSWalletAddressPool2] = useState('');
+  let safeRDSWalletAddressPool2;
+  const [newSafeRDSWalletAddressPool2, updateNewSafeRDSWalletAddressPool2] = useState('');
+  
+  const [withdrawTokensPool2, updateWithdrawTokensPool2] = useState(0);
+  const [withdrawAddressTokenPool2, updateWithdrawAddressTokenPool2] = useState('');
+  const [withdrawToPool2, updateWithdrawToPool2] = useState('');
+
+  const [rdsSafeRDSPool2Wallet, updateRdsSafeRDSPool2Wallet] = useState(0);
+  const [rdsSafeRWAPool2Wallet, updateRdsSafeRWAPool2Wallet] = useState(0);
+  const [usdtSafeRWAPool2Wallet, updateUsdtSafeRWAPool2Wallet] = useState(0);
+  const [balanceRWARPool2, updateBalanceRWARPool2] = useState(0);
+  const [rwarTotalStackedPool2, updateRWARTotalStackedPool2] = useState(0);
+  const [totalStacked7DaysPool2, updateTotalStacked7DaysPool2] = useState(0);
+  const [sendYieldPool2, updateSendYieldPool2] = useState('');
+
+  //Pool 3
+  /*const [newOwner1AddressPool3, updateNewOwner1AddressPool3] = useState('');
+  const [newOwner2AddressPool3, updateNewOwner2AddressPool3] = useState('');*/
+  const [showSafeRDSWalletAddressPool3, updateShowSafeRDSWalletAddressPool3] = useState('');
+  let safeRDSWalletAddressPool3;
+  const [newSafeRDSWalletAddressPool3, updateNewSafeRDSWalletAddressPool3] = useState('');
+  
+  const [withdrawTokensPool3, updateWithdrawTokensPool3] = useState(0);
+  const [withdrawAddressTokenPool3, updateWithdrawAddressTokenPool3] = useState('');
+  const [withdrawToPool3, updateWithdrawToPool3] = useState('');
+
+  const [rdsSafeRDSPool3Wallet, updateRdsSafeRDSPool3Wallet] = useState(0);
+  const [rdsSafeRWAPool3Wallet, updateRdsSafeRWAPool3Wallet] = useState(0);
+  const [usdtSafeRWAPool3Wallet, updateUsdtSafeRWAPool3Wallet] = useState(0);
+  const [balanceRWARPool3, updateBalanceRWARPool3] = useState(0);
+  const [rwarTotalStackedPool3, updateRWARTotalStackedPool3] = useState(0);
+  const [totalStacked7DaysPool3, updateTotalStacked7DaysPool3] = useState(0);
+  const [sendYieldPool3, updateSendYieldPool3] = useState('');
   
 
-  const [totalStacked7Days, updateTotalStacked7Days] = useState(0);
-  
-
-  const [sendYield, updateSendYield] = useState('');
   const [loading, updateLoading] = useState(false);
   const [popup, updatePopup] = useState(false);
-  const [boolTransfer, updateBoolTransfer] = useState(false);
-  
-  const [boolTransferRWAR, updateBoolTransferRWAR] = useState(false);
-  const [boolSendYield, updateBoolsendYield] = useState(false);
-  const [boolSubmitMint, updateBoolSubmitMint] = useState(false);
+
+  //Bool function
+  const [boolSubmitMintForTeam, updateBoolSubmitMintForTeam] = useState(false);
   const [boolSubmitBurn, updateBoolSubmitBurn] = useState(false);
-  const [boolSubmitChangeOwner1, updateBoolSubmitChangeOwner1] = useState(false);
-  const [boolSubmitChangeOwner2, updateBoolSubmitChangeOwner2] = useState(false);
-  const [boolChangePrice, updateBoolChangePrice] = useState(false);
-  const [boolChangeUsdtAddressRWAR, updateBoolChangeUsdtAddressRWAR] = useState(false);
-  const [boolChangeReserveWalletAddressRWAR, updateBoolChangeReserveWalletAddressRWAR] = useState(false);
-  const [boolChangeSafeUSDTWalletAddressRWAR, updateBoolChangeSafeUSDTWalletAddressRWAR] = useState(false);
-  const [boolUsdtAddressPool1, updateBoolUsdtAddressPool1] = useState(false);
-  const [boolSubmitChangeOwner1AddressPool1, updateBoolSubmitChangeOwner1AddressPool1] = useState(false);
-  const [boolSubmitChangeOwner2AddressPool1, updateBoolSubmitChangeOwner2AddressPool1] = useState(false);
-  
-  const [boolSubmitChangeRWARWalletAddressPool1, updateBoolSubmitChangeRWARWalletAddressPool1] = useState(false);
-  const [boolSubmitChangeMarketingWalletAddressPool1, updateBoolSubmitChangeMarketingWalletAddressPool1] = useState(false);
-  const [boolAddAffiliateAddressPool1, updateboolAddAffiliateAddressPool1] = useState(false);
+  const [boolSubmitMint, updateBoolSubmitMint] = useState(false);
+  const [boolSubmitWithdraw, updateBoolSubmitWithdraw] = useState(false);
+  const [boolRenounce, updateBoolRenounce] = useState(false);
+  /*const [boolSubmitChangeOwner1, updateBoolSubmitChangeOwner1] = useState(false);
+  const [boolSubmitChangeOwner2, updateBoolSubmitChangeOwner2] = useState(false);*/
+  //Pool 1
+  const [boolSendYieldPool1, updateBoolsendYieldPool1] = useState(false);
+  /*const [boolSubmitChangeOwner1AddressPool1, updateBoolSubmitChangeOwner1AddressPool1] = useState(false);
+  const [boolSubmitChangeOwner2AddressPool1, updateBoolSubmitChangeOwner2AddressPool1] = useState(false);*/
+  const [boolSubmitChangeSafeRDSWalletAddressPool1, updateBoolSubmitChangeSafeRDSWalletAddressPool1] = useState(false);
+  const [boolSubmitWithdrawPool1, updateBoolSubmitWithdrawPool1] = useState(false);
+  const [boolRenouncePool1, updateBoolRenouncePool1] = useState(false);
+
+  //Pool 2
+  const [boolSendYieldPool2, updateBoolsendYieldPool2] = useState(false);
+  /*const [boolSubmitChangeOwner1AddressPool2, updateBoolSubmitChangeOwner1AddressPool2] = useState(false);
+  const [boolSubmitChangeOwner2AddressPool2, updateBoolSubmitChangeOwner2AddressPool2] = useState(false);*/
+  const [boolSubmitChangeSafeRDSWalletAddressPool2, updateBoolSubmitChangeSafeRDSWalletAddressPool2] = useState(false);
+  const [boolSubmitWithdrawPool2, updateBoolSubmitWithdrawPool2] = useState(false);
+  const [boolRenouncePool2, updateBoolRenouncePool2] = useState(false);
+  //Pool 3
+  const [boolSendYieldPool3, updateBoolsendYieldPool3] = useState(false);
+  /*const [boolSubmitChangeOwner1AddressPool3, updateBoolSubmitChangeOwner1AddressPool3] = useState(false);
+  const [boolSubmitChangeOwner2AddressPool3, updateBoolSubmitChangeOwner2AddressPool3] = useState(false);*/
+  const [boolSubmitChangeSafeRDSWalletAddressPool3, updateBoolSubmitChangeSafeRDSWalletAddressPool3] = useState(false);
+  const [boolSubmitWithdrawPool3, updateBoolSubmitWithdrawPool3] = useState(false);
+  const [boolRenouncePool3, updateBoolRenouncePool3] = useState(false);
+
+  //Transactions
   const [boolConfirmTransaction, updateBoolConfirmTransaction] = useState(false);
   const [boolDeleteTransaction, updateBoolDeleteTransaction] = useState(false);
   const [transactionsToBeConfirmed, updateTransactionsToBeConfirmed] = useState([]);
   const [submitedTransactions, updatesubmitedTransactions] = useState([]);
 
-  //Submit Pool
-  const [boolConfirmTransactionPool, updateBoolConfirmTransactionPool] = useState(false);
-  const [boolDeleteTransactionPool, updateBoolDeleteTransactionPool] = useState(false);
-  const [transactionsToBeConfirmedPool, updateTransactionsToBeConfirmedPool] = useState([]);
-  const [submitedTransactionsPool, updatesubmitedTransactionsPool] = useState([]);
+  //Submit Pool 1
+  const [boolConfirmTransactionPool1, updateBoolConfirmTransactionPool1] = useState(false);
+  const [boolDeleteTransactionPool1, updateBoolDeleteTransactionPool1] = useState(false);
+  const [transactionsToBeConfirmedPool1, updateTransactionsToBeConfirmedPool1] = useState([]);
+  const [submitedTransactionsPool1, updatesubmitedTransactionsPool1] = useState([]);
+  //Submit Pool 2
+  const [boolConfirmTransactionPool2, updateBoolConfirmTransactionPool2] = useState(false);
+  const [boolDeleteTransactionPool2, updateBoolDeleteTransactionPool2] = useState(false);
+  const [transactionsToBeConfirmedPool2, updateTransactionsToBeConfirmedPool2] = useState([]);
+  const [submitedTransactionsPool2, updatesubmitedTransactionsPool2] = useState([]);
+  //Submit Pool 3
+  const [boolConfirmTransactionPool3, updateBoolConfirmTransactionPool3] = useState(false);
+  const [boolDeleteTransactionPool3, updateBoolDeleteTransactionPool3] = useState(false);
+  const [transactionsToBeConfirmedPool3, updateTransactionsToBeConfirmedPool3] = useState([]);
+  const [submitedTransactionsPool3, updatesubmitedTransactionsPool3] = useState([]);
   
   const ethers = require("ethers");
   const { address } = useAccount();
@@ -178,10 +226,10 @@ const Admin = () => {
     }
   }
 
-  //Function Confirm and delete Pool
-  async function confirmTransactionPool(i) {
+  //Function Confirm and delete Pool 1
+  async function confirmTransactionPool1(i) {
     try {
-      updateBoolConfirmTransactionPool(true);
+      updateBoolConfirmTransactionPool1(true);
       updateLoading(true);
       updatePopup(true);
 
@@ -202,14 +250,14 @@ const Admin = () => {
     } catch (error) {
       alert("You can't confirm the transaction!");
       updateLoading(false);
-      updateBoolConfirmTransactionPool(false);
+      updateBoolConfirmTransactionPool1(false);
       updatePopup(false);
     }
   }
 
-  async function deleteTransactionPool(i) {
+  async function deleteTransactionPool1(i) {
     try {
-      updateBoolDeleteTransactionPool(true);
+      updateBoolDeleteTransactionPool1(true);
       updateLoading(true);
       updatePopup(true);
 
@@ -230,13 +278,162 @@ const Admin = () => {
     } catch (error) {
       alert("You can't delete the transaction!");
       updateLoading(false);
-      updateBoolDeleteTransactionPool(false);
+      updateBoolDeleteTransactionPool1(false);
+      updatePopup(false);
+    }
+  }
+
+
+
+  //Function Confirm and delete Pool 2
+  async function confirmTransactionPool2(i) {
+    try {
+      updateBoolConfirmTransactionPool2(true);
+      updateLoading(true);
+      updatePopup(true);
+
+      const { request: requestConfirm } = await prepareWriteContract({
+        address: Pool2.address,
+        abi: Pool2.abi,
+        functionName: 'confirmTransaction',
+        args: [i],
+      });
+      let { hash: confirmSent } = await writeContract(requestConfirm)
+
+      const dataConfirmPool = await waitForTransaction({
+        hash: confirmSent
+      })
+
+      updateLoading(false);
+
+    } catch (error) {
+      alert("You can't confirm the transaction!");
+      updateLoading(false);
+      updateBoolConfirmTransactionPool2(false);
+      updatePopup(false);
+    }
+  }
+
+  async function deleteTransactionPool2(i) {
+    try {
+      updateBoolDeleteTransactionPool2(true);
+      updateLoading(true);
+      updatePopup(true);
+
+      const { request: requestDelete } = await prepareWriteContract({
+        address: Pool2.address,
+        abi: Pool2.abi,
+        functionName: 'deleteTransaction',
+        args: [i],
+      });
+      let { hash: deleteSent } = await writeContract(requestDelete)
+
+      const dataDeletePool = await waitForTransaction({
+        hash: deleteSent
+      })
+
+      updateLoading(false);
+
+    } catch (error) {
+      alert("You can't delete the transaction!");
+      updateLoading(false);
+      updateBoolDeleteTransactionPool2(false);
+      updatePopup(false);
+    }
+  }
+
+
+
+  //Function Confirm and delete Pool 3
+  async function confirmTransactionPool3(i) {
+    try {
+      updateBoolConfirmTransactionPool3(true);
+      updateLoading(true);
+      updatePopup(true);
+
+      const { request: requestConfirm } = await prepareWriteContract({
+        address: Pool3.address,
+        abi: Pool3.abi,
+        functionName: 'confirmTransaction',
+        args: [i],
+      });
+      let { hash: confirmSent } = await writeContract(requestConfirm)
+
+      const dataConfirmPool = await waitForTransaction({
+        hash: confirmSent
+      })
+
+      updateLoading(false);
+
+    } catch (error) {
+      alert("You can't confirm the transaction!");
+      updateLoading(false);
+      updateBoolConfirmTransactionPool3(false);
+      updatePopup(false);
+    }
+  }
+
+  async function deleteTransactionPool3(i) {
+    try {
+      updateBoolDeleteTransactionPool3(true);
+      updateLoading(true);
+      updatePopup(true);
+
+      const { request: requestDelete } = await prepareWriteContract({
+        address: Pool3.address,
+        abi: Pool3.abi,
+        functionName: 'deleteTransaction',
+        args: [i],
+      });
+      let { hash: deleteSent } = await writeContract(requestDelete)
+
+      const dataDeletePool = await waitForTransaction({
+        hash: deleteSent
+      })
+
+      updateLoading(false);
+
+    } catch (error) {
+      alert("You can't delete the transaction!");
+      updateLoading(false);
+      updateBoolDeleteTransactionPool3(false);
+      updatePopup(false);
+    }
+  }
+
+
+
+
+  async function mintForTeam() {
+    try {
+      updateBoolSubmitMintForTeam(true);
+      updateLoading(true);
+      updatePopup(true);
+
+      const { request: requestMintForTeam } = await prepareWriteContract({
+        address: RWAR.address,
+        abi: RWAR.abi,
+        functionName: 'submitTransaction',
+        args: ['mintForTeam', RWAR.address, RWAR.address, 0],
+      });
+      let { hash: mintForTeamSent } = await writeContract(requestMintForTeam)
+
+      const dataMintForTeam = await waitForTransaction({
+        hash: mintForTeamSent
+      })
+
+      updateLoading(false);
+
+    } catch (error) {
+      alert("You can't mint!");
+      updateLoading(false);
+      updateBoolSubmitMintForTeam(false);
       updatePopup(false);
     }
   }
 
   async function mint() {
-    if(mintRWARTokens!=='')
+    if(mintRDSTokens!==0 && ethers.utils.isAddress(addressMintRDSTokens))
     try {
       updateBoolSubmitMint(true);
       updateLoading(true);
@@ -246,7 +443,7 @@ const Admin = () => {
         address: RWAR.address,
         abi: RWAR.abi,
         functionName: 'submitTransaction',
-        args: ['mint', RWAR.address, ethers.utils.parseUnits(mintRWARTokens)],
+        args: ['mint', RWAR.address, addressMintRDSTokens, ethers.utils.parseUnits(mintRDSTokens)],
       });
       let { hash: mintSent } = await writeContract(requestMint)
 
@@ -265,7 +462,7 @@ const Admin = () => {
   }
 
   async function burn() {
-    if(burnRWARTokens!=='')
+    if(burnRWARTokens!==0)
     try {
       updateBoolSubmitBurn(true);
       updateLoading(true);
@@ -275,7 +472,7 @@ const Admin = () => {
         address: RWAR.address,
         abi: RWAR.abi,
         functionName: 'submitTransaction',
-        args: ['burn', RWAR.address, ethers.utils.parseUnits(burnRWARTokens)],
+        args: ['burn', RWAR.address, RWAR.address, ethers.utils.parseUnits(burnRWARTokens)],
       });
       let { hash: burnSent } = await writeContract(requestBurn)
 
@@ -293,42 +490,74 @@ const Admin = () => {
     }
   }
 
-  async function changePrice() {
-    if(newPrice!==0)
+  async function withdraw() {
+    if(withdrawTokens!==0 && ethers.utils.isAddress(withdrawAddressToken) && ethers.utils.isAddress(withdrawTo))
     try {
-      updateBoolChangePrice(true);
+      updateBoolSubmitWithdraw(true);
       updateLoading(true);
       updatePopup(true);
 
-      const { request: requestChangePrice } = await prepareWriteContract({
+      const { request: requestWithdraw } = await prepareWriteContract({
         address: RWAR.address,
         abi: RWAR.abi,
         functionName: 'submitTransaction',
-        args: ['changePrice', RWAR.address, ethers.utils.parseUnits(newPrice)],
+        args: ['withdraw', withdrawAddressToken, withdrawTo, ethers.utils.parseUnits(withdrawTokens)],
       });
-      let { hash: changePriceSent } = await writeContract(requestChangePrice)
+      let { hash: withdrawSent } = await writeContract(requestWithdraw)
 
-      const dataChangePrice = await waitForTransaction({
-        hash: changePriceSent
+      const dataWithdraw = await waitForTransaction({
+        hash: withdrawSent
       })
 
       updateLoading(false);
 
     } catch (error) {
-      alert("You can't change the price!");
+      alert("You can't withdraw!");
       updateLoading(false);
-      updateBoolChangePrice(false);
+      updateBoolSubmitWithdraw(false);
       updatePopup(false);
     }
   }
 
+  async function renounce() {
+    try {
+      updateBoolRenounce(true);
+      updateLoading(true);
+      updatePopup(true);
+
+      const { request: requestRenounce } = await prepareWriteContract({
+        address: RWAR.address,
+        abi: RWAR.abi,
+        functionName: 'submitTransaction',
+        args: ['renounceOwnership', RWAR.address, RWAR.address, 0]
+      });
+      let { hash: renounceSent } = await writeContract(requestRenounce)
+
+      const dataRenounce = await waitForTransaction({
+        hash: renounceSent
+      })
+
+      updateLoading(false);
+
+    } catch (error) {
+      alert("You can't renounce!");
+      updateLoading(false);
+      updateBoolRenounce(false);
+      updatePopup(false);
+    }
+  }
+  /*
   async function changeOwner1() {
     if(addressNewOwner1!== '')
     try {
       updateBoolSubmitChangeOwner1(true);
+      updateBoolSubmitChangeOwner1AddressPool1(true);
+      updateBoolSubmitChangeOwner1AddressPool2(true);
+      updateBoolSubmitChangeOwner1AddressPool3(true);
       updateLoading(true);
       updatePopup(true);
 
+      //SC Token
       const { request: requestChangeOwner1 } = await prepareWriteContract({
         address: RWAR.address,
         abi: RWAR.abi,
@@ -341,12 +570,54 @@ const Admin = () => {
         hash: changeOwner1Sent
       })
 
+      //Pool 1
+      const { request: requestChangeOwner1Pool1 } = await prepareWriteContract({
+        address: Pool1.address,
+        abi: Pool1.abi,
+        functionName: 'submitTransaction',
+        args: ['changeOwner1', addressNewOwner1, 0]
+      });
+      let { hash: changeOwner1Pool1Sent } = await writeContract(requestChangeOwner1Pool1)
+
+      const dataChangeOwner1Pool1 = await waitForTransaction({
+        hash: changeOwner1Pool1Sent
+      })
+
+      //Pool 2
+      const { request: requestChangeOwner1Pool2 } = await prepareWriteContract({
+        address: Pool2.address,
+        abi: Pool2.abi,
+        functionName: 'submitTransaction',
+        args: ['changeOwner1', addressNewOwner1, 0]
+      });
+      let { hash: changeOwner1Pool2Sent } = await writeContract(requestChangeOwner1Pool2)
+
+      const dataChangeOwner1Pool2 = await waitForTransaction({
+        hash: changeOwner1Pool2Sent
+      })
+
+      //Pool 3
+      const { request: requestChangeOwner1Pool3 } = await prepareWriteContract({
+        address: Pool3.address,
+        abi: Pool3.abi,
+        functionName: 'submitTransaction',
+        args: ['changeOwner1', addressNewOwner1, 0]
+      });
+      let { hash: changeOwner1Pool3Sent } = await writeContract(requestChangeOwner1Pool3)
+
+      const dataChangeOwner1Pool3 = await waitForTransaction({
+        hash: changeOwner1Pool3Sent
+      })
+
       updateLoading(false);
 
     } catch (error) {
       alert("You can't change the owner!");
       updateLoading(false);
       updateBoolSubmitChangeOwner1(false);
+      updateBoolSubmitChangeOwner1AddressPool1(false);
+      updateBoolSubmitChangeOwner1AddressPool2(false);
+      updateBoolSubmitChangeOwner1AddressPool3(false);
       updatePopup(false);
     }
   }
@@ -355,9 +626,13 @@ const Admin = () => {
     if(addressNewOwner2!== '')
     try {
       updateBoolSubmitChangeOwner2(true);
+      updateBoolSubmitChangeOwner2AddressPool1(true);
+      updateBoolSubmitChangeOwner2AddressPool2(true);
+      updateBoolSubmitChangeOwner2AddressPool3(true);
       updateLoading(true);
       updatePopup(true);
 
+      //SC Token
       const { request: requestChangeOwner2 } = await prepareWriteContract({
         address: RWAR.address,
         abi: RWAR.abi,
@@ -370,186 +645,72 @@ const Admin = () => {
         hash: changeOwner2Sent
       })
 
+      //Pool 1
+      const { request: requestChangeOwner2Pool1 } = await prepareWriteContract({
+        address: Pool1.address,
+        abi: Pool1.abi,
+        functionName: 'submitTransaction',
+        args: ['changeOwner2', addressNewOwner2, 0]
+      });
+      let { hash: changeOwner2Pool1Sent } = await writeContract(requestChangeOwner2Pool1)
+
+      const dataChangeOwner2Pool1 = await waitForTransaction({
+        hash: changeOwner2Pool1Sent
+      })
+
+      
+      //Pool 2
+      const { request: requestChangeOwner2Pool2 } = await prepareWriteContract({
+        address: Pool2.address,
+        abi: Pool2.abi,
+        functionName: 'submitTransaction',
+        args: ['changeOwner2', addressNewOwner2, 0]
+      });
+      let { hash: changeOwner2Pool2Sent } = await writeContract(requestChangeOwner2Pool2)
+
+      const dataChangeOwner2Pool2 = await waitForTransaction({
+        hash: changeOwner2Pool2Sent
+      })
+      
+      //Pool 3
+      const { request: requestChangeOwner2Pool3 } = await prepareWriteContract({
+        address: Pool3.address,
+        abi: Pool3.abi,
+        functionName: 'submitTransaction',
+        args: ['changeOwner2', addressNewOwner2, 0]
+      });
+      let { hash: changeOwner2Pool3Sent } = await writeContract(requestChangeOwner2Pool3)
+
+      const dataChangeOwner2Pool3 = await waitForTransaction({
+        hash: changeOwner2Pool3Sent
+      })
+
       updateLoading(false);
 
     } catch (error) {
       alert("You can't change the owner!");
       updateLoading(false);
       updateBoolSubmitChangeOwner2(false);
+      updateBoolSubmitChangeOwner2AddressPool1(false);
+      updateBoolSubmitChangeOwner2AddressPool2(false);
+      updateBoolSubmitChangeOwner2AddressPool3(false);
       updatePopup(false);
     }
-  }
+  }*/
 
-  async function changeUSDTAddress() {
-    if(newUsdtAddressRWAR!== '')
+  //Function Pool 1
+  async function sendYieldToPool1() {
+    if(sendYieldPool1!== '')
     try {
-      updateBoolChangeUsdtAddressRWAR(true);
+      updateBoolsendYieldPool1(true);
       updateLoading(true);
       updatePopup(true);
-
-      const { request: requestChangeUSDTAddress } = await prepareWriteContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
-        functionName: 'changeUSDTAddress',
-        args: [newUsdtAddressRWAR],
-      });
-      let { hash: changeUSDTAddressSent } = await writeContract(requestChangeUSDTAddress)
-
-      const dataChangeUSDTAddress = await waitForTransaction({
-        hash: changeUSDTAddressSent
-      })
-
-      updateLoading(false);
-
-    } catch (error) {
-      alert("You can't change the usdt address!");
-      updateLoading(false);
-      updateBoolChangeUsdtAddressRWAR(false);
-      updatePopup(false);
-    }
-  }
-
-  async function changeReserveWalletAddressRWAR() {
-    if(newReserveWalletAddressRWAR!== '')
-    try {
-      updateBoolChangeReserveWalletAddressRWAR(true);
-      updateLoading(true);
-      updatePopup(true);
-
-      const { request: requestChangeReserveWalletAddressRWAR } = await prepareWriteContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
-        functionName: 'submitTransaction',
-        args: ['changeReserveWallet', newReserveWalletAddressRWAR, 0]
-      });
-      let { hash: changeChangeReserveWalletAddressRWARSent } = await writeContract(requestChangeReserveWalletAddressRWAR)
-
-      const dataChangeReserveWalletAddressRWAR = await waitForTransaction({
-        hash: changeChangeReserveWalletAddressRWARSent
-      })
-
-      updateLoading(false);
-
-    } catch (error) {
-      alert("You can't change the reserve wallet address RWAR!");
-      updateLoading(false);
-      updateBoolChangeReserveWalletAddressRWAR(false);
-      updatePopup(false);
-    }
-  }
-
-  async function changeSafeUSDTWalletAddressRWAR() {
-    if(newSafeUSDTWalletAddressRWAR!== '')
-    try {
-      updateBoolChangeSafeUSDTWalletAddressRWAR(true);
-      updateLoading(true);
-      updatePopup(true);
-
-      const { request: requestChangeSafeUSDTWalletAddressRWAR } = await prepareWriteContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
-        functionName: 'submitTransaction',
-        args: ['changeSafeUSDTWallet', newSafeUSDTWalletAddressRWAR, 0]
-      });
-      let { hash: changeChangeSafeUSDTWalletAddressRWARSent } = await writeContract(requestChangeSafeUSDTWalletAddressRWAR)
-
-      const dataChangeSafeUSDTWalletAddressRWAR = await waitForTransaction({
-        hash: changeChangeSafeUSDTWalletAddressRWARSent
-      })
-
-      updateLoading(false);
-
-    } catch (error) {
-      alert("You can't change the reserve wallet address RWAR!");
-      updateLoading(false);
-      updateBoolChangeSafeUSDTWalletAddressRWAR(false);
-      updatePopup(false);
-    }
-  }
-
-  async function transfer() {
-    if(transferStableCoins!== '' && transferStableCoins!=='')
-    try {
-      updateBoolTransfer(true);
-      updateLoading(true);
-      updatePopup(true);
-
-      const { request: requestTransferStableCoins } = await prepareWriteContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
-        functionName: 'submitTransaction',
-        args: ['transferUSDT', addressTransferStableCoins, ethers.utils.parseUnits(transferStableCoins)],
-      });
-      let { hash: transferStableCoinsSent } = await writeContract(requestTransferStableCoins)
-
-      const dataTransferStableCoins = await waitForTransaction({
-        hash: transferStableCoinsSent
-      })
-
-      updateLoading(false);
-
-    } catch (error) {
-      alert("You don't have enough stable coins or the address is invalid!");
-      updateLoading(false);
-      updateBoolTransfer(false);
-      updatePopup(false);
-    }
-  }
-
-  async function transferRWAR() {
-    if(transferRWARTokens!== '' && transferRWARTokens!=='')
-    try {
-      updateBoolTransferRWAR(true);
-      updateLoading(true);
-      updatePopup(true);
-
-      const { request: requestTransferRWAR } = await prepareWriteContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
-        functionName: 'submitTransaction',
-        args: ['transferRWAR', addressTransferRWARTokens, ethers.utils.parseUnits(transferRWARTokens)],
-      });
-      let { hash: transferRWARSent } = await writeContract(requestTransferRWAR)
-
-      const dataTransferRWAR = await waitForTransaction({
-        hash: transferRWARSent
-      })
-
-      updateLoading(false);
-
-    } catch (error) {
-      alert("You don't have enough RWAR tokens or the address is invalid!");
-      updateLoading(false);
-      updateBoolTransferRWAR(false);
-      updatePopup(false);
-    }
-  }
-
-  async function sendYieldPool1() {
-    if(sendYield!== '')
-    try {
-      updateBoolsendYield(true);
-      updateLoading(true);
-      updatePopup(true);
-/*
-      const { request: requestApprovesendYield } = await prepareWriteContract({
-        address: tokenerc20.address,
-        abi: tokenerc20.abi,
-        functionName: 'approve',
-        args: [Pool1.address, ethers.utils.parseUnits(sendYield)],
-      });
-      let { hash: approvesendYieldSent } = await writeContract(requestApprovesendYield)
-
-      const dataApprovesendYield = await waitForTransaction({
-        hash: approvesendYieldSent
-      })
-      console.log(dataApprovesendYield.status)*/
 
       const { request: requestSendYield } = await prepareWriteContract({
         address: Pool1.address,
         abi: Pool1.abi,
         functionName: 'submitTransaction',
-        args: ['sendYield', Pool1.address, ethers.utils.parseUnits(sendYield)]
+        args: ['sendYield', Pool1.address, Pool1.address, ethers.utils.parseUnits(sendYieldPool1)]
       });
       let { hash: SendYieldSent } = await writeContract(requestSendYield)
 
@@ -561,102 +722,16 @@ const Admin = () => {
 
     } catch (error) {
       updateLoading(false);
-      updateBoolsendYield(false);
+      updateBoolsendYieldPool1(false);
       updatePopup(false);
     }
   }
 
-  async function changeOwner1AddressPool1() {
-    if(newOwner1AddressPool1!== '')
+  //Pool 1 change address of SafeRDS wallet 
+  async function changeSafeRDSWalletAddressPool1() {
+    if(newSafeRDSWalletAddressPool1!== '')
     try {
-      updateBoolSubmitChangeOwner1AddressPool1(true);
-      updateLoading(true);
-      updatePopup(true);
-
-      const { request: requestChangeOwner1Pool1 } = await prepareWriteContract({
-        address: Pool1.address,
-        abi: Pool1.abi,
-        functionName: 'submitTransaction',
-        args: ['changeOwner1', newOwner1AddressPool1, 0]
-      });
-      let { hash: changeOwner1Pool1Sent } = await writeContract(requestChangeOwner1Pool1)
-
-      const dataChangeOwner1Pool1 = await waitForTransaction({
-        hash: changeOwner1Pool1Sent
-      })
-
-      updateLoading(false);
-
-    } catch (error) {
-      alert("You can't change the owner 1 address!");
-      updateLoading(false);
-      updateBoolSubmitChangeOwner1AddressPool1(false);
-      updatePopup(false);
-    }
-  }
-
-  async function changeOwner2AddressPool1() {
-    if(newOwner2AddressPool1!== '')
-    try {
-      updateBoolSubmitChangeOwner2AddressPool1(true);
-      updateLoading(true);
-      updatePopup(true);
-
-      const { request: requestChangeOwner2Pool1 } = await prepareWriteContract({
-        address: Pool1.address,
-        abi: Pool1.abi,
-        functionName: 'submitTransaction',
-        args: ['changeOwner2', newOwner2AddressPool1, 0]
-      });
-      let { hash: changeOwner2Pool1Sent } = await writeContract(requestChangeOwner2Pool1)
-
-      const dataChangeOwner2Pool1 = await waitForTransaction({
-        hash: changeOwner2Pool1Sent
-      })
-
-      updateLoading(false);
-
-    } catch (error) {
-      alert("You can't change the owner 2 address!");
-      updateLoading(false);
-      updateBoolSubmitChangeOwner2AddressPool1(false);
-      updatePopup(false);
-    }
-  }
-  
-  async function changeUsdtPool1() {
-    if(newUsdtAddressPool1!== '')
-    try {
-      updateBoolUsdtAddressPool1(true);
-      updateLoading(true);
-      updatePopup(true);
-
-      const { request: requestChangeUsdtAddress } = await prepareWriteContract({
-        address: Pool1.address,
-        abi: Pool1.abi,
-        functionName: 'changeUsdtAddress',
-        args: [newUsdtAddressPool1],
-      });
-      let { hash: changeUsdtAddressSent } = await writeContract(requestChangeUsdtAddress)
-
-      const dataChangeUsdtAddress = await waitForTransaction({
-        hash: changeUsdtAddressSent
-      })
-
-      updateLoading(false);
-
-    } catch (error) {
-      alert("You can't change the usdt address!");
-      updateLoading(false);
-      updateBoolUsdtAddressPool1(false);
-      updatePopup(false);
-    }
-  }
-
-  async function changeRWARWalletAddressPool1() {
-    if(newRWARWalletAddressPool1!== '')
-    try {
-      updateBoolSubmitChangeRWARWalletAddressPool1(true);
+      updateBoolSubmitChangeSafeRDSWalletAddressPool1(true);
       updateLoading(true);
       updatePopup(true);
 
@@ -664,7 +739,7 @@ const Admin = () => {
         address: Pool1.address,
         abi: Pool1.abi,
         functionName: 'submitTransaction',
-        args: ['changeRwarWalletAddress', newRWARWalletAddressPool1, 0]
+        args: ['changeSafeRDSWalletAddress', Pool1.address, newSafeRDSWalletAddressPool1, 0]
       });
       let { hash: changeRWARWalletAddressPool1Sent } = await writeContract(requestChangeRWARWalletAddressPool1)
 
@@ -675,97 +750,348 @@ const Admin = () => {
       updateLoading(false);
 
     } catch (error) {
-      alert("You can't change the Pool 1 RWAR Wallet address!");
+      alert("You can't change the Pool 1 SafeRDS Wallet address!");
       updateLoading(false);
-      updateBoolSubmitChangeRWARWalletAddressPool1(false);
+      updateBoolSubmitChangeSafeRDSWalletAddressPool1(false);
       updatePopup(false);
     }
   }
 
-  async function changeMarketingWalletAddressPool1() {
-    if(newMarketingWalletAddressPool1!== '')
+  async function withdrawPool1() {
+    if(withdrawTokensPool1!==0 && ethers.utils.isAddress(withdrawAddressTokenPool1) && ethers.utils.isAddress(withdrawToPool1))
     try {
-      updateBoolSubmitChangeMarketingWalletAddressPool1(true);
+      updateBoolSubmitWithdrawPool1(true);
       updateLoading(true);
       updatePopup(true);
 
-      const { request: requestChangeMarketingWalletAddressPool1 } = await prepareWriteContract({
+      const { request: requestWithdrawPool1 } = await prepareWriteContract({
         address: Pool1.address,
         abi: Pool1.abi,
         functionName: 'submitTransaction',
-        args: ['changeMarketingWalletAddress', newMarketingWalletAddressPool1, 0]
+        args: ['withdraw', withdrawAddressTokenPool1, withdrawToPool1, ethers.utils.parseUnits(withdrawTokensPool1)],
       });
-      let { hash: changeMarketingWalletAddressPool1Sent } = await writeContract(requestChangeMarketingWalletAddressPool1)
+      let { hash: withdrawSentPool1 } = await writeContract(requestWithdrawPool1)
 
-      const dataChangeMarketingWalletAddressPool1 = await waitForTransaction({
-        hash: changeMarketingWalletAddressPool1Sent
+      const dataWithdrawPool1 = await waitForTransaction({
+        hash: withdrawSentPool1
       })
 
       updateLoading(false);
 
     } catch (error) {
-      alert("You can't change the Pool 1 Marketing Wallet address!");
+      alert("You can't withdraw Pool 1!");
       updateLoading(false);
-      updateBoolSubmitChangeMarketingWalletAddressPool1(false);
+      updateBoolSubmitWithdrawPool1(false);
       updatePopup(false);
     }
   }
 
-  async function functionAddAffiliateAddressPool1() {
-    if(addAffiliateAddressPool1!== '')
+  async function renouncePool1() {
     try {
-      updateboolAddAffiliateAddressPool1(true);
+      updateBoolRenouncePool1(true);
       updateLoading(true);
       updatePopup(true);
 
-      const { request: requestAddAffiliateAddressPool1 } = await prepareWriteContract({
+      const { request: requestRenouncePool1 } = await prepareWriteContract({
         address: Pool1.address,
         abi: Pool1.abi,
         functionName: 'submitTransaction',
-        args: ['addAffiliateAddress', Pool1.address, addAffiliateAddressPool1]
+        args: ['renounceOwnership', Pool1.address, Pool1.address, 0]
       });
-      let { hash: addAffiliateAddressPool1Sent } = await writeContract(requestAddAffiliateAddressPool1)
+      let { hash: renouncePool1Sent } = await writeContract(requestRenouncePool1)
 
-      const dataAddAffiliateAddressPool1 = await waitForTransaction({
-        hash: addAffiliateAddressPool1Sent
+      const dataRenouncePool1 = await waitForTransaction({
+        hash: renouncePool1Sent
       })
-      console.log(dataAddAffiliateAddressPool1.status)
 
       updateLoading(false);
 
     } catch (error) {
-      alert("You can't add this address!");
+      alert("You can't renounce Pool1!");
       updateLoading(false);
-      updateboolAddAffiliateAddressPool1(false);
+      updateBoolRenouncePool1(false);
       updatePopup(false);
     }
   }
-  
 
+  //Function Pool 2
+  async function sendYieldToPool2() {
+    if(sendYieldPool2!== '')
+    try {
+      updateBoolsendYieldPool2(true);
+      updateLoading(true);
+      updatePopup(true);
 
+      const { request: requestSendYield } = await prepareWriteContract({
+        address: Pool2.address,
+        abi: Pool2.abi,
+        functionName: 'submitTransaction',
+        args: ['sendYield', Pool2.address, Pool2.address, ethers.utils.parseUnits(sendYieldPool2)]
+      });
+      let { hash: SendYieldSent } = await writeContract(requestSendYield)
 
+      const dataSendYield = await waitForTransaction({
+        hash: SendYieldSent
+      })
 
+      updateLoading(false);
 
+    } catch (error) {
+      updateLoading(false);
+      updateBoolsendYieldPool2(false);
+      updatePopup(false);
+    }
+  }
 
+  async function changeSafeRDSWalletAddressPool2() {
+    if(newSafeRDSWalletAddressPool2!== '')
+    try {
+      updateBoolSubmitChangeSafeRDSWalletAddressPool2(true);
+      updateLoading(true);
+      updatePopup(true);
 
+      const { request: requestChangeRWARWalletAddressPool2 } = await prepareWriteContract({
+        address: Pool2.address,
+        abi: Pool2.abi,
+        functionName: 'submitTransaction',
+        args: ['changeSafeRDSWalletAddress', Pool2.address, newSafeRDSWalletAddressPool2, 0]
+      });
+      let { hash: changeRWARWalletAddressPool2Sent } = await writeContract(requestChangeRWARWalletAddressPool2)
 
+      const dataChangeRWARWalletAddressPool2 = await waitForTransaction({
+        hash: changeRWARWalletAddressPool2Sent
+      })
 
+      updateLoading(false);
 
+    } catch (error) {
+      alert("You can't change the Pool 2 Safe RDS Wallet address!");
+      updateLoading(false);
+      updateBoolSubmitChangeSafeRDSWalletAddressPool2(false);
+      updatePopup(false);
+    }
+  }
 
+  async function withdrawPool2() {
+    if(withdrawTokensPool2!==0 && ethers.utils.isAddress(withdrawAddressTokenPool2) && ethers.utils.isAddress(withdrawToPool2))
+    try {
+      updateBoolSubmitWithdrawPool2(true);
+      updateLoading(true);
+      updatePopup(true);
 
+      const { request: requestWithdrawPool2 } = await prepareWriteContract({
+        address: Pool2.address,
+        abi: Pool2.abi,
+        functionName: 'submitTransaction',
+        args: ['withdraw', withdrawAddressTokenPool2, withdrawToPool2, ethers.utils.parseUnits(withdrawTokensPool2)],
+      });
+      let { hash: withdrawSentPool2 } = await writeContract(requestWithdrawPool2)
+
+      const dataWithdrawPool2 = await waitForTransaction({
+        hash: withdrawSentPool2
+      })
+
+      updateLoading(false);
+
+    } catch (error) {
+      alert("You can't withdraw Pool 2!");
+      updateLoading(false);
+      updateBoolSubmitWithdrawPool2(false);
+      updatePopup(false);
+    }
+  }
+
+  async function renouncePool2() {
+    try {
+      updateBoolRenouncePool2(true);
+      updateLoading(true);
+      updatePopup(true);
+
+      const { request: requestRenouncePool2 } = await prepareWriteContract({
+        address: Pool2.address,
+        abi: Pool2.abi,
+        functionName: 'submitTransaction',
+        args: ['renounceOwnership', Pool2.address, Pool2.address, 0]
+      });
+      let { hash: renouncePool2Sent } = await writeContract(requestRenouncePool2)
+
+      const dataRenouncePool2 = await waitForTransaction({
+        hash: renouncePool2Sent
+      })
+
+      updateLoading(false);
+
+    } catch (error) {
+      alert("You can't renounce Pool2!");
+      updateLoading(false);
+      updateBoolRenouncePool2(false);
+      updatePopup(false);
+    }
+  }
+
+  //Function Pool 3
+  async function sendYieldToPool3() {
+    if(sendYieldPool3!== '')
+    try {
+      updateBoolsendYieldPool3(true);
+      updateLoading(true);
+      updatePopup(true);
+
+      const { request: requestSendYield } = await prepareWriteContract({
+        address: Pool3.address,
+        abi: Pool3.abi,
+        functionName: 'submitTransaction',
+        args: ['sendYield', Pool3.address, Pool3.address, ethers.utils.parseUnits(sendYieldPool3)]
+      });
+      let { hash: SendYieldSent } = await writeContract(requestSendYield)
+
+      const dataSendYield = await waitForTransaction({
+        hash: SendYieldSent
+      })
+
+      updateLoading(false);
+
+    } catch (error) {
+      updateLoading(false);
+      updateBoolsendYieldPool3(false);
+      updatePopup(false);
+    }
+  }
+
+  async function changeSafeRDSWalletAddressPool3() {
+    if(newSafeRDSWalletAddressPool3!== '')
+    try {
+      updateBoolSubmitChangeSafeRDSWalletAddressPool3(true);
+      updateLoading(true);
+      updatePopup(true);
+
+      const { request: requestChangeRWARWalletAddressPool3 } = await prepareWriteContract({
+        address: Pool3.address,
+        abi: Pool3.abi,
+        functionName: 'submitTransaction',
+        args: ['changeSafeRDSWalletAddress', Pool3.address, newSafeRDSWalletAddressPool3, 0]
+      });
+      let { hash: changeRWARWalletAddressPool3Sent } = await writeContract(requestChangeRWARWalletAddressPool3)
+
+      const dataChangeRWARWalletAddressPool3 = await waitForTransaction({
+        hash: changeRWARWalletAddressPool3Sent
+      })
+
+      updateLoading(false);
+
+    } catch (error) {
+      alert("You can't change the Pool 3 SafeRDS Wallet address!");
+      updateLoading(false);
+      updateBoolSubmitChangeSafeRDSWalletAddressPool3(false);
+      updatePopup(false);
+    }
+  }
+
+  async function withdrawPool3() {
+    if(withdrawTokensPool3!==0 && ethers.utils.isAddress(withdrawAddressTokenPool3) && ethers.utils.isAddress(withdrawToPool3))
+    try {
+      updateBoolSubmitWithdrawPool3(true);
+      updateLoading(true);
+      updatePopup(true);
+
+      const { request: requestWithdrawPool3 } = await prepareWriteContract({
+        address: Pool3.address,
+        abi: Pool3.abi,
+        functionName: 'submitTransaction',
+        args: ['withdraw', withdrawAddressTokenPool3, withdrawToPool3, ethers.utils.parseUnits(withdrawTokensPool3)],
+      });
+      let { hash: withdrawSentPool3 } = await writeContract(requestWithdrawPool3)
+
+      const dataWithdrawPool3 = await waitForTransaction({
+        hash: withdrawSentPool3
+      })
+
+      updateLoading(false);
+
+    } catch (error) {
+      alert("You can't withdraw Pool 3!");
+      updateLoading(false);
+      updateBoolSubmitWithdrawPool3(false);
+      updatePopup(false);
+    }
+  }
+
+  async function renouncePool3() {
+    try {
+      updateBoolRenouncePool3(true);
+      updateLoading(true);
+      updatePopup(true);
+
+      const { request: requestRenouncePool3 } = await prepareWriteContract({
+        address: Pool3.address,
+        abi: Pool3.abi,
+        functionName: 'submitTransaction',
+        args: ['renounceOwnership', Pool3.address, Pool3.address, 0]
+      });
+      let { hash: renouncePool3Sent } = await writeContract(requestRenouncePool3)
+
+      const dataRenouncePool3 = await waitForTransaction({
+        hash: renouncePool3Sent
+      })
+
+      updateLoading(false);
+
+    } catch (error) {
+      alert("You can't renounce Pool3!");
+      updateLoading(false);
+      updateBoolRenouncePool3(false);
+      updatePopup(false);
+    }
+  }
 
   async function getData() {
     try {
+
+      //Pool 1 SafeRDS Wallet address
+      const readSafeRDSWalletPool1 = await readContract({
+        address: Pool1.address,
+        abi: Pool1.abi,
+        functionName: 'safeRDSWallet',
+      })
+      updateShowSafeRDSWalletAddressPool1(readSafeRDSWalletPool1);
+      safeRDSWalletAddressPool1=readSafeRDSWalletPool1;
+
+      //Pool 2 SafeRDS Wallet address
+      const readSafeRDSWalletPool2 = await readContract({
+        address: Pool2.address,
+        abi: Pool2.abi,
+        functionName: 'safeRDSWallet',
+      })
+      updateShowSafeRDSWalletAddressPool2(readSafeRDSWalletPool2);
+      safeRDSWalletAddressPool2=readSafeRDSWalletPool2;
       
-      //Balance RWAR of RWAR SC
-      const readbalanceOfRWARTokensContract = await readContract({
+      //Pool 3 SafeRDS Wallet address
+      const readSafeRDSWalletPool3 = await readContract({
+        address: Pool3.address,
+        abi: Pool3.abi,
+        functionName: 'safeRDSWallet',
+      })
+      updateShowSafeRDSWalletAddressPool3(readSafeRDSWalletPool3);
+      safeRDSWalletAddressPool3=readSafeRDSWalletPool3;
+
+      //totalSupply
+      const readTotalSupply = await readContract({
         address: RWAR.address,
         abi: RWAR.abi,
-        functionName: 'balanceOf',
-        args: [RWAR.address],
+        functionName: 'getTotalSupply',
       })
-      const balanceOfRWARTokensContract = ethers.utils.formatEther(readbalanceOfRWARTokensContract, 18);
-      updateRWARTokensContract(balanceOfRWARTokensContract);
+      const getTotalSupply = ethers.utils.formatEther(readTotalSupply, 18);
+      updateTotalSupply(getTotalSupply);
+
+      //MaxSupply
+      const readMaxSupply = await readContract({
+        address: RWAR.address,
+        abi: RWAR.abi,
+        functionName: '_initial_supply',
+      })
+      const getMaxSupply = ethers.utils.formatEther(readMaxSupply, 18);
+      updateMaxSupply(getMaxSupply);
+      
 
       //Address owner 1 of RWAR SC
       const readAddressOwner1 = await readContract({
@@ -785,70 +1111,23 @@ const Admin = () => {
       })
       updateOwnerAddress2(readAddressOwner2);
 
-      //Price RWAR
-      const readPrice1 = await readContract({
+      //Address owner 3 of RWAR SC
+      const readAddressOwner3 = await readContract({
         address: RWAR.address,
         abi: RWAR.abi,
-        functionName: 'price',
+        functionName: 'owners',
+        args: [2],
       })
-      const readPrice = ethers.utils.formatEther(readPrice1, 18);
-      updatePrice(readPrice);
+      updateOwnerAddress3(readAddressOwner3);
 
-      
-      //Balance USDT of the Safe Wallet
-      
-      //USDT Safe
-      const readBalanceOfUSDTSafeWallet = await readContract({
-        address: tokenerc20.address,
-        abi: tokenerc20.abi,
-        functionName: 'balanceOf',
-        args: [addressUSDTSafeWallet],
-      })
-      const balanceOfUSDTSafeWallet = ethers.utils.formatEther(readBalanceOfUSDTSafeWallet, 18);
-      updateUsdtWalletSafe(balanceOfUSDTSafeWallet);
-
-      //Reserve
-      const readBalanceOfUSDTReserveSafeWallet = await readContract({
-        address: tokenerc20.address,
-        abi: tokenerc20.abi,
-        functionName: 'balanceOf',
-        args: [addressReserveSafeWallet],
-      })
-      const balanceOfUSDTReserveSafeWallet = ethers.utils.formatEther(readBalanceOfUSDTReserveSafeWallet, 18);
-      updateUsdtReserveWalletSafe(balanceOfUSDTReserveSafeWallet);
-      
-      //Development
-      const readBalanceOfUSDTDevelopmentSafeWallet = await readContract({
-        address: tokenerc20.address,
-        abi: tokenerc20.abi,
-        functionName: 'balanceOf',
-        args: [addressDevelopmentSafeWallet],
-      })
-      const balanceOfUSDTDevelopmentSafeWallet = ethers.utils.formatEther(readBalanceOfUSDTDevelopmentSafeWallet, 18);
-      updateUsdtDevelopmentWalletSafe(balanceOfUSDTDevelopmentSafeWallet);
-
-      //Team
-      const readBalanceOfUSDTTeamSafeWallet = await readContract({
-        address: tokenerc20.address,
-        abi: tokenerc20.abi,
-        functionName: 'balanceOf',
-        args: [addressTeamSafeWallet],
-      })
-      const balanceOfUSDTTeamSafeWallet = ethers.utils.formatEther(readBalanceOfUSDTTeamSafeWallet, 18);
-      updateUsdtTeamWalletSafe(balanceOfUSDTTeamSafeWallet);
-
-
-      //Balance RWAR of the Safe Wallet
-
-      //Reserve
-      const readBalanceOfRWARReserveSafeWallet = await readContract({
+      //Address owner 4 of RWAR SC
+      const readAddressOwner4 = await readContract({
         address: RWAR.address,
         abi: RWAR.abi,
-        functionName: 'balanceOf',
-        args: [addressReserveSafeWallet],
+        functionName: 'owners',
+        args: [3],
       })
-      const balanceOfRWARReserveSafeWallet = ethers.utils.formatEther(readBalanceOfRWARReserveSafeWallet, 18);
-      updateRwarReserveWalletSafe(balanceOfRWARReserveSafeWallet);
+      updateOwnerAddress4(readAddressOwner4);
 
       //Development
       const readBalanceOfRWARDevelopmentSafeWallet = await readContract({
@@ -858,7 +1137,7 @@ const Admin = () => {
         args: [addressDevelopmentSafeWallet],
       })
       const balanceOfRWARDevelopmentSafeWallet = ethers.utils.formatEther(readBalanceOfRWARDevelopmentSafeWallet, 18);
-      updateRwarDevelopmentWalletSafe(balanceOfRWARDevelopmentSafeWallet);
+      updateRdsDevelopmentWalletSafe(balanceOfRWARDevelopmentSafeWallet);
 
       //Team
       const readBalanceOfRWARTeamSafeWallet = await readContract({
@@ -868,7 +1147,7 @@ const Admin = () => {
         args: [addressTeamSafeWallet],
       })
       const balanceOfRWARTeamSafeWallet = ethers.utils.formatEther(readBalanceOfRWARTeamSafeWallet, 18);
-      updateRwarTeamWalletSafe(balanceOfRWARTeamSafeWallet);
+      updateRdsTeamWalletSafe(balanceOfRWARTeamSafeWallet);
 
       //Marketing
       const readBalanceOfRWARMarketingSafeWallet = await readContract({
@@ -878,119 +1157,102 @@ const Admin = () => {
         args: [addressMarketingSafeWallet],
       })
       const balanceOfRWARMarketingSafeWallet = ethers.utils.formatEther(readBalanceOfRWARMarketingSafeWallet, 18);
-      updateRwarMarketingWalletSafe(balanceOfRWARMarketingSafeWallet);
-
-      //Public RWAR
-      const readBalanceOfRWARPublicSafeWallet = await readContract({
+      updateRdsMarketingWalletSafe(balanceOfRWARMarketingSafeWallet);
+      //Pool 1
+      //SafeRDSPool1 RDS
+      const readBalanceOfRDSSafeRDSPool1Wallet = await readContract({
         address: RWAR.address,
         abi: RWAR.abi,
         functionName: 'balanceOf',
-        args: [addressPublicRWARSafeWallet],
+        args: [safeRDSWalletAddressPool1],
       })
-      const balanceOfRWARPublicSafeWallet = ethers.utils.formatEther(readBalanceOfRWARPublicSafeWallet, 18);
-      updateRwarPublicRWARWalletSafe(balanceOfRWARPublicSafeWallet);
+      const balanceOfRdsSafeRdsPool1Wallet = ethers.utils.formatEther(readBalanceOfRDSSafeRDSPool1Wallet, 18);
+      updateRdsSafeRDSPool1Wallet(balanceOfRdsSafeRdsPool1Wallet);
 
-      //Private RWAR
-      const readBalanceOfRWARPrivateSafeWallet = await readContract({
+      //SafeRWAPool1 RDS
+      const readBalanceOfRDSSafeRWAPool1Wallet = await readContract({
         address: RWAR.address,
         abi: RWAR.abi,
         functionName: 'balanceOf',
-        args: [addressPrivateRWARSafeWallet],
+        args: [addressSafeRWAPool1Wallet],
       })
-      const balanceOfRWARPrivateSafeWallet = ethers.utils.formatEther(readBalanceOfRWARPrivateSafeWallet, 18);
-      updateRwarPrivateRWARWalletSafe(balanceOfRWARPrivateSafeWallet);
+      const balanceOfRdsSafeRWAPool1Wallet = ethers.utils.formatEther(readBalanceOfRDSSafeRWAPool1Wallet, 18);
+      updateRdsSafeRWAPool1Wallet(balanceOfRdsSafeRWAPool1Wallet);
 
-
-      //Address USDT SC of RWAR SC
-      const readStableCoinAddr = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
-        functionName: 'usdt',
-      })
-      updateUsdtAddressRWAR(readStableCoinAddr);
-
-      //Address Reserve Wallet of RWAR SC
-      const readReserveWalletRWAR = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
-        functionName: 'reserveWallet',
-      })
-      updateReserveWalletAddressRWAR(readReserveWalletRWAR);
-
-      //Address Safe USDT Wallet of RWAR SC
-      const readSafeUSDTWalletRWAR = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
-        functionName: 'safeUSDTWallet',
-      })
-      updateSafeUSDTWalletAddressRWAR(readSafeUSDTWalletRWAR);
-
-
-      
-      //Address owner 1 of the Pool
-      const readAddressOwner1Pool1 = await readContract({
-        address: Pool1.address,
-        abi: Pool1.abi,
-        functionName: 'owners',
-        args: [0],
-      })
-      updateOwner1AddressPool1(readAddressOwner1Pool1);
-
-      //Address owner 2 of the Pool
-      const readAddressOwner2Pool1 = await readContract({
-        address: Pool1.address,
-        abi: Pool1.abi,
-        functionName: 'owners',
-        args: [1],
-      })
-      updateOwner2AddressPool1(readAddressOwner2Pool1);
-
-      //Address USDT SC of the Pool
-      const readUsdtAddressPool1 = await readContract({
-        address: Pool1.address,
-        abi: Pool1.abi,
-        functionName: 'usdt',
-      })
-      updateUsdtAddressPool1(readUsdtAddressPool1);
-
-      //Address RWAR Safe Wallet of the Pool
-      const readRWARWalletPool1 = await readContract({
-        address: Pool1.address,
-        abi: Pool1.abi,
-        functionName: 'rwarWallet',
-      })
-      updateRWARWalletAddressPool1(readRWARWalletPool1);
-
-      //Address Marketing of the Pool
-      const readMarketingWalletPool1 = await readContract({
-        address: Pool1.address,
-        abi: Pool1.abi,
-        functionName: 'marketingWallet',
-      })
-      updateMarketingWalletAddressPool1(readMarketingWalletPool1);
-
-      //USDT don't claimed yet of the Pool
-      /*
-      const readUSDTDontClaimed = await readContract({
-        address: Pool1.address,
-        abi: Pool1.abi,
-        functionName: 'getUSDTDontClaimed',
-      })
-      const usdtDontClaimed = ethers.utils.formatEther(readUSDTDontClaimed, 18);
-      updateUsdtDontClaimedPool1(usdtDontClaimed);
-      console.log(usdtDontClaimed);*/
-
-      //Balance USDT of the Pool
-      const readBalanceOfUsdtPool1 = await readContract({
+      //SafeRWAPool1 USDT
+      const readBalanceOfUSDTSafeRWAPool1Wallet = await readContract({
         address: tokenerc20.address,
         abi: tokenerc20.abi,
         functionName: 'balanceOf',
-        args: [Pool1.address],
+        args: [addressSafeRWAPool1Wallet],
       })
-      const balanceOfUsdtPool1 = ethers.utils.formatEther(readBalanceOfUsdtPool1, 18);
-      updateUSDTPool1(balanceOfUsdtPool1);
+      const balanceOfUSDTSafeRWAPool1Wallet = ethers.utils.formatEther(readBalanceOfUSDTSafeRWAPool1Wallet, 18);
+      updateUsdtSafeRWAPool1Wallet(balanceOfUSDTSafeRWAPool1Wallet);
 
-      //Balance RWAR of the Pool
+
+      //Pool 2
+      //SafeRDSPool2 RDS
+      const readBalanceOfRDSSafeRDSPool2Wallet = await readContract({
+        address: RWAR.address,
+        abi: RWAR.abi,
+        functionName: 'balanceOf',
+        args: [safeRDSWalletAddressPool2],
+      })
+      const balanceOfRdsSafeRdsPool2Wallet = ethers.utils.formatEther(readBalanceOfRDSSafeRDSPool2Wallet, 18);
+      updateRdsSafeRDSPool2Wallet(balanceOfRdsSafeRdsPool2Wallet);
+
+      //SafeRWAPool2 RDS
+      const readBalanceOfRDSSafeRWAPool2Wallet = await readContract({
+        address: RWAR.address,
+        abi: RWAR.abi,
+        functionName: 'balanceOf',
+        args: [addressSafeRWAPool2Wallet],
+      })
+      const balanceOfRdsSafeRWAPool2Wallet = ethers.utils.formatEther(readBalanceOfRDSSafeRWAPool2Wallet, 18);
+      updateRdsSafeRWAPool2Wallet(balanceOfRdsSafeRWAPool2Wallet);
+
+      //SafeRWAPool2 USDT
+      const readBalanceOfUSDTSafeRWAPool2Wallet = await readContract({
+        address: tokenerc20.address,
+        abi: tokenerc20.abi,
+        functionName: 'balanceOf',
+        args: [addressSafeRWAPool2Wallet],
+      })
+      const balanceOfUSDTSafeRWAPool2Wallet = ethers.utils.formatEther(readBalanceOfUSDTSafeRWAPool2Wallet, 18);
+      updateUsdtSafeRWAPool2Wallet(balanceOfUSDTSafeRWAPool2Wallet);
+
+      //Pool 3
+      //SafeRDSPool3 RDS
+      const readBalanceOfRDSSafeRDSPool3Wallet = await readContract({
+        address: RWAR.address,
+        abi: RWAR.abi,
+        functionName: 'balanceOf',
+        args: [safeRDSWalletAddressPool3],
+      })
+      const balanceOfRdsSafeRdsPool3Wallet = ethers.utils.formatEther(readBalanceOfRDSSafeRDSPool3Wallet, 18);
+      updateRdsSafeRDSPool3Wallet(balanceOfRdsSafeRdsPool3Wallet);
+
+      //SafeRWAPool3 RDS
+      const readBalanceOfRDSSafeRWAPool3Wallet = await readContract({
+        address: RWAR.address,
+        abi: RWAR.abi,
+        functionName: 'balanceOf',
+        args: [addressSafeRWAPool3Wallet],
+      })
+      const balanceOfRdsSafeRWAPool3Wallet = ethers.utils.formatEther(readBalanceOfRDSSafeRWAPool3Wallet, 18);
+      updateRdsSafeRWAPool3Wallet(balanceOfRdsSafeRWAPool3Wallet);
+
+      //SafeRWAPool2 USDT
+      const readBalanceOfUSDTSafeRWAPool3Wallet = await readContract({
+        address: tokenerc20.address,
+        abi: tokenerc20.abi,
+        functionName: 'balanceOf',
+        args: [addressSafeRWAPool3Wallet],
+      })
+      const balanceOfUSDTSafeRWAPool3Wallet = ethers.utils.formatEther(readBalanceOfUSDTSafeRWAPool3Wallet, 18);
+      updateUsdtSafeRWAPool3Wallet(balanceOfUSDTSafeRWAPool3Wallet);
+
+      //Balance RWAR of the Pool 1
       const readRWARTotal = await readContract({
         address: RWAR.address,
         abi: RWAR.abi,
@@ -998,9 +1260,9 @@ const Admin = () => {
         args: [Pool1.address],
       })
       const balanceOfRWARPool1 = ethers.utils.formatEther(readRWARTotal, 18);
-      updateBalanceRWARPool(balanceOfRWARPool1);
+      updateBalanceRWARPool1(balanceOfRWARPool1);
 
-      //Total Stacked of the Pool
+      //Total Stacked of the Pool 1
       const readTotalStacked = await readContract({
         address: Pool1.address,
         abi: Pool1.abi,
@@ -1009,16 +1271,70 @@ const Admin = () => {
       const readTotalStackedPool1 = ethers.utils.formatEther(readTotalStacked, 18);
       updateRWARTotalStackedPool1(readTotalStackedPool1);
 
-      //Total Stacked 7 Days of the Pool
+      //Total Stacked 7 Days of the Pool 1
       const readTotalStacked7Days = await readContract({
         address: Pool1.address,
         abi: Pool1.abi,
-        functionName: 'getTotalStacked7Days',
+        functionName: 'getTotalStacked',
       })
-      const readTotalStackedPool17Days = ethers.utils.formatEther(readTotalStacked7Days, 18);
-      updateTotalStacked7Days(readTotalStackedPool17Days);
+      const getTotalStacked7DaysPool1 = ethers.utils.formatEther(readTotalStacked7Days, 18);
+      updateTotalStacked7DaysPool1(getTotalStacked7DaysPool1);
 
+      //Balance RWAR of the Pool 2
+      const readRWARTotalPool2 = await readContract({
+        address: RWAR.address,
+        abi: RWAR.abi,
+        functionName: 'balanceOf',
+        args: [Pool2.address],
+      })
+      const balanceOfRWARPool2 = ethers.utils.formatEther(readRWARTotalPool2, 18);
+      updateBalanceRWARPool2(balanceOfRWARPool2);
 
+      //Total Stacked of the Pool 2
+      const readTotalStackedPool2 = await readContract({
+        address: Pool2.address,
+        abi: Pool2.abi,
+        functionName: 'totalStacked',
+      })
+      const totalStackedPool2 = ethers.utils.formatEther(readTotalStackedPool2, 18);
+      updateRWARTotalStackedPool2(totalStackedPool2);
+
+      //Total Stacked 7 Days of the Pool 2
+      const readTotalStacked7DaysPool2 = await readContract({
+        address: Pool2.address,
+        abi: Pool2.abi,
+        functionName: 'getTotalStacked',
+      })
+      const getTotalStacked7DaysPool2 = ethers.utils.formatEther(readTotalStacked7DaysPool2, 18);
+      updateTotalStacked7DaysPool2(getTotalStacked7DaysPool2);
+
+      //Balance RWAR of the Pool 3
+      const readRWARTotalPool3 = await readContract({
+        address: RWAR.address,
+        abi: RWAR.abi,
+        functionName: 'balanceOf',
+        args: [Pool3.address],
+      })
+      const balanceOfRWARPool3 = ethers.utils.formatEther(readRWARTotalPool3, 18);
+      updateBalanceRWARPool3(balanceOfRWARPool3);
+
+      //Total Stacked of the Pool 3
+      const readTotalStackedPool3 = await readContract({
+        address: Pool3.address,
+        abi: Pool3.abi,
+        functionName: 'totalStacked',
+      })
+      const totalStackedPool3 = ethers.utils.formatEther(readTotalStackedPool3, 18);
+      updateRWARTotalStackedPool3(totalStackedPool3);
+
+      //Total Stacked 7 Days of the Pool 3
+      const readTotalStacked7DaysPool3 = await readContract({
+        address: Pool3.address,
+        abi: Pool3.abi,
+        functionName: 'getTotalStacked',
+      })
+      const getTotalStacked7DaysPool3 = ethers.utils.formatEther(readTotalStacked7DaysPool3, 18);
+      updateTotalStacked7DaysPool3(getTotalStacked7DaysPool3);
 
       //List transactions to be confirmed for RWAR SC
       const readTransactionToBeConf = await readContract({
@@ -1038,10 +1354,9 @@ const Admin = () => {
       updateTransactionsToBeConfirmed(readTransactionToBeConf);
       updatesubmitedTransactions(readSubmitedTransaction);
 
-
-
+      //Pool 1
       //List transactions to be confirmed for Pool SC
-      const readTransactionToBeConfPool = await readContract({
+      const readTransactionToBeConfPool1 = await readContract({
         address: Pool1.address,
         abi: Pool1.abi,
         functionName: 'getTransactionsToBeConfirmed',
@@ -1049,14 +1364,52 @@ const Admin = () => {
       })
 
       //List submited transactions for Pool SC
-      const readSubmitedTransactionPool = await readContract({
+      const readSubmitedTransactionPool1 = await readContract({
         address: Pool1.address,
         abi: Pool1.abi,
         functionName: 'getSubmitedTransactions',
         args: [address]
       })
-      updateTransactionsToBeConfirmedPool(readTransactionToBeConfPool);
-      updatesubmitedTransactionsPool(readSubmitedTransactionPool);
+      updateTransactionsToBeConfirmedPool1(readTransactionToBeConfPool1);
+      updatesubmitedTransactionsPool1(readSubmitedTransactionPool1);
+
+      //Pool 2
+      //List transactions to be confirmed for Pool SC
+      const readTransactionToBeConfPool2 = await readContract({
+        address: Pool2.address,
+        abi: Pool2.abi,
+        functionName: 'getTransactionsToBeConfirmed',
+        args: [address]
+      })
+
+      //List submited transactions for Pool SC
+      const readSubmitedTransactionPool2 = await readContract({
+        address: Pool2.address,
+        abi: Pool2.abi,
+        functionName: 'getSubmitedTransactions',
+        args: [address]
+      })
+      updateTransactionsToBeConfirmedPool2(readTransactionToBeConfPool2);
+      updatesubmitedTransactionsPool2(readSubmitedTransactionPool2);
+
+      //Pool 3
+      //List transactions to be confirmed for Pool SC
+      const readTransactionToBeConfPool3 = await readContract({
+        address: Pool3.address,
+        abi: Pool3.abi,
+        functionName: 'getTransactionsToBeConfirmed',
+        args: [address]
+      })
+
+      //List submited transactions for Pool SC
+      const readSubmitedTransactionPool3 = await readContract({
+        address: Pool3.address,
+        abi: Pool3.abi,
+        functionName: 'getSubmitedTransactions',
+        args: [address]
+      })
+      updateTransactionsToBeConfirmedPool3(readTransactionToBeConfPool3);
+      updatesubmitedTransactionsPool3(readSubmitedTransactionPool3);
     
     } catch (error) {
       
@@ -1070,7 +1423,7 @@ const Admin = () => {
   return (
     
     <div className='admin_container'>
-    {address === ownerAddress1 || address === ownerAddress2 || address === owner1AddressPool1 || address === owner2AddressPool1?
+    {address === ownerAddress1 || address === ownerAddress2 || address === ownerAddress3 || address === ownerAddress4 ?
     <>
     <div className='admin'>
       <p className='admin_title'>Admin</p>
@@ -1078,195 +1431,248 @@ const Admin = () => {
 
         <div className='admin_info_container_part'>
           <div className='admin_info'>
-            <p className='admin_info_title'>Tokens of the RWAR smart contract</p>
-            <p className='admin_info_number'>{RWARTokensContract}</p>
-          </div>
-          
-          <div className='admin_info'>
-            <p className='admin_info_title'>Price of RWAR Token</p>
-            <p className='admin_info_number'>{price} USDT</p>
-          </div>
-
-          <div className='admin_info'>
-            <p className='admin_info_title'>USDT of USDT Safe Wallet</p>
-            <p className='admin_info_number'>{usdtUSDTWalletSafe} USDT</p>
+            <p className='admin_info_title'>Total Supply RDS</p>
+            <p className='admin_info_number'>{totalSupply}/{maxSupply}</p>
           </div>
         </div>
 
         <div className='admin_info_container_part'>
           <div className='admin_info'>
-            <p className='admin_info_title'>USDT of Reserve Wallet</p>
-            <p className='admin_info_number'>{usdtReserveWalletSafe} USDT</p>
+            <p className='admin_info_title'>RDS of Marketing Wallet</p>
+            <p className='admin_info_address_little'>{addressMarketingSafeWallet}</p>
+            <p className='admin_info_number'>{rdsMarketingWalletSafe} RDS</p>
           </div>
           
           <div className='admin_info'>
-            <p className='admin_info_title'>USDT of Development Wallet</p>
-            <p className='admin_info_number'>{usdtDevelopmentWalletSafe} USDT</p>
+            <p className='admin_info_title'>RDS of Development Wallet</p>
+            <p className='admin_info_address_little'>{addressDevelopmentSafeWallet}</p>
+            <p className='admin_info_number'>{rdsDevelopmentWalletSafe} RDS</p>
           </div>
 
           <div className='admin_info'>
-            <p className='admin_info_title'>USDT of Team Wallet</p>
-            <p className='admin_info_number'>{usdtTeamWalletSafe} USDT</p>
-          </div>
-        </div>
-
-        <div className='admin_info_container_part'>
-          <div className='admin_info'>
-            <p className='admin_info_title'>RWAR of Reserve Wallet</p>
-            <p className='admin_info_number'>{rwarReserveWalletSafe} RWAR</p>
-          </div>
-          
-          <div className='admin_info'>
-            <p className='admin_info_title'>RWAR of Development Wallet</p>
-            <p className='admin_info_number'>{rwarDevelopmentWalletSafe} RWAR</p>
-          </div>
-
-          <div className='admin_info'>
-            <p className='admin_info_title'>RWAR of Team Wallet</p>
-            <p className='admin_info_number'>{rwarTeamWalletSafe} RWAR</p>
-          </div>
-        </div>
-
-        <div className='admin_info_container_part'>
-          <div className='admin_info'>
-            <p className='admin_info_title'>RWAR of Marketing Wallet</p>
-            <p className='admin_info_number'>{rwarMarketingWalletSafe} RWAR</p>
-          </div>
-          
-          <div className='admin_info'>
-            <p className='admin_info_title'>RWAR of RWAR public Wallet</p>
-            <p className='admin_info_number'>{rwarPublicRWARWalletSafe} RWAR</p>
-          </div>
-
-          <div className='admin_info'>
-            <p className='admin_info_title'>RWAR of RWAR private Wallet</p>
-            <p className='admin_info_number'>{rwarPrivateRWARWalletSafe} RWAR</p>
-          </div>
-        </div>
-
-        <p className='admin_title'>RWAR Smart Contract</p>
-
-        <div className='admin_info_container_part'>
-          <div className='admin_info'>
-            <p className='admin_info_title'>RWAR Smart Contract Address</p>
-            <p className='admin_info_number'>{RWAR.address}</p>
+            <p className='admin_info_title'>RDS of Team Wallet</p>
+            <p className='admin_info_address_little'>{addressTeamSafeWallet}</p>
+            <p className='admin_info_number'>{rdsTeamWalletSafe} RDS</p>
           </div>
         </div>
           
         <div className='admin_info_container_part'>
           <div className='admin_info'>
-            <p className='admin_info_title'>RWAR token owner's address n°1</p>
+            <p className='admin_info_title'>Smart contracts owner's address n°1</p>
             <p className='admin_info_number'>{ownerAddress1}</p>
           </div>
         </div>
             
         <div className='admin_info_container_part'>
           <div className='admin_info'>
-            <p className='admin_info_title'>RWAR token owner's address n°2</p>
+            <p className='admin_info_title'>Smart contracts owner's address n°2</p>
             <p className='admin_info_number'>{ownerAddress2}</p>
           </div>
         </div>
 
         <div className='admin_info_container_part'>
           <div className='admin_info'>
-            <p className='admin_info_title'>RWAR token USDT address</p>
-            <p className='admin_info_number'>{usdtAddressRWAR}</p>
+            <p className='admin_info_title'>Smart contracts owner's address n°3</p>
+            <p className='admin_info_number'>{ownerAddress3}</p>
           </div>
         </div>
 
         <div className='admin_info_container_part'>
           <div className='admin_info'>
-            <p className='admin_info_title'>RWAR token Reserve Wallet address</p>
-            <p className='admin_info_number'>{reserveWalletAddressRWAR}</p>
+            <p className='admin_info_title'>Smart contracts owner's address n°4</p>
+            <p className='admin_info_number'>{ownerAddress4}</p>
           </div>
         </div>
 
+        <p className='admin_title'>RDS</p>
+
         <div className='admin_info_container_part'>
           <div className='admin_info'>
-            <p className='admin_info_title'>RWAR token Safe USDT Wallet address</p>
-            <p className='admin_info_number'>{safeUSDTWalletAddressRWAR}</p>
+            <p className='admin_info_title'>Smart Contract Address</p>
+            <p className='admin_info_number'>{RWAR.address}</p>
           </div>
         </div>
         
-        
-        <p className='admin_title'>Pool Smart Contract</p>
+        <p className='admin_title'>Pool 1</p>
 
         <div className='admin_info_container_part'>
           <div className='admin_info'>
-            <p className='admin_info_title'>Pool Smart Contract address</p>
+            <p className='admin_info_title'>Smart Contract address</p>
             <p className='admin_info_number'>{Pool1.address}</p>
           </div>
         </div>
 
         <div className='admin_info_container_part'>
           <div className='admin_info'>
-            <p className='admin_info_title'>Pool owner 1 address</p>
-            <p className='admin_info_number'>{owner1AddressPool1}</p>
+            <p className='admin_info_title'>SafeRDS Wallet address</p>
+            <p className='admin_info_number'>{showSafeRDSWalletAddressPool1}</p>
           </div>
         </div>
 
         <div className='admin_info_container_part'>
+          
           <div className='admin_info'>
-            <p className='admin_info_title'>Pool owner 2 address</p>
-            <p className='admin_info_number'>{owner2AddressPool1}</p>
+            <p className='admin_info_title'>RDS of SafeRDS Wallet</p>
+            <p className='admin_info_address_little'>{showSafeRDSWalletAddressPool1}</p>
+            <p className='admin_info_number'>{rdsSafeRDSPool1Wallet} RDS</p>
           </div>
+
+        </div>
+        
+        
+        <div className='admin_info_container_part'>
+
+          <div className='admin_info'>
+            <p className='admin_info_title'>RDS of SafeRWA Wallet</p>
+            <p className='admin_info_address_little'>{addressSafeRWAPool1Wallet}</p>
+            <p className='admin_info_number'>{rdsSafeRWAPool1Wallet} RDS</p>
+          </div>
+
+          <div className='admin_info'>
+            <p className='admin_info_title'>USDT of SafeRWA Wallet</p>
+            <p className='admin_info_address_little'>{addressSafeRWAPool1Wallet}</p>
+            <p className='admin_info_number'>{usdtSafeRWAPool1Wallet} USDT</p>
+          </div>
+
         </div>
 
         <div className='admin_info_container_part'>
           <div className='admin_info'>
-            <p className='admin_info_title'>Pool usdt address</p>
-            <p className='admin_info_number'>{usdtAddressPool1}</p>
+            <p className='admin_info_title'>Balance of RDS</p>
+            <p className='admin_info_number'>{balanceRWARPool1}</p>
           </div>
-        </div>
 
-        <div className='admin_info_container_part'>
           <div className='admin_info'>
-            <p className='admin_info_title'>Pool RWAR Safe Wallet address</p>
-            <p className='admin_info_number'>{rwarWalletAddressPool1}</p>
-          </div>
-        </div>
-
-        <div className='admin_info_container_part'>
-          <div className='admin_info'>
-            <p className='admin_info_title'>Pool Marketing Wallet address</p>
-            <p className='admin_info_number'>{marketingWalletAddressPool1}</p>
-          </div>
-        </div>
-
-        {/*
-        <div className='admin_info_container_part'>
-          <div className='admin_info'>
-            <p className='admin_info_title'>Pool USDT don't claimed</p>
-            <p className='admin_info_number'>{usdtDontClaimedPool1}</p>
-          </div>
-        </div>
-        */}
-
-        <div className='admin_info_container_part'>
-          <div className='admin_info'>
-            <p className='admin_info_title'>Pool balance of USDT</p>
-            <p className='admin_info_number'>{usdtPool1}</p>
-          </div>
-        </div>
-
-        <div className='admin_info_container_part'>
-          <div className='admin_info'>
-            <p className='admin_info_title'>Pool balance of RWAR</p>
-            <p className='admin_info_number'>{balanceRWARPool}</p>
-          </div>
-        </div>
-
-        <div className='admin_info_container_part'>
-          <div className='admin_info'>
-            <p className='admin_info_title'>Pool total stacked</p>
+            <p className='admin_info_title'>Total stacked</p>
             <p className='admin_info_number'>{rwarTotalStackedPool1}</p>
           </div>
+
+          <div className='admin_info'>
+            <p className='admin_info_title'>Total stacked at least 7 Days old</p>
+            <p className='admin_info_number'>{totalStacked7DaysPool1}</p>
+          </div>
+        </div>
+
+
+
+        <p className='admin_title'>Pool 2</p>
+
+        <div className='admin_info_container_part'>
+          <div className='admin_info'>
+            <p className='admin_info_title'>Smart Contract address</p>
+            <p className='admin_info_number'>{Pool2.address}</p>
+          </div>
         </div>
 
         <div className='admin_info_container_part'>
           <div className='admin_info'>
-            <p className='admin_info_title'>Pool total stacked at least 7 Days old</p>
-            <p className='admin_info_number'>{totalStacked7Days}</p>
+            <p className='admin_info_title'>SafeRDS Wallet address</p>
+            <p className='admin_info_number'>{showSafeRDSWalletAddressPool2}</p>
+          </div>
+        </div>
+
+        <div className='admin_info_container_part'>
+          
+          <div className='admin_info'>
+            <p className='admin_info_title'>RDS of SafeRDS Wallet</p>
+            <p className='admin_info_address_little'>{showSafeRDSWalletAddressPool2}</p>
+            <p className='admin_info_number'>{rdsSafeRDSPool2Wallet} RDS</p>
+          </div>
+
+        </div>
+        
+        
+        <div className='admin_info_container_part'>
+
+          <div className='admin_info'>
+            <p className='admin_info_title'>RDS of SafeRWA Wallet</p>
+            <p className='admin_info_address_little'>{addressSafeRWAPool2Wallet}</p>
+            <p className='admin_info_number'>{rdsSafeRWAPool2Wallet} RDS</p>
+          </div>
+
+          <div className='admin_info'>
+            <p className='admin_info_title'>USDT of SafeRWA Wallet</p>
+            <p className='admin_info_address_little'>{addressSafeRWAPool2Wallet}</p>
+            <p className='admin_info_number'>{usdtSafeRWAPool2Wallet} USDT</p>
+          </div>
+
+        </div>
+
+        <div className='admin_info_container_part'>
+          <div className='admin_info'>
+            <p className='admin_info_title'>Balance of RDS</p>
+            <p className='admin_info_number'>{balanceRWARPool2}</p>
+          </div>
+
+          <div className='admin_info'>
+            <p className='admin_info_title'>Total stacked</p>
+            <p className='admin_info_number'>{rwarTotalStackedPool2}</p>
+          </div>
+
+          <div className='admin_info'>
+            <p className='admin_info_title'>Total stacked at least 7 Days old</p>
+            <p className='admin_info_number'>{totalStacked7DaysPool2}</p>
+          </div>
+        </div>
+
+
+        <p className='admin_title'>Pool 3</p>
+
+        <div className='admin_info_container_part'>
+          <div className='admin_info'>
+            <p className='admin_info_title'>Smart Contract address</p>
+            <p className='admin_info_number'>{Pool3.address}</p>
+          </div>
+        </div>
+
+        <div className='admin_info_container_part'>
+          <div className='admin_info'>
+            <p className='admin_info_title'>SafeRDS Wallet address</p>
+            <p className='admin_info_number'>{showSafeRDSWalletAddressPool3}</p>
+          </div>
+        </div>
+
+        <div className='admin_info_container_part'>
+          
+          <div className='admin_info'>
+            <p className='admin_info_title'>RDS of SafeRDS Wallet</p>
+            <p className='admin_info_address_little'>{showSafeRDSWalletAddressPool3}</p>
+            <p className='admin_info_number'>{rdsSafeRDSPool3Wallet} RDS</p>
+          </div>
+
+        </div>
+        
+        
+        <div className='admin_info_container_part'>
+
+          <div className='admin_info'>
+            <p className='admin_info_title'>RDS of SafeRWA Wallet</p>
+            <p className='admin_info_address_little'>{addressSafeRWAPool3Wallet}</p>
+            <p className='admin_info_number'>{rdsSafeRWAPool3Wallet} RDS</p>
+          </div>
+
+          <div className='admin_info'>
+            <p className='admin_info_title'>USDT of SafeRWA Wallet</p>
+            <p className='admin_info_address_little'>{addressSafeRWAPool3Wallet}</p>
+            <p className='admin_info_number'>{usdtSafeRWAPool3Wallet} USDT</p>
+          </div>
+
+        </div>
+
+        <div className='admin_info_container_part'>
+          <div className='admin_info'>
+            <p className='admin_info_title'>Balance of RDS</p>
+            <p className='admin_info_number'>{balanceRWARPool3}</p>
+          </div>
+
+          <div className='admin_info'>
+            <p className='admin_info_title'>Total stacked</p>
+            <p className='admin_info_number'>{rwarTotalStackedPool3}</p>
+          </div>
+
+          <div className='admin_info'>
+            <p className='admin_info_title'>Total stacked at least 7 Days old</p>
+            <p className='admin_info_number'>{totalStacked7DaysPool3}</p>
           </div>
         </div>
 
@@ -1289,20 +1695,45 @@ const Admin = () => {
         </>
 
         <>
-        {transactionsToBeConfirmedPool && transactionsToBeConfirmedPool.map((value, index) => {
-          return <TransactionToBeConfirmedPool data={value} index={index} key={index} confirmTransactionPool={confirmTransactionPool} deleteTransaction={deleteTransaction}></TransactionToBeConfirmedPool>;
+        {transactionsToBeConfirmedPool1 && transactionsToBeConfirmedPool1.map((value, index) => {
+          return <TransactionToBeConfirmedPool1 data={value} index={index} key={index} confirmTransactionPool1={confirmTransactionPool1} deleteTransactionPool1={deleteTransactionPool1}></TransactionToBeConfirmedPool1>;
         })}
         </>
         <>
-        {submitedTransactionsPool && submitedTransactionsPool.map((value, index) => {
-          return <SubmitedTransactionsPool data={value} index={index} key={index} deleteTransactionPool={deleteTransactionPool}></SubmitedTransactionsPool>;
+        {submitedTransactionsPool1 && submitedTransactionsPool1.map((value, index) => {
+          return <SubmitedTransactionsPool1 data={value} index={index} key={index} deleteTransactionPool1={deleteTransactionPool1}></SubmitedTransactionsPool1>;
+        })}
+        </>
+
+
+        <>
+        {transactionsToBeConfirmedPool2 && transactionsToBeConfirmedPool2.map((value, index) => {
+          return <TransactionToBeConfirmedPool2 data={value} index={index} key={index} confirmTransactionPool2={confirmTransactionPool2} deleteTransactionPool2={deleteTransactionPool2}></TransactionToBeConfirmedPool2>;
+        })}
+        </>
+        <>
+        {submitedTransactionsPool2 && submitedTransactionsPool2.map((value, index) => {
+          return <SubmitedTransactionsPool2 data={value} index={index} key={index} deleteTransactionPool2={deleteTransactionPool2}></SubmitedTransactionsPool2>;
+        })}
+        </>
+
+
+        <>
+        {transactionsToBeConfirmedPool3 && transactionsToBeConfirmedPool3.map((value, index) => {
+          return <TransactionToBeConfirmedPool3 data={value} index={index} key={index} confirmTransactionPool3={confirmTransactionPool3} deleteTransactionPool3={deleteTransactionPool3}></TransactionToBeConfirmedPool3>;
+        })}
+        </>
+        <>
+        {submitedTransactionsPool3 && submitedTransactionsPool3.map((value, index) => {
+          return <SubmitedTransactionsPool3 data={value} index={index} key={index} deleteTransactionPool3={deleteTransactionPool3}></SubmitedTransactionsPool3>;
         })}
         </>
         
-        {transactionsToBeConfirmedPool && transactionsToBeConfirmedPool.length===0 && submitedTransactionsPool.length===0 && transactionsToBeConfirmed && transactionsToBeConfirmed.length===0 && submitedTransactions.length===0 ? 
+        {transactionsToBeConfirmedPool1 && transactionsToBeConfirmedPool1.length===0 && submitedTransactionsPool1.length===0 && transactionsToBeConfirmedPool2 && transactionsToBeConfirmedPool2.length===0 && submitedTransactionsPool2.length===0 && transactionsToBeConfirmedPool3 && transactionsToBeConfirmedPool3.length===0 && submitedTransactionsPool3.length===0 && transactionsToBeConfirmed && transactionsToBeConfirmed.length===0 && submitedTransactions.length===0 ? 
         <>
           <p className='admin_info'>none</p>
         </>
+
         :''
         }
 
@@ -1310,102 +1741,114 @@ const Admin = () => {
     </div>
 
 
-      {popup && boolSubmitMint ? 
-        <Popup loading={loading} number={mintRWARTokens+' RWAR tokens!'} action='submit: mint' updatePopup={updatePopup} updateBoolSubmitMint={updateBoolSubmitMint} >
+      {popup && boolSubmitMintForTeam ? 
+        <Popup loading={loading} number={' RDS tokens!'} action='submit: mintForTeam' updatePopup={updatePopup} updateBoolSubmitMintForTeam={updateBoolSubmitMintForTeam} >
+        </Popup>
+        :popup && boolSubmitMint ? 
+        <Popup loading={loading} number={mintRDSTokens+' RDS tokens!'} action='submit: mint' updatePopup={updatePopup} updateBoolSubmitMint={updateBoolSubmitMint} >
         </Popup>
         :popup && boolSubmitBurn ? 
-          <Popup loading={loading} number={burnRWARTokens+' RWAR tokens!'} action='submit: burn' updatePopup={updatePopup} updateBoolSubmitBurn={updateBoolSubmitBurn} >
-          </Popup>
+        <Popup loading={loading} number={burnRWARTokens+' RDS tokens!'} action='submit: burn' updatePopup={updatePopup} updateBoolSubmitBurn={updateBoolSubmitBurn} >
+        </Popup>
+        :popup && boolSubmitWithdraw ? 
+        <Popup loading={loading} number={withdrawTokens+' tokens!'} action='submit: withdraw' updatePopup={updatePopup} updateBoolSubmitWithdraw={updateBoolSubmitWithdraw} >
+        </Popup>
+        :popup && boolRenounce ? 
+        <Popup loading={loading} number={''} action='submit: renounce' updatePopup={updatePopup} updateBoolRenounce={updateBoolRenounce} >
+        </Popup>
+        /*
         :popup && boolSubmitChangeOwner1 ? 
         <Popup loading={loading} number={''} action={'submit: change the owner 1 to '+addressNewOwner1} updatePopup={updatePopup} updateBoolSubmitChangeOwner1={updateBoolSubmitChangeOwner1} >
         </Popup>
         :popup && boolSubmitChangeOwner2 ? 
         <Popup loading={loading} number={''} action={'submit: change the owner 2 to '+addressNewOwner2} updatePopup={updatePopup} updateBoolSubmitChangeOwner2={updateBoolSubmitChangeOwner2} >
-        </Popup>
-        :popup && boolChangePrice ? 
-        <Popup loading={loading} number={''} action={'submit: change the price to '+newPrice} updatePopup={updatePopup} updateBoolChangePrice={updateBoolChangePrice} >
-        </Popup>
-        :popup && boolChangeUsdtAddressRWAR ? 
-        <Popup loading={loading} number={''} action={'change the usdt address to '+newUsdtAddressRWAR} updatePopup={updatePopup} updateBoolChangeUsdtAddressRWAR={updateBoolChangeUsdtAddressRWAR} >
-        </Popup>
-        :popup && boolChangeReserveWalletAddressRWAR ? 
-        <Popup loading={loading} number={''} action={'submit: change the reserve wallet address RWAR to '+ newReserveWalletAddressRWAR} updatePopup={updatePopup} updateBoolChangeReserveWalletAddressRWAR={updateBoolChangeReserveWalletAddressRWAR} >
-        </Popup>
-        :popup && boolChangeSafeUSDTWalletAddressRWAR ? 
-        <Popup loading={loading} number={''} action={'submit: change the safe USDT wallet address RWAR to '+ newSafeUSDTWalletAddressRWAR} updatePopup={updatePopup} updateBoolChangeSafeUSDTWalletAddressRWAR={updateBoolChangeSafeUSDTWalletAddressRWAR} >
-        </Popup>
-        :popup && boolTransfer ? 
-        <Popup loading={loading} number={transferStableCoins+' usdt to: ' + addressTransferStableCoins} action='submit: transfer' updatePopup={updatePopup} updateBoolTransfer={updateBoolTransfer} >
-        </Popup>
-        :popup && boolTransferRWAR ? 
-        <Popup loading={loading} number={transferRWARTokens+' RWAR Tokens!'} action='submit: transfer' updatePopup={updatePopup} updateBoolTransferRWAR={updateBoolTransferRWAR}>
-        </Popup>
+        </Popup>*/
         : boolConfirmTransaction ?
         <Popup loading={loading} number={''} action={'confirmed the transaction'} updatePopup={updatePopup} updateBoolConfirmTransaction={updateBoolConfirmTransaction} >
         </Popup>
         : boolDeleteTransaction ?
         <Popup loading={loading} number={''} action={'deleted the transaction'} updatePopup={updatePopup} updateBoolDeleteTransaction={updateBoolDeleteTransaction} >
         </Popup>
-        : boolConfirmTransactionPool ?
-        <Popup loading={loading} number={''} action={'confirmed the transaction Pool 1 '} updatePopup={updatePopup} updateBoolConfirmTransactionPool={updateBoolConfirmTransactionPool} >
+        : boolConfirmTransactionPool1 ?
+        <Popup loading={loading} number={''} action={'confirmed the transaction Pool 1 '} updatePopup={updatePopup} updateBoolConfirmTransactionPool1={updateBoolConfirmTransactionPool1} >
         </Popup>
-        : boolDeleteTransactionPool ?
-        <Popup loading={loading} number={''} action={'deleted the transaction Pool 1'} updatePopup={updatePopup} updateBoolDeleteTransactionPool={updateBoolDeleteTransactionPool} >
-        </Popup>
+        : boolDeleteTransactionPool1 ?
+        <Popup loading={loading} number={''} action={'deleted the transaction Pool 1'} updatePopup={updatePopup} updateBoolDeleteTransactionPool1={updateBoolDeleteTransactionPool1} >
+        </Popup>/*
         :popup && boolSubmitChangeOwner1AddressPool1 ? 
         <Popup loading={loading} number={''} action={'submit: change the pool 1 owner 1 address to '+ newOwner1AddressPool1} updatePopup={updatePopup} updateBoolSubmitChangeOwner1AddressPool1={updateBoolSubmitChangeOwner1AddressPool1} >
         </Popup>
         :popup && boolSubmitChangeOwner2AddressPool1 ? 
         <Popup loading={loading} number={''} action={'submit: change the pool 1 owner 2 address to '+ newOwner2AddressPool1} updatePopup={updatePopup} updateBoolSubmitChangeOwner2AddressPool1={updateBoolSubmitChangeOwner2AddressPool1} >
+        </Popup>*/
+        :popup && boolSubmitChangeSafeRDSWalletAddressPool1 ? 
+        <Popup loading={loading} number={''} action={'submit: change the SafeRDS Wallet address of the pool 1 to '+ newSafeRDSWalletAddressPool1} updatePopup={updatePopup} updateBoolSubmitChangeSafeRDSWalletAddressPool1={updateBoolSubmitChangeSafeRDSWalletAddressPool1} >
         </Popup>
-        :popup && boolUsdtAddressPool1 ? 
-        <Popup loading={loading} number={''} action={'change the usdt address of the pool 1 to '+ newUsdtAddressPool1} updatePopup={updatePopup} updateBoolUsdtAddressPool1={updateBoolUsdtAddressPool1} >
+        :popup && boolSendYieldPool1? 
+        <Popup loading={loading} number={sendYieldPool1 +' RDS to the stackers of Pool 1'} action='submit: send ' updatePopup={updatePopup} updateBoolsendYieldPool1={updateBoolsendYieldPool1}>
         </Popup>
-        :popup && boolSubmitChangeRWARWalletAddressPool1 ? 
-        <Popup loading={loading} number={''} action={'submit: change the RWAR Wallet address of the pool 1 to '+ newRWARWalletAddressPool1} updatePopup={updatePopup} updateBoolSubmitChangeRWARWalletAddressPool1={updateBoolSubmitChangeRWARWalletAddressPool1} >
+        :popup && boolSubmitWithdrawPool1 ? 
+        <Popup loading={loading} number={withdrawTokensPool1+' tokens!'} action='submit: withdraw Pool 1' updatePopup={updatePopup} updateBoolSubmitWithdrawPool1={updateBoolSubmitWithdrawPool1} >
         </Popup>
-        :popup && boolSubmitChangeMarketingWalletAddressPool1 ? 
-        <Popup loading={loading} number={''} action={'submit: change the Martketing Wallet address of the pool 1 to '+ newMarketingWalletAddressPool1} updatePopup={updatePopup} updateBoolSubmitChangeMarketingWalletAddressPool1={updateBoolSubmitChangeMarketingWalletAddressPool1} >
+        :popup && boolRenouncePool1 ? 
+        <Popup loading={loading} number={''} action='submit: renounce Pool 1' updatePopup={updatePopup} updateBoolRenouncePool1={updateBoolRenouncePool1} >
         </Popup>
-        :popup && boolSendYield? 
-        <Popup loading={loading} number={sendYield +' usdt to users'} action='submit: send yield ' updatePopup={updatePopup} updateBoolsendYield={updateBoolsendYield}>
+        : boolConfirmTransactionPool2 ?
+        <Popup loading={loading} number={''} action={'confirmed the transaction Pool 2 '} updatePopup={updatePopup} updateBoolConfirmTransactionPool2={updateBoolConfirmTransactionPool2} >
         </Popup>
-        :popup && boolAddAffiliateAddressPool1 ? 
-        <Popup loading={loading} number='' action={'submit: add ' + addAffiliateAddressPool1 + " on affiliate address list!"} updatePopup={updatePopup} updateboolAddAffiliateAddressPool1={updateboolAddAffiliateAddressPool1} >
+        : boolDeleteTransactionPool2 ?
+        <Popup loading={loading} number={''} action={'deleted the transaction Pool 2'} updatePopup={updatePopup} updateBoolDeleteTransactionPool2={updateBoolDeleteTransactionPool2} >
+        </Popup>/*
+        :popup && boolSubmitChangeOwner1AddressPool2 ? 
+        <Popup loading={loading} number={''} action={'submit: change the pool 2 owner 1 address to '+ newOwner1AddressPool2} updatePopup={updatePopup} updateBoolSubmitChangeOwner1AddressPool2={updateBoolSubmitChangeOwner1AddressPool2} >
+        </Popup>
+        :popup && boolSubmitChangeOwner2AddressPool2 ? 
+        <Popup loading={loading} number={''} action={'submit: change the pool 2 owner 2 address to '+ newOwner2AddressPool2} updatePopup={updatePopup} updateBoolSubmitChangeOwner2AddressPool2={updateBoolSubmitChangeOwner2AddressPool2} >
+        </Popup>*/
+        :popup && boolSubmitChangeSafeRDSWalletAddressPool2 ? 
+        <Popup loading={loading} number={''} action={'submit: change the SafeRDS Wallet address of the pool 2 to '+ newSafeRDSWalletAddressPool2} updatePopup={updatePopup} updateBoolSubmitChangeSafeRDSWalletAddressPool2={updateBoolSubmitChangeSafeRDSWalletAddressPool2} >
+        </Popup>
+        :popup && boolSendYieldPool2? 
+        <Popup loading={loading} number={sendYieldPool2 +' RDS to the stackers of Pool 2'} action='submit: send ' updatePopup={updatePopup} updateBoolsendYieldPool2={updateBoolsendYieldPool2}>
+        </Popup>
+        :popup && boolSubmitWithdrawPool2 ? 
+        <Popup loading={loading} number={withdrawTokensPool2+' tokens!'} action='submit: withdraw Pool 2' updatePopup={updatePopup} updateBoolSubmitWithdrawPool2={updateBoolSubmitWithdrawPool2} >
+        </Popup>
+        :popup && boolRenouncePool2 ? 
+        <Popup loading={loading} number={''} action='submit: renounce Pool 2' updatePopup={updatePopup} updateBoolRenouncePool2={updateBoolRenouncePool2} >
+        </Popup>
+        : boolConfirmTransactionPool3 ?
+        <Popup loading={loading} number={''} action={'confirmed the transaction Pool 3 '} updatePopup={updatePopup} updateBoolConfirmTransactionPool3={updateBoolConfirmTransactionPool3} >
+        </Popup>
+        : boolDeleteTransactionPool3 ?
+        <Popup loading={loading} number={''} action={'deleted the transaction Pool 3'} updatePopup={updatePopup} updateBoolDeleteTransactionPool3={updateBoolDeleteTransactionPool3} >
+        </Popup>/*
+        :popup && boolSubmitChangeOwner1AddressPool3 ? 
+        <Popup loading={loading} number={''} action={'submit: change the pool 3 owner 1 address to '+ newOwner1AddressPool3} updatePopup={updatePopup} updateBoolSubmitChangeOwner1AddressPool3={updateBoolSubmitChangeOwner1AddressPool3} >
+        </Popup>
+        :popup && boolSubmitChangeOwner2AddressPool3 ? 
+        <Popup loading={loading} number={''} action={'submit: change the pool 3 owner 2 address to '+ newOwner2AddressPool3} updatePopup={updatePopup} updateBoolSubmitChangeOwner2AddressPool3={updateBoolSubmitChangeOwner2AddressPool3} >
+        </Popup>*/
+        :popup && boolSubmitChangeSafeRDSWalletAddressPool3 ? 
+        <Popup loading={loading} number={''} action={'submit: change the SafeRDS Wallet address of the pool 3 to '+ newSafeRDSWalletAddressPool3} updatePopup={updatePopup} updateBoolSubmitChangeSafeRDSWalletAddressPool3={updateBoolSubmitChangeSafeRDSWalletAddressPool3} >
+        </Popup>
+        :popup && boolSendYieldPool3? 
+        <Popup loading={loading} number={sendYieldPool3 +' RDS to the stackers of Pool 3'} action='submit: send ' updatePopup={updatePopup} updateBoolsendYieldPool3={updateBoolsendYieldPool3}>
+        </Popup>
+        :popup && boolSubmitWithdrawPool3 ? 
+        <Popup loading={loading} number={withdrawTokensPool3+' tokens!'} action='submit: withdraw Pool 3' updatePopup={updatePopup} updateBoolSubmitWithdrawPool3={updateBoolSubmitWithdrawPool3} >
+        </Popup>
+        :popup && boolRenouncePool3 ? 
+        <Popup loading={loading} number={''} action='submit: renounce Pool 3' updatePopup={updatePopup} updateBoolRenouncePool3={updateBoolRenouncePool3} >
         </Popup>
         :''
       }
       
-      
-    <div className='admin'>
-      <div className='admin_section'>
-        <p className='admin_title'>Mint RWAR Tokens</p>
-        <div className='admin_input_container'>
-          <input className="admin_input" id="RWAR" type="number" placeholder="Number of tokens" value={mintRWARTokens} onChange={e => updateMintRWARTokens(e.target.value)}></input>
-          <p>RWAR Token</p>
-        </div>
-        <button className="admin_button" onClick={() => mint()}>
-          Submit Mint Tokens
-        </button>
-      </div>
-    </div>
     
+    {/*
     <div className='admin'>
       <div className='admin_section'>
-        <p className='admin_title'>Burn RWAR Tokens</p>
-        <div className='admin_input_container'>
-        <input className="admin_input" id="RWAR" type="number" placeholder="Number of tokens" value={burnRWARTokens} onChange={e => updateBurnRWARTokens(e.target.value)}></input>
-          <p>RWAR Token</p>
-        </div>
-        <button className="admin_button" onClick={() => burn()}>
-          Submit Burn tokens
-        </button>
-      </div>
-    </div>
-    
-    <div className='admin'>
-      <div className='admin_section'>
-        <p className='admin_title'>Change Owner 1</p>
+        <p className='admin_title'>Change Owner 1 of the smarts contracts</p>
         <div className='admin_input_container'>
           <input className="admin_input" id="address" type="string" placeholder="New Address" value={addressNewOwner1} onChange={e => updateAddressNewOwner1(e.target.value)}></input>
           <p>New Owner's address</p>
@@ -1418,7 +1861,7 @@ const Admin = () => {
     
     <div className='admin'>
       <div className='admin_section'>
-        <p className='admin_title'>Change Owner 2</p>
+        <p className='admin_title'>Change Owner 2 of the smarts contracts</p>
         <div className='admin_input_container'>
           <input className="admin_input" id="address" type="string" placeholder="New Address" value={addressNewOwner2} onChange={e => updateAddressNewOwner2(e.target.value)}></input>
           <p>New Owner's address</p>
@@ -1427,168 +1870,101 @@ const Admin = () => {
           Submit Change Owner 2
         </button>
       </div>
-    </div>
-    
+    </div> */}
+
     <div className='admin'>
       <div className='admin_section'>
-        <p className='admin_title'>Change Price</p>
-        <div className='admin_input_container'>
-        <input className="admin_input" id="price" type="number" placeholder="Price of RWAR token" value={newPrice} onChange={e => updateNewPrice(e.target.value)}></input>
-          <p>Price RWAR token</p>
-        </div>
-        <button className="admin_button" onClick={() => changePrice()}>
-          Submit Change Price
-        </button>
-      </div>
-    </div>
-    
-    <div className='admin'>
-      <div className='admin_section'>
-        <p className='admin_title'>Change USDT Address</p>
-        <div className='admin_input_container'>
-          <input className="admin_input" id="address" type="string" placeholder="New Address" value={newUsdtAddressRWAR} onChange={e => updateNewUsdtAddressRWAR(e.target.value)}></input>
-          <p>New usdt's address</p>
-        </div>
-        <button className="admin_button" onClick={() => changeUSDTAddress()}>
-          Change USDT Address
+        <p className='admin_title'>Mint RDS Tokens for the Team</p>
+        <button className="admin_button" onClick={() => mintForTeam()}>
+          Submit Mint Tokens
         </button>
       </div>
     </div>
 
     <div className='admin'>
       <div className='admin_section'>
-        <p className='admin_title'>Change Reserve Wallet Address RWAR</p>
+        <p className='admin_title'>Mint RDS Tokens</p>
         <div className='admin_input_container'>
-          <input className="admin_input" id="address" type="string" placeholder="New Address" value={newReserveWalletAddressRWAR} onChange={e => updateNewReserveWalletAddressRWAR(e.target.value)}></input>
-          <p>New reserve wallet's address</p>
+        <input className="admin_input" id="Tokens" type="number" placeholder="Number of tokens" value={mintRDSTokens} onChange={e => updateMintRDSTokens(e.target.value)}></input>
+          <p>Amount Tokens</p>
         </div>
-        <button className="admin_button" onClick={() => changeReserveWalletAddressRWAR()}>
-          Submit Change Reserve Wallet Address
-        </button>
-      </div>
-    </div>
-
-    <div className='admin'>
-      <div className='admin_section'>
-        <p className='admin_title'>Change Safe USDT Wallet Address RWAR</p>
+        <br></br>
         <div className='admin_input_container'>
-          <input className="admin_input" id="address" type="string" placeholder="New Address" value={newSafeUSDTWalletAddressRWAR} onChange={e => updateNewSafeUSDTWalletAddressRWAR(e.target.value)}></input>
-          <p>New safe usdt wallet's address</p>
+        <input className="admin_input" id="Tokens" type="address" placeholder="Destination address" value={addressMintRDSTokens} onChange={e => updateAddressMintRDSTokens(e.target.value)}></input>
+          <p>Address Destination</p>
         </div>
-        <button className="admin_button" onClick={() => changeSafeUSDTWalletAddressRWAR()}>
-          Submit Change Safe USDT Wallet Address
+        <button className="admin_button" onClick={() => mint()}>
+          Submit Mint Tokens
         </button>
       </div>
     </div>
     
     <div className='admin'>
       <div className='admin_section'>
-        <p className='admin_title'>Transfer USDT</p>
+        <p className='admin_title'>Burn RDS Tokens</p>
         <div className='admin_input_container'>
-          <input className="admin_input" id="stablecoin" type="number" placeholder="Price in usdt" value={transferStableCoins} onChange={e => updateTransferStableCoins(e.target.value)}></input>
-          <p>USDT</p>
+        <input className="admin_input" id="RWAR" type="number" placeholder="Number of tokens" value={burnRWARTokens} onChange={e => updateBurnRWARTokens(e.target.value)}></input>
+          <p>RDS Token</p>
         </div>
-        <div className='admin_input_container'>
-          <input className="admin_input" id="address" type="string" placeholder="Address" value={addressTransferStableCoins} onChange={e => updateAddressTransferStableCoins(e.target.value)}></input>
-          <p>Address</p>
-        </div>
-        <button className="admin_button" onClick={() => transfer()}>
-          Submit Transfer USDT
+        <button className="admin_button" onClick={() => burn()}>
+          Submit Burn tokens
         </button>
       </div>
     </div>
     
     <div className='admin'>
       <div className='admin_section'>
-        <p className='admin_title'>Transfer RWAR Tokens</p>
+        <p className='admin_title'>Withdraw ERC-20 Tokens</p>
         <div className='admin_input_container'>
-        <input className="admin_input" id="rwar" type="number" placeholder="Number of tokens" value={transferRWARTokens} onChange={e => updateTransferRWARTokens(e.target.value)}></input>
-          <p>RWAR Token</p>
+        <input className="admin_input" id="Tokens" type="number" placeholder="Number of tokens" value={withdrawTokens} onChange={e => updateWithdrawTokens(e.target.value)}></input>
+          <p>Amount Tokens</p>
         </div>
+        <br></br>
         <div className='admin_input_container'>
-          <input className="admin_input" id="address" type="string" placeholder="Address" value={addressTransferRWARTokens} onChange={e => updateAddressTransferRWARTokens(e.target.value)}></input>
-          <p>Address</p>
+        <input className="admin_input" id="Tokens" type="address" placeholder="Address of the token" value={withdrawAddressToken} onChange={e => updateWithdrawAddressToken(e.target.value)}></input>
+          <p>Address Tokens</p>
         </div>
-        <button className="admin_button" onClick={() => transferRWAR()}>
-          Submit Transfer RWAR Tokens
+        <br></br>
+        <div className='admin_input_container'>
+        <input className="admin_input" id="Tokens" type="address" placeholder="Destination address" value={withdrawTo} onChange={e => updateWithdrawTo(e.target.value)}></input>
+          <p>Address Destination</p>
+        </div>
+        <button className="admin_button" onClick={() => withdraw()}>
+          Submit Withdraw tokens
         </button>
       </div>
     </div>
 
     <div className='admin'>
       <div className='admin_section'>
-        <p className='admin_title'>Pool 1 Change Owner 1 address</p>
-        <div className='admin_input_container'>
-          <input className="admin_input" id="address" type="string" placeholder="New Address" value={newOwner1AddressPool1} onChange={e => updateNewOwner1AddressPool1(e.target.value)}></input>
-          <p>New Owner's address</p>
-        </div>
-        <button className="admin_button" onClick={() => changeOwner1AddressPool1()}>
-          Submit Change Owner 1
+        <p className='admin_title'>Renounce SC</p>
+        <button className="admin_button" onClick={() => renounce()}>
+          Submit Renounce
         </button>
       </div>
     </div>
 
     <div className='admin'>
       <div className='admin_section'>
-        <p className='admin_title'>Pool 1 Change Owner 2 address</p>
+        <p className='admin_title'>Pool 1 Change SafeRDS Wallet Address</p>
         <div className='admin_input_container'>
-          <input className="admin_input" id="address" type="string" placeholder="New Address" value={newOwner2AddressPool1} onChange={e => updateNewOwner2AddressPool1(e.target.value)}></input>
-          <p>New Owner's address</p>
+          <input className="admin_input" id="address" type="string" placeholder="New Address" value={newSafeRDSWalletAddressPool1} onChange={e => updateNewSafeRDSWalletAddressPool1(e.target.value)}></input>
+          <p>New SafeRDS Wallet's address</p>
         </div>
-        <button className="admin_button" onClick={() => changeOwner2AddressPool1()}>
-          Submit Change Owner 2
+        <button className="admin_button" onClick={() => changeSafeRDSWalletAddressPool1()}>
+          Submit change SafeRDS Wallet Address
         </button>
       </div>
     </div>
-
-    <div className='admin'>
-      <div className='admin_section'>
-        <p className='admin_title'>Pool 1 Change USDT Address</p>
-        <div className='admin_input_container'>
-          <input className="admin_input" id="address" type="string" placeholder="New Address" value={newUsdtAddressPool1} onChange={e => updateNewUsdtAddressPool1(e.target.value)}></input>
-          <p>New usdt's address</p>
-        </div>
-        <button className="admin_button" onClick={() => changeUsdtPool1()}>
-          Change USDT Address
-        </button>
-      </div>
-    </div>
-
-    <div className='admin'>
-      <div className='admin_section'>
-        <p className='admin_title'>Pool 1 Change RWAR Wallet Address</p>
-        <div className='admin_input_container'>
-          <input className="admin_input" id="address" type="string" placeholder="New Address" value={newRWARWalletAddressPool1} onChange={e => updateNewRWARWalletAddressPool1(e.target.value)}></input>
-          <p>New RWAR Wallet's address</p>
-        </div>
-        <button className="admin_button" onClick={() => changeRWARWalletAddressPool1()}>
-          Submit change RWAR Wallet Address
-        </button>
-      </div>
-    </div>
-
-    <div className='admin'>
-      <div className='admin_section'>
-        <p className='admin_title'>Pool 1 Change Marketing Wallet Address</p>
-        <div className='admin_input_container'>
-          <input className="admin_input" id="address" type="string" placeholder="New Address" value={newMarketingWalletAddressPool1} onChange={e => updateNewMarketingWalletAddressPool1(e.target.value)}></input>
-          <p>New Marketing Wallet's address</p>
-        </div>
-        <button className="admin_button" onClick={() => changeMarketingWalletAddressPool1()}>
-          Submit change Marketing Wallet Address
-        </button>
-      </div>
-    </div>
-    
     
     <div className='admin'>
       <div className='admin_section'>
         <p className='admin_title'>Pool 1 Send Yield</p>
         <div className='admin_input_container'>
-          <input className="admin_input" id="stablecoin" type="number" placeholder="Price in USDT" value={sendYield} onChange={e => updateSendYield(e.target.value)}></input>
-          <p>USDT</p>
+          <input className="admin_input" id="token" type="number" placeholder="Amount in RDS" value={sendYieldPool1} onChange={e => updateSendYieldPool1(e.target.value)}></input>
+          <p>RDS</p>
         </div>
-        <button className="admin_button" onClick={() => sendYieldPool1()}>
+        <button className="admin_button" onClick={() => sendYieldToPool1()}>
           Submit Send Yield
         </button>
       </div>
@@ -1596,13 +1972,148 @@ const Admin = () => {
 
     <div className='admin'>
       <div className='admin_section'>
-        <p className='admin_title'>Pool 1 add affiliate address</p>
+        <p className='admin_title'>Pool 1 Withdraw ERC-20 Tokens</p>
         <div className='admin_input_container'>
-          <input className="admin_input" id="address" type="string" placeholder="New Affiliate Address" value={addAffiliateAddressPool1} onChange={e => updateAddAffiliateAddressPool1(e.target.value)}></input>
-          <p>New affiliate address</p>
+        <input className="admin_input" id="Tokens" type="number" placeholder="Number of tokens" value={withdrawTokensPool1} onChange={e => updateWithdrawTokensPool1(e.target.value)}></input>
+          <p>Amount Tokens</p>
         </div>
-        <button className="admin_button" onClick={() => functionAddAffiliateAddressPool1()}>
-          Submit Add Address
+        <br></br>
+        <div className='admin_input_container'>
+        <input className="admin_input" id="Tokens" type="address" placeholder="Address of the token" value={withdrawAddressTokenPool1} onChange={e => updateWithdrawAddressTokenPool1(e.target.value)}></input>
+          <p>Address Tokens</p>
+        </div>
+        <br></br>
+        <div className='admin_input_container'>
+        <input className="admin_input" id="Tokens" type="address" placeholder="Destination address" value={withdrawToPool1} onChange={e => updateWithdrawToPool1(e.target.value)}></input>
+          <p>Address Destination</p>
+        </div>
+        <button className="admin_button" onClick={() => withdrawPool1()}>
+          Submit Withdraw tokens
+        </button>
+      </div>
+    </div>
+
+    <div className='admin'>
+      <div className='admin_section'>
+        <p className='admin_title'>Renounce Pool 1</p>
+        <button className="admin_button" onClick={() => renouncePool1()}>
+          Submit Renounce
+        </button>
+      </div>
+    </div>
+
+    <div className='admin'>
+      <div className='admin_section'>
+        <p className='admin_title'>Pool 2 Change SafeRDS Wallet Address</p>
+        <div className='admin_input_container'>
+          <input className="admin_input" id="address" type="string" placeholder="New Address" value={newSafeRDSWalletAddressPool2} onChange={e => updateNewSafeRDSWalletAddressPool2(e.target.value)}></input>
+          <p>New SafeRDS Wallet's address</p>
+        </div>
+        <button className="admin_button" onClick={() => changeSafeRDSWalletAddressPool2()}>
+          Submit change SafeRDS Wallet Address
+        </button>
+      </div>
+    </div>
+    
+    <div className='admin'>
+      <div className='admin_section'>
+        <p className='admin_title'>Pool 2 Send Yield</p>
+        <div className='admin_input_container'>
+          <input className="admin_input" id="token" type="number" placeholder="Amount in RDS" value={sendYieldPool2} onChange={e => updateSendYieldPool2(e.target.value)}></input>
+          <p>RDS</p>
+        </div>
+        <button className="admin_button" onClick={() => sendYieldToPool2()}>
+          Submit Send Yield
+        </button>
+      </div>
+    </div>
+
+    <div className='admin'>
+      <div className='admin_section'>
+        <p className='admin_title'>Pool 2 Withdraw ERC-20 Tokens</p>
+        <div className='admin_input_container'>
+        <input className="admin_input" id="Tokens" type="number" placeholder="Number of tokens" value={withdrawTokensPool2} onChange={e => updateWithdrawTokensPool2(e.target.value)}></input>
+          <p>Amount Tokens</p>
+        </div>
+        <br></br>
+        <div className='admin_input_container'>
+        <input className="admin_input" id="Tokens" type="address" placeholder="Address of the token" value={withdrawAddressTokenPool2} onChange={e => updateWithdrawAddressTokenPool2(e.target.value)}></input>
+          <p>Address Tokens</p>
+        </div>
+        <br></br>
+        <div className='admin_input_container'>
+        <input className="admin_input" id="Tokens" type="address" placeholder="Destination address" value={withdrawToPool2} onChange={e => updateWithdrawToPool2(e.target.value)}></input>
+          <p>Address Destination</p>
+        </div>
+        <button className="admin_button" onClick={() => withdrawPool2()}>
+          Submit Withdraw tokens
+        </button>
+      </div>
+    </div>
+
+    <div className='admin'>
+      <div className='admin_section'>
+        <p className='admin_title'>Renounce Pool 2</p>
+        <button className="admin_button" onClick={() => renouncePool2()}>
+          Submit Renounce
+        </button>
+      </div>
+    </div>
+
+    <div className='admin'>
+      <div className='admin_section'>
+        <p className='admin_title'>Pool 3 Change SafeRDS Wallet Address</p>
+        <div className='admin_input_container'>
+          <input className="admin_input" id="address" type="string" placeholder="New Address" value={newSafeRDSWalletAddressPool3} onChange={e => updateNewSafeRDSWalletAddressPool3(e.target.value)}></input>
+          <p>New SafeRDS Wallet's address</p>
+        </div>
+        <button className="admin_button" onClick={() => changeSafeRDSWalletAddressPool3()}>
+          Submit change SafeRDS Wallet Address
+        </button>
+      </div>
+    </div>
+    
+    <div className='admin'>
+      <div className='admin_section'>
+        <p className='admin_title'>Pool 3 Send Yield</p>
+        <div className='admin_input_container'>
+          <input className="admin_input" id="token" type="number" placeholder="Amount in RDS" value={sendYieldPool3} onChange={e => updateSendYieldPool3(e.target.value)}></input>
+          <p>RDS</p>
+        </div>
+        <button className="admin_button" onClick={() => sendYieldToPool3()}>
+          Submit Send Yield
+        </button>
+      </div>
+    </div>
+
+    <div className='admin'>
+      <div className='admin_section'>
+        <p className='admin_title'>Pool 3 Withdraw ERC-20 Tokens</p>
+        <div className='admin_input_container'>
+        <input className="admin_input" id="Tokens" type="number" placeholder="Number of tokens" value={withdrawTokensPool3} onChange={e => updateWithdrawTokensPool3(e.target.value)}></input>
+          <p>Amount Tokens</p>
+        </div>
+        <br></br>
+        <div className='admin_input_container'>
+        <input className="admin_input" id="Tokens" type="address" placeholder="Address of the token" value={withdrawAddressTokenPool3} onChange={e => updateWithdrawAddressTokenPool3(e.target.value)}></input>
+          <p>Address Tokens</p>
+        </div>
+        <br></br>
+        <div className='admin_input_container'>
+        <input className="admin_input" id="Tokens" type="address" placeholder="Destination address" value={withdrawToPool3} onChange={e => updateWithdrawToPool3(e.target.value)}></input>
+          <p>Address Destination</p>
+        </div>
+        <button className="admin_button" onClick={() => withdrawPool3()}>
+          Submit Withdraw tokens
+        </button>
+      </div>
+    </div>
+
+    <div className='admin'>
+      <div className='admin_section'>
+        <p className='admin_title'>Renounce Pool 3</p>
+        <button className="admin_button" onClick={() => renouncePool3()}>
+          Submit Renounce
         </button>
       </div>
     </div>

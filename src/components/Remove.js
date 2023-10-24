@@ -4,13 +4,30 @@ import { useState, useEffect } from "react";
 import polygon from '../img/Polygon.png';
 import RWAR from "../RWAR.json";
 import Pool1 from "../Pool1.json";
+import Pool2 from "../Pool2.json";
+import Pool3 from "../Pool3.json";
 import PopupUnstack from "./PopupUnstack";
 import Alert from "./Alert";
 import { useAccount } from 'wagmi';
 import { readContract, writeContract, prepareWriteContract, waitForTransaction } from '@wagmi/core';
+import { useParams } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 
 const Remove = () => {
+
+  const cookies = new Cookies(null, { path: '/' });
+  
+  const [checkbox, updateCheckbox] = React.useState('');
+
+  const params = useParams();
+  const PoolNb = params.name;
+  console.log(PoolNb);
+
+  if(cookies.get(PoolNb)!=="Pool 1" && cookies.get(PoolNb)!=="Pool 2" && cookies.get(PoolNb)!=="Pool 3"){
+    window.location.assign("/");
+  }
+
   const [formParams, updateFormParams] = useState({ dfl: ''});
   const [dflTokens, updatedflTokens] = useState(0);
   const [myStack, updateMyStack] = useState(0);
@@ -26,110 +43,234 @@ const Remove = () => {
   const { address } = useAccount();
 
   async function getData() {
-    try {
 
-      const readBalanceOfMyDflTokens = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
-        functionName: 'balanceOf',
-        args: [address],
-      })
-      const balanceOfMyDflTokens = ethers.utils.formatEther(readBalanceOfMyDflTokens, 18);
-      updatedflTokens(balanceOfMyDflTokens);
+    if(PoolNb==='Pool 1'){
+      try {
 
-      const readGetMyStacks = await readContract({
-        address: Pool1.address,
-        abi: Pool1.abi,
-        functionName: 'getMyStacks',
-        args: [address]
-      })
-      updateMyStack(ethers.utils.formatEther(readGetMyStacks, 18));
+        const readBalanceOfMyDflTokens = await readContract({
+          address: RWAR.address,
+          abi: RWAR.abi,
+          functionName: 'balanceOf',
+          args: [address],
+        })
+        const balanceOfMyDflTokens = ethers.utils.formatEther(readBalanceOfMyDflTokens, 18);
+        updatedflTokens(balanceOfMyDflTokens);
 
-      const readTotalStacked = await readContract({
-        address: Pool1.address,
-        abi: Pool1.abi,
-        functionName: 'totalStacked',
-      })
-      const totalStacked = ethers.utils.formatEther(readTotalStacked, 18);
-      updateTotalStacked(totalStacked);
+        const readGetMyStacks = await readContract({
+          address: Pool1.address,
+          abi: Pool1.abi,
+          functionName: 'getMyStacks',
+          args: [address]
+        })
+        updateMyStack(ethers.utils.formatEther(readGetMyStacks, 18));
 
-      const readMaxStack = await readContract({
-        address: Pool1.address,
-        abi: Pool1.abi,
-        functionName: 'maxStack',
-      })
-      const maxStack = ethers.utils.formatEther(readMaxStack, 18);
-      updateMaxStack(maxStack);
+        const readTotalStacked = await readContract({
+          address: Pool1.address,
+          abi: Pool1.abi,
+          functionName: 'totalStacked',
+        })
+        const totalStacked = ethers.utils.formatEther(readTotalStacked, 18);
+        updateTotalStacked(totalStacked);
 
-      /*
-      const ethers = require("ethers");
-      //After adding your Hardhat network to your metamask, this code will get providers and signers
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      await signer.getAddress();
-      const addr = await signer.getAddress();
-      let contractDfl = new ethers.Contract(RWAR.address, RWAR.abi, signer);
+        const readMaxStack = await readContract({
+          address: Pool1.address,
+          abi: Pool1.abi,
+          functionName: 'maxStack',
+        })
+        const maxStack = ethers.utils.formatEther(readMaxStack, 18);
+        updateMaxStack(maxStack);
 
-      let balanceOfMyDflTokens = await contractDfl.balanceOf(addr);
-      balanceOfMyDflTokens = ethers.utils.formatEther(balanceOfMyDflTokens, 18);
-      updatedflTokens(balanceOfMyDflTokens);
-      
-      let contractPool1 = new ethers.Contract(Pool1.address, Pool1.abi, signer);
-      
-      let stack = await contractPool1.getMyStacks();
-      stack = ethers.utils.formatEther(stack, 18);
-      updateMyStack(stack);
-      */
-
-      updateData(true);
-    } catch (error) {
-      
+        updateData(true);
+      } catch (error) {
+        
+      }
     }
+
+    else if(PoolNb==='Pool 2'){
+      try {
+
+        const readBalanceOfMyDflTokens = await readContract({
+          address: RWAR.address,
+          abi: RWAR.abi,
+          functionName: 'balanceOf',
+          args: [address],
+        })
+        const balanceOfMyDflTokens = ethers.utils.formatEther(readBalanceOfMyDflTokens, 18);
+        updatedflTokens(balanceOfMyDflTokens);
+
+        const readGetMyStacks = await readContract({
+          address: Pool2.address,
+          abi: Pool2.abi,
+          functionName: 'getMyStacks',
+          args: [address]
+        })
+        updateMyStack(ethers.utils.formatEther(readGetMyStacks, 18));
+
+        const readTotalStacked = await readContract({
+          address: Pool2.address,
+          abi: Pool2.abi,
+          functionName: 'totalStacked',
+        })
+        const totalStacked = ethers.utils.formatEther(readTotalStacked, 18);
+        updateTotalStacked(totalStacked);
+
+        const readMaxStack = await readContract({
+          address: Pool2.address,
+          abi: Pool2.abi,
+          functionName: 'maxStack',
+        })
+        const maxStack = ethers.utils.formatEther(readMaxStack, 18);
+        updateMaxStack(maxStack);
+
+        updateData(true);
+      } catch (error) {
+        
+      }
+    }
+
+    else if(PoolNb==='Pool 3'){
+      try {
+
+        const readBalanceOfMyDflTokens = await readContract({
+          address: RWAR.address,
+          abi: RWAR.abi,
+          functionName: 'balanceOf',
+          args: [address],
+        })
+        const balanceOfMyDflTokens = ethers.utils.formatEther(readBalanceOfMyDflTokens, 18);
+        updatedflTokens(balanceOfMyDflTokens);
+
+        const readGetMyStacks = await readContract({
+          address: Pool3.address,
+          abi: Pool3.abi,
+          functionName: 'getMyStacks',
+          args: [address]
+        })
+        updateMyStack(ethers.utils.formatEther(readGetMyStacks, 18));
+
+        const readTotalStacked = await readContract({
+          address: Pool3.address,
+          abi: Pool3.abi,
+          functionName: 'totalStacked',
+        })
+        const totalStacked = ethers.utils.formatEther(readTotalStacked, 18);
+        updateTotalStacked(totalStacked);
+
+        const readMaxStack = await readContract({
+          address: Pool3.address,
+          abi: Pool3.abi,
+          functionName: 'maxStack',
+        })
+        const maxStack = ethers.utils.formatEther(readMaxStack, 18);
+        updateMaxStack(maxStack);
+
+        updateData(true);
+      } catch (error) {
+        
+      }
+    }
+
+
+
   }
   
   async function remove() {
-    if(formParams.dfl!=='')
-    try {
-      updateLoading(true);
-      updatePopup(true);
+    if(formParams.dfl!==''){
 
-      const { request: requestRemove } = await prepareWriteContract({
-        address: Pool1.address,
-        abi: Pool1.abi,
-        functionName: 'remove',
-        args: [ethers.utils.parseUnits(formParams.dfl)],
-      });
-      let { hash: removeSent } = await writeContract(requestRemove)
-
-      const dataRemove = await waitForTransaction({
-        hash: removeSent
-      })
-      if(dataRemove.logs.length>1){
-        updateUnstacked(ethers.utils.formatEther(dataRemove.logs[0].data, 18));
-      } else {
-        updateUnstacked(0)
+      
+      if(PoolNb==='Pool 1'){
+        try {
+          updateLoading(true);
+          updatePopup(true);
+    
+          const { request: requestRemove } = await prepareWriteContract({
+            address: Pool1.address,
+            abi: Pool1.abi,
+            functionName: 'remove',
+            args: [ethers.utils.parseUnits(formParams.dfl)],
+          });
+          let { hash: removeSent } = await writeContract(requestRemove)
+    
+          const dataRemove = await waitForTransaction({
+            hash: removeSent
+          })
+          if(dataRemove.logs.length>1){
+            updateUnstacked(ethers.utils.formatEther(dataRemove.logs[0].data, 18));
+          } else {
+            updateUnstacked(0)
+          }
+    
+          updateLoading(false);
+    
+        } catch (error) {
+          updateAlert(true);
+          console.log("ERROR: " + error)
+        }
       }
 
-      /*
-      const ethers = require("ethers");
-      //After adding your Hardhat network to your metamask, this code will get providers and signers
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
 
-      //Pull the deployed contract instance
-      let contractPool1 = new ethers.Contract(Pool1.address, Pool1.abi, signer);
-      
-      let transaction = await contractPool1.remove(ethers.utils.parseUnits(formParams.dfl));
-      await transaction.wait();
-      */
+      else if(PoolNb==='Pool 2'){
+        try {
+          updateLoading(true);
+          updatePopup(true);
+    
+          const { request: requestRemove } = await prepareWriteContract({
+            address: Pool2.address,
+            abi: Pool2.abi,
+            functionName: 'remove',
+            args: [ethers.utils.parseUnits(formParams.dfl)],
+          });
+          let { hash: removeSent } = await writeContract(requestRemove)
+    
+          const dataRemove = await waitForTransaction({
+            hash: removeSent
+          })
+          if(dataRemove.logs.length>1){
+            updateUnstacked(ethers.utils.formatEther(dataRemove.logs[0].data, 18));
+          } else {
+            updateUnstacked(0)
+          }
+    
+          updateLoading(false);
+    
+        } catch (error) {
+          updateAlert(true);
+          console.log("ERROR: " + error)
+        }
+      }
 
-      updateLoading(false);
 
-    } catch (error) {
-      //alert("You don't have enough DFL!");
-      updateAlert(true);
-      console.log("ERROR: " + error)
+      else if(PoolNb==='Pool 3'){
+        try {
+          updateLoading(true);
+          updatePopup(true);
+    
+          const { request: requestRemove } = await prepareWriteContract({
+            address: Pool3.address,
+            abi: Pool3.abi,
+            functionName: 'remove',
+            args: [ethers.utils.parseUnits(formParams.dfl)],
+          });
+          let { hash: removeSent } = await writeContract(requestRemove)
+    
+          const dataRemove = await waitForTransaction({
+            hash: removeSent
+          })
+          if(dataRemove.logs.length>1){
+            updateUnstacked(ethers.utils.formatEther(dataRemove.logs[0].data, 18));
+          } else {
+            updateUnstacked(0)
+          }
+    
+          updateLoading(false);
+    
+        } catch (error) {
+          updateAlert(true);
+          console.log("ERROR: " + error)
+        }
+      }
     }
+    
   }
 
   
@@ -144,7 +285,7 @@ const Remove = () => {
           <div className='stack_network'>
             <img alt='polygon' src={polygon}></img>
           </div>
-          <p className='stack_name'>Pool 1</p>
+          <p className='stack_name'>{PoolNb}</p>
         </div>
         <div className='stack_description'>
           {data ?
@@ -162,7 +303,7 @@ const Remove = () => {
                 <p className='stack_info_number'>{myStack}</p>
               </div>
               <div className='stack_description_line'>
-                <p className='stack_info_title'>My RWAR</p>
+                <p className='stack_info_title'>My RDS</p>
                 <p className='stack_info_number'>{dflTokens}</p>
               </div>
             </div>
@@ -176,7 +317,7 @@ const Remove = () => {
         <div className='stack_exchange_container'>
           <div className='stack_input_container'>
             <input className="stack_input" id="dfl" type="number" placeholder="Number of tokens" value={formParams.dfl} onChange={e => updateFormParams({...formParams, dfl: e.target.value})}></input>
-            <p>RWAR</p>
+            <p>Renditus</p>
           </div>
           <br></br>
           <p className='invest_info_title'>After making a deposit, your tokens are locked in for a period of 30 days. This means you cannot unstake or withdraw them during this time.</p>
@@ -193,7 +334,7 @@ const Remove = () => {
         }
 
         {alert ? 
-        <Alert action="You don't have enough RWAR tokens!" updatePopup={updatePopup} updateLoading={updateLoading} updateAlert={updateAlert}>
+        <Alert action="You don't have enough RDS stacked!" updatePopup={updatePopup} updateLoading={updateLoading} updateAlert={updateAlert}>
         </Alert>
         : ""
         }

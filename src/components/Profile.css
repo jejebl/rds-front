@@ -17,7 +17,7 @@
   border-radius: 20px;
 }
 .profile_address {
-  color: #0074d9;
+  color: #008AFF;
   margin-top: 20px;
 }
 .profile_tokens {
@@ -40,8 +40,22 @@
   width: 100%;
   margin-top: 25px;
 }
+.profile_info_container_Affiliate {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 25px;
+}
 
 .profile_description_line {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+.profile_description_line_affiliate {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -56,6 +70,10 @@
   font-size: 22px;
   color: black;
 }
+.profile_info_listAffiliateAddress{
+  font-size: 10px;
+  color: black;
+}
 
 .profile_token {
   font-size: 20px;
@@ -63,17 +81,17 @@
 }
 .profile_button {
   width: 10rem;
-  color: #0074d9;
+  color: #008AFF;
   background-color: #F9FAFC;
   font-size: 20px;
   padding: 8px 16px;
   cursor: pointer;
-  border: 1px solid #0074d9;
+  border: 1px solid #008AFF;
   border-radius: 25px;
-  box-shadow: 2px 3px #0074d9;
+  box-shadow: 2px 3px #008AFF;
 }
 .profile_button:hover {
-  background-color: #0074d9;
+  background-color: #008AFF;
   color: white;
   box-shadow: none;
 }
@@ -84,6 +102,25 @@
   align-items: center;
 }
 
+
+@media screen and (max-width: 1600px) {
+  .profile_info_container_Affiliate {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: space-between;
+    width: 100%;
+    margin-top: 0px;
+  }
+  .profile_description_line_affiliate {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    margin-top: 15px;
+  }
+}
 
 @media screen and (max-width: 900px) {
   .profile_container {

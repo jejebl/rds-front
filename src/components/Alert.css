@@ -34,17 +34,17 @@ p {
 .alert_button {
   margin-top: 30px;
   width: 10rem;
-  color: #0074d9;
+  color: #008AFF;
   background-color: white;
   font-size: 20px;
   padding: 10px 20px;
   cursor: pointer;
-  border: 1px solid #0074d9;
+  border: 1px solid #008AFF;
   border-radius: 25px;
-  box-shadow: 2px 3px #0074d9;
+  box-shadow: 2px 3px #008AFF;
 }
 .alert_button:hover {
-  background-color: #0074d9;
+  background-color: #008AFF;
   color: white;
   box-shadow: none;
 }
