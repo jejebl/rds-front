@@ -1,6 +1,6 @@
 {
   "homepage": "https://jejebl.github.io/rds-front",
-  "name": "dfl-front",
+  "name": "rds-front",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

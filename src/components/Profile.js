@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import {
   Link
 } from "react-router-dom";
-import RWAR from "../RWAR.json";
+import RDS from "../RDS.json";
 import Pool1 from "../Pool1.json";
 import Pool2 from "../Pool2.json";
 import Pool3 from "../Pool3.json";
@@ -22,9 +22,9 @@ const Profile = () => {
   const [myYieldsPool1, updateMyYieldsPool1] = useState(0);
   const [myYieldsPool2, updateMyYieldsPool2] = useState(0);
   const [myYieldsPool3, updateMyYieldsPool3] = useState(0);
-  const [amountRDSAffiliate1, updateAmountRDSAffiliate1] = useState();
-  const [amountRDSAffiliate2, updateAmountRDSAffiliate2] = useState();
-  const [amountRDSAffiliate3, updateAmountRDSAffiliate3] = useState();
+  const [amountRDSAffiliate1, updateAmountRDSAffiliate1] = useState(0);
+  const [amountRDSAffiliate2, updateAmountRDSAffiliate2] = useState(0);
+  const [amountRDSAffiliate3, updateAmountRDSAffiliate3] = useState(0);
   const [affiliateAddress1, updateAffiliateAddress1] = useState([]);
   const [affiliateAddress2, updateAffiliateAddress2] = useState([]);
   const [affiliateAddress3, updateAffiliateAddress3] = useState([]);
@@ -35,8 +35,8 @@ const Profile = () => {
   async function getData() {
     try {
       const readBalanceOfMyDflTokens = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'balanceOf',
         args: [address],
       })
@@ -71,16 +71,16 @@ const Profile = () => {
       updateMyStackPool3(stack3);
 
       const readAddressOwner1 = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'owners',
         args: [0],
       })
       updateOwnerAddress1(readAddressOwner1);
 
       const readAddressOwner2 = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'owners',
         args: [1],
       })

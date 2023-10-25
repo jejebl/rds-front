@@ -8,7 +8,7 @@ const PopupUnstack = (props) => {
       <div className='popup_inner'>
         {!props.loading ?  
           <div className='popup_description'>
-            <p>You recovered {props.unstacked} tokens!</p>
+            <p>You recovered {props.unstacked} RDS!</p>
             <button className='popup_button' onClick={() => {
               props.updatePopup(false);
               window.location.reload();

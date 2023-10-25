@@ -216,6 +216,11 @@
   .poolpage_address {
     font-size: 11px;
   }
+  
+  .poolpage_info_number{
+    font-size: 16px;
+    color: black;
+  }
   .poolpage_allocation_1_container {
     border: 1px solid #EAEDF3;
     width: 100%;

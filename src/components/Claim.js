@@ -2,7 +2,7 @@ import React from 'react';
 import './Stack.css';
 import { useState, useEffect } from "react";
 import polygon from '../img/Polygon.png';
-import RWAR from "../RWAR.json";
+import RDS from "../RDS.json";
 import Pool1 from "../Pool1.json";
 import Pool2 from "../Pool2.json";
 import Pool3 from "../Pool3.json";
@@ -17,8 +17,6 @@ import Cookies from 'universal-cookie';
 const Remove = () => {
 
   const cookies = new Cookies(null, { path: '/' });
-  
-  const [checkbox, updateCheckbox] = React.useState('');
 
   const params = useParams();
   const PoolNb = params.name;
@@ -29,7 +27,7 @@ const Remove = () => {
   }
 
   const [formParams, updateFormParams] = useState({usdt: ''});
-  const [dflTokens, updatedflTokens] = useState(0);
+  const [rdsTokens, updaterdsTokens] = useState(0);
   const [myStack, updateMyStack] = useState(0);
   const [data, updateData] = useState(false);
   const [loading, updateLoading] = useState(false);
@@ -44,14 +42,14 @@ const Remove = () => {
     if(PoolNb==="Pool 1"){
       try {
 
-        const readBalanceOfMyDflTokens = await readContract({
-          address: RWAR.address,
-          abi: RWAR.abi,
+        const readBalanceOfMyrdsTokens = await readContract({
+          address: RDS.address,
+          abi: RDS.abi,
           functionName: 'balanceOf',
           args: [address],
         })
-        const balanceOfMyDflTokens = ethers.utils.formatEther(readBalanceOfMyDflTokens, 18);
-        updatedflTokens(balanceOfMyDflTokens);
+        const balanceOfMyrdsTokens = ethers.utils.formatEther(readBalanceOfMyrdsTokens, 18);
+        updaterdsTokens(balanceOfMyrdsTokens);
   
         const readGetMyStacks = await readContract({
           address: Pool1.address,
@@ -79,14 +77,14 @@ const Remove = () => {
     else if(PoolNb==="Pool 2"){
       try {
 
-        const readBalanceOfMyDflTokens = await readContract({
-          address: RWAR.address,
-          abi: RWAR.abi,
+        const readBalanceOfMyrdsTokens = await readContract({
+          address: RDS.address,
+          abi: RDS.abi,
           functionName: 'balanceOf',
           args: [address],
         })
-        const balanceOfMyDflTokens = ethers.utils.formatEther(readBalanceOfMyDflTokens, 18);
-        updatedflTokens(balanceOfMyDflTokens);
+        const balanceOfMyrdsTokens = ethers.utils.formatEther(readBalanceOfMyrdsTokens, 18);
+        updaterdsTokens(balanceOfMyrdsTokens);
   
         const readGetMyStacks = await readContract({
           address: Pool2.address,
@@ -114,14 +112,14 @@ const Remove = () => {
     else if(PoolNb==="Pool 3"){
       try {
 
-        const readBalanceOfMyDflTokens = await readContract({
-          address: RWAR.address,
-          abi: RWAR.abi,
+        const readBalanceOfMyrdsTokens = await readContract({
+          address: RDS.address,
+          abi: RDS.abi,
           functionName: 'balanceOf',
           args: [address],
         })
-        const balanceOfMyDflTokens = ethers.utils.formatEther(readBalanceOfMyDflTokens, 18);
-        updatedflTokens(balanceOfMyDflTokens);
+        const balanceOfMyrdsTokens = ethers.utils.formatEther(readBalanceOfMyrdsTokens, 18);
+        updaterdsTokens(balanceOfMyrdsTokens);
   
         const readGetMyStacks = await readContract({
           address: Pool3.address,
@@ -260,7 +258,7 @@ const Remove = () => {
               </div>
               <div className='stack_description_line'>
                 <p className='stack_info_title'>My RDS</p>
-                <p className='stack_info_number'>{dflTokens}</p>
+                <p className='stack_info_number'>{rdsTokens}</p>
               </div>
             </div>
             : 'Need to be connected'

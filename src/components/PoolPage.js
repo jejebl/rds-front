@@ -6,7 +6,7 @@ import {
   Link
 } from "react-router-dom";
 import { useState, useEffect} from "react";
-import RWAR from "../RWAR.json";
+import RDS from "../RDS.json";
 import Pool1 from "../Pool1.json";
 import Pool2 from "../Pool2.json";
 import Pool3 from "../Pool3.json";
@@ -19,8 +19,6 @@ const PoolPage = () => {
 
   const cookies = new Cookies(null, { path: '/' });
   
-  const [checkbox, updateCheckbox] = React.useState('');
-  
   const params = useParams();
   const PoolNb = params.PoolNb;
   console.log(PoolNb)
@@ -32,7 +30,7 @@ const PoolPage = () => {
   const [dflTokens, updatedflTokens] = useState(0);
   const [data, updateData] = useState(false);
   const [totalStacked, updateTotalStacked] = useState(0);
-  const [maxStack, updateMaxStack] = useState(0);
+  //const [maxStack, updateMaxStack] = useState(0);
   const [myStackPool, updateMyStackPool] = useState(0);
   const [myYieldsPool, updateMyYieldsPool] = useState(0);
   
@@ -40,11 +38,11 @@ const PoolPage = () => {
   const { address } = useAccount();
 
   async function getData() {
-    if(PoolNb=='Pool 1'){
+    if(PoolNb==='Pool 1'){
       try {
         const readBalanceOfMyDflTokens = await readContract({
-          address: RWAR.address,
-          abi: RWAR.abi,
+          address: RDS.address,
+          abi: RDS.abi,
           functionName: 'balanceOf',
           args: [address],
         })
@@ -76,14 +74,14 @@ const PoolPage = () => {
         })
         const totalStacked = ethers.utils.formatEther(readTotalStacked, 18);
         updateTotalStacked(totalStacked);
-
+/*
         const readMaxStack = await readContract({
           address: Pool1.address,
           abi: Pool1.abi,
           functionName: 'maxStack',
         })
         const maxStack = ethers.utils.formatEther(readMaxStack, 18);
-        updateMaxStack(maxStack);
+        updateMaxStack(maxStack);*/
 
         updateData(true);
       } catch (error) {
@@ -91,11 +89,11 @@ const PoolPage = () => {
       }
     }
 
-    else if(PoolNb=='Pool 2'){
+    else if(PoolNb==='Pool 2'){
       try {
         const readBalanceOfMyDflTokens = await readContract({
-          address: RWAR.address,
-          abi: RWAR.abi,
+          address: RDS.address,
+          abi: RDS.abi,
           functionName: 'balanceOf',
           args: [address],
         })
@@ -127,14 +125,14 @@ const PoolPage = () => {
         })
         const totalStacked = ethers.utils.formatEther(readTotalStacked, 18);
         updateTotalStacked(totalStacked);
-
+/*
         const readMaxStack = await readContract({
           address: Pool2.address,
           abi: Pool2.abi,
           functionName: 'maxStack',
         })
         const maxStack = ethers.utils.formatEther(readMaxStack, 18);
-        updateMaxStack(maxStack);
+        updateMaxStack(maxStack);*/
 
         updateData(true);
       } catch (error) {
@@ -142,11 +140,11 @@ const PoolPage = () => {
       }
     }
 
-    else if(PoolNb=='Pool 3'){
+    else if(PoolNb==='Pool 3'){
       try {
         const readBalanceOfMyDflTokens = await readContract({
-          address: RWAR.address,
-          abi: RWAR.abi,
+          address: RDS.address,
+          abi: RDS.abi,
           functionName: 'balanceOf',
           args: [address],
         })
@@ -178,14 +176,14 @@ const PoolPage = () => {
         })
         const totalStacked = ethers.utils.formatEther(readTotalStacked, 18);
         updateTotalStacked(totalStacked);
-
+/*
         const readMaxStack = await readContract({
           address: Pool3.address,
           abi: Pool3.abi,
           functionName: 'maxStack',
         })
         const maxStack = ethers.utils.formatEther(readMaxStack, 18);
-        updateMaxStack(maxStack);
+        updateMaxStack(maxStack);*/
 
         updateData(true);
       } catch (error) {
@@ -219,7 +217,7 @@ const PoolPage = () => {
             </div>
             <div className='poolpage_description_line'>
               <p className='poolpage_info_title'>Stacked</p>
-              <p className='poolpage_info_number'>{totalStacked}/{maxStack}</p>
+              <p className='poolpage_info_number'>{totalStacked}</p>
             </div>
             <div className='poolpage_description_line'>
               <p className='poolpage_info_title'>My stacks</p>
@@ -239,15 +237,15 @@ const PoolPage = () => {
         </div>
         
         <p className='poolpage_address'>Import the receipt token in your wallet with this address:</p>
-        {PoolNb=='Pool 1' ?
+        {PoolNb==='Pool 1' ?
         <p className='poolpage_address'>{Pool1.address}</p>
-        : PoolNb=='Pool 2' ?
+        : PoolNb==='Pool 2' ?
         <p className='poolpage_address'>{Pool2.address}</p>
-        : PoolNb=='Pool 3' ?
+        : PoolNb==='Pool 3' ?
         <p className='poolpage_address'>{Pool3.address}</p>
         :''}
 
-        {PoolNb=='Pool 1' ? 
+        {PoolNb==='Pool 1' ? 
         <div className='poolpage_name_text'>
           <p>Staking: When you deposit your RDS tokens into the pool, they are staked to generate yield from real-world assets. This staking mechanism is designed to encourage long-term participation, ensuring the stability and longevity of the pool.</p>
           <p>There is a 3% tax on every deposit. 2% goes to the Reserve. The remaining 1% goes to the affiliate or Marketing Wallet (Please check the Affiliate Program section).</p>
@@ -256,7 +254,7 @@ const PoolPage = () => {
           <br></br>
           <p>Weekly Rewards: Every 2 weeks, Renditus distributes rewards to its stakers. These rewards are paid in RDS tokens and are derived from the yield generated by the underlying Real-World Assets. This consistent payout ensures that stakers receive regular returns for their commitment, further enhancing the benefits of being part of the Renditus ecosystem.</p>
         </div>
-        : PoolNb=='Pool 2' ? 
+        : PoolNb==='Pool 2' ? 
         <div className='poolpage_name_text'>
           <p>Staking: When you deposit your RDS tokens into the pool, they are staked to generate yield from real-world assets. This staking mechanism is designed to encourage long-term participation, ensuring the stability and longevity of the pool.</p>
           <p>There is a 3% tax on every deposit. 2% goes to the Reserve. The remaining 1% goes to the affiliate or Marketing Wallet (Please check the Affiliate Program section).</p>
@@ -265,7 +263,7 @@ const PoolPage = () => {
           <br></br>
           <p>Weekly Rewards: Every 2 weeks, Renditus distributes rewards to its stakers. These rewards are paid in RDS tokens and are derived from the yield generated by the underlying Real-World Assets. This consistent payout ensures that stakers receive regular returns for their commitment, further enhancing the benefits of being part of the Renditus ecosystem.</p>
         </div>
-        : PoolNb=='Pool 3' ?
+        : PoolNb==='Pool 3' ?
         <div className='poolpage_name_text'>
           <p>Staking: When you deposit your RDS tokens into the pool, they are staked to generate yield from real-world assets. This staking mechanism is designed to encourage long-term participation, ensuring the stability and longevity of the pool.</p>
           <p>There is a 3% tax on every deposit. 2% goes to the Reserve. The remaining 1% goes to the affiliate or Marketing Wallet (Please check the Affiliate Program section).</p>

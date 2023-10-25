@@ -5,18 +5,14 @@ import {
   useLocation
 } from "react-router-dom";
 import Navbar from './components/Navbar';
-import Home from './components/Home';
 import Footer from './components/Footer';
 import Pools from './components/Pools';
 import Docs from './components/Docs';
 import Profile from './components/Profile';
 import PoolPage from './components/PoolPage';
-import Invest from './components/Invest';
-import Sell from './components/Sell';
 import Admin from './components/Admin';
 import Stack from './components/Stack';
 import Remove from './components/Remove';
-import Tokens from './components/Tokens';
 import Claim from './components/Claim';
 import { useEffect } from 'react';
 

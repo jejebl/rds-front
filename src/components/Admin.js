@@ -1,8 +1,7 @@
 import React from 'react'
 import './Admin.css';
 import { useState, useEffect } from "react";
-import RWAR from "../RWAR.json";
-import tokenerc20 from "../tokenerc20.json";
+import RDS from "../RDS.json";
 import Popup from "./Popup";
 import TransactionToBeConfirmed from './TransactionToBeConfirmed';
 import TransactionToBeConfirmedPool1 from './TransactionToBeConfirmedPool1';
@@ -15,6 +14,7 @@ import SubmitedTransactions from './SubmitedTransactions';
 import Pool1 from "../Pool1.json";
 import Pool2 from "../Pool2.json";
 import Pool3 from "../Pool3.json";
+import tokenerc20 from "../tokenerc20.json";
 import { useAccount } from 'wagmi';
 import { readContract, writeContract, prepareWriteContract, waitForTransaction } from '@wagmi/core';
 
@@ -39,7 +39,7 @@ const Admin = () => {
   
   
   //const [mintForTeamValue, updateMintForTeamValue] = useState(0);
-  const [burnRWARTokens, updateBurnRWARTokens] = useState(0);
+  const [burnRDSTokens, updateBurnRDSTokens] = useState(0);
   const [mintRDSTokens, updateMintRDSTokens] = useState(0);
   const [addressMintRDSTokens, updateAddressMintRDSTokens] = useState('');
   const [withdrawTokens, updateWithdrawTokens] = useState(0);
@@ -66,8 +66,8 @@ const Admin = () => {
   const [rdsSafeRDSPool1Wallet, updateRdsSafeRDSPool1Wallet] = useState(0);
   const [rdsSafeRWAPool1Wallet, updateRdsSafeRWAPool1Wallet] = useState(0);
   const [usdtSafeRWAPool1Wallet, updateUsdtSafeRWAPool1Wallet] = useState(0);
-  const [balanceRWARPool1, updateBalanceRWARPool1] = useState(0);
-  const [rwarTotalStackedPool1, updateRWARTotalStackedPool1] = useState(0);
+  const [balanceRDSPool1, updateBalanceRDSPool1] = useState(0);
+  const [RDSTotalStackedPool1, updateRDSTotalStackedPool1] = useState(0);
   const [totalStacked7DaysPool1, updateTotalStacked7DaysPool1] = useState(0);
   const [sendYieldPool1, updateSendYieldPool1] = useState('');
 
@@ -85,8 +85,8 @@ const Admin = () => {
   const [rdsSafeRDSPool2Wallet, updateRdsSafeRDSPool2Wallet] = useState(0);
   const [rdsSafeRWAPool2Wallet, updateRdsSafeRWAPool2Wallet] = useState(0);
   const [usdtSafeRWAPool2Wallet, updateUsdtSafeRWAPool2Wallet] = useState(0);
-  const [balanceRWARPool2, updateBalanceRWARPool2] = useState(0);
-  const [rwarTotalStackedPool2, updateRWARTotalStackedPool2] = useState(0);
+  const [balanceRDSPool2, updateBalanceRDSPool2] = useState(0);
+  const [RDSTotalStackedPool2, updateRDSTotalStackedPool2] = useState(0);
   const [totalStacked7DaysPool2, updateTotalStacked7DaysPool2] = useState(0);
   const [sendYieldPool2, updateSendYieldPool2] = useState('');
 
@@ -104,8 +104,8 @@ const Admin = () => {
   const [rdsSafeRDSPool3Wallet, updateRdsSafeRDSPool3Wallet] = useState(0);
   const [rdsSafeRWAPool3Wallet, updateRdsSafeRWAPool3Wallet] = useState(0);
   const [usdtSafeRWAPool3Wallet, updateUsdtSafeRWAPool3Wallet] = useState(0);
-  const [balanceRWARPool3, updateBalanceRWARPool3] = useState(0);
-  const [rwarTotalStackedPool3, updateRWARTotalStackedPool3] = useState(0);
+  const [balanceRDSPool3, updateBalanceRDSPool3] = useState(0);
+  const [RDSTotalStackedPool3, updateRDSTotalStackedPool3] = useState(0);
   const [totalStacked7DaysPool3, updateTotalStacked7DaysPool3] = useState(0);
   const [sendYieldPool3, updateSendYieldPool3] = useState('');
   
@@ -177,14 +177,14 @@ const Admin = () => {
       updatePopup(true);
 
       const { request: requestConfirm } = await prepareWriteContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'confirmTransaction',
         args: [i],
       });
       let { hash: confirmSent } = await writeContract(requestConfirm)
 
-      const dataConfirm = await waitForTransaction({
+      await waitForTransaction({
         hash: confirmSent
       })
 
@@ -205,14 +205,14 @@ const Admin = () => {
       updatePopup(true);
 
       const { request: requestDelete } = await prepareWriteContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'deleteTransaction',
         args: [i],
       });
       let { hash: deleteSent } = await writeContract(requestDelete)
 
-      const dataDelete = await waitForTransaction({
+      await waitForTransaction({
         hash: deleteSent
       })
 
@@ -241,7 +241,7 @@ const Admin = () => {
       });
       let { hash: confirmSent } = await writeContract(requestConfirm)
 
-      const dataConfirmPool = await waitForTransaction({
+      await waitForTransaction({
         hash: confirmSent
       })
 
@@ -269,7 +269,7 @@ const Admin = () => {
       });
       let { hash: deleteSent } = await writeContract(requestDelete)
 
-      const dataDeletePool = await waitForTransaction({
+      await waitForTransaction({
         hash: deleteSent
       })
 
@@ -300,7 +300,7 @@ const Admin = () => {
       });
       let { hash: confirmSent } = await writeContract(requestConfirm)
 
-      const dataConfirmPool = await waitForTransaction({
+      await waitForTransaction({
         hash: confirmSent
       })
 
@@ -328,7 +328,7 @@ const Admin = () => {
       });
       let { hash: deleteSent } = await writeContract(requestDelete)
 
-      const dataDeletePool = await waitForTransaction({
+      await waitForTransaction({
         hash: deleteSent
       })
 
@@ -359,7 +359,7 @@ const Admin = () => {
       });
       let { hash: confirmSent } = await writeContract(requestConfirm)
 
-      const dataConfirmPool = await waitForTransaction({
+      await waitForTransaction({
         hash: confirmSent
       })
 
@@ -387,7 +387,7 @@ const Admin = () => {
       });
       let { hash: deleteSent } = await writeContract(requestDelete)
 
-      const dataDeletePool = await waitForTransaction({
+      await waitForTransaction({
         hash: deleteSent
       })
 
@@ -411,14 +411,14 @@ const Admin = () => {
       updatePopup(true);
 
       const { request: requestMintForTeam } = await prepareWriteContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'submitTransaction',
-        args: ['mintForTeam', RWAR.address, RWAR.address, 0],
+        args: ['mintForTeam', RDS.address, RDS.address, 0],
       });
       let { hash: mintForTeamSent } = await writeContract(requestMintForTeam)
 
-      const dataMintForTeam = await waitForTransaction({
+      await waitForTransaction({
         hash: mintForTeamSent
       })
 
@@ -440,14 +440,14 @@ const Admin = () => {
       updatePopup(true);
 
       const { request: requestMint } = await prepareWriteContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'submitTransaction',
-        args: ['mint', RWAR.address, addressMintRDSTokens, ethers.utils.parseUnits(mintRDSTokens)],
+        args: ['mint', RDS.address, addressMintRDSTokens, ethers.utils.parseUnits(mintRDSTokens)],
       });
       let { hash: mintSent } = await writeContract(requestMint)
 
-      const dataMint = await waitForTransaction({
+      await waitForTransaction({
         hash: mintSent
       })
 
@@ -462,21 +462,21 @@ const Admin = () => {
   }
 
   async function burn() {
-    if(burnRWARTokens!==0)
+    if(burnRDSTokens!==0)
     try {
       updateBoolSubmitBurn(true);
       updateLoading(true);
       updatePopup(true);
 
       const { request: requestBurn } = await prepareWriteContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'submitTransaction',
-        args: ['burn', RWAR.address, RWAR.address, ethers.utils.parseUnits(burnRWARTokens)],
+        args: ['burn', RDS.address, RDS.address, ethers.utils.parseUnits(burnRDSTokens)],
       });
       let { hash: burnSent } = await writeContract(requestBurn)
 
-      const dataBurn = await waitForTransaction({
+      await waitForTransaction({
         hash: burnSent
       })
 
@@ -498,14 +498,14 @@ const Admin = () => {
       updatePopup(true);
 
       const { request: requestWithdraw } = await prepareWriteContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'submitTransaction',
         args: ['withdraw', withdrawAddressToken, withdrawTo, ethers.utils.parseUnits(withdrawTokens)],
       });
       let { hash: withdrawSent } = await writeContract(requestWithdraw)
 
-      const dataWithdraw = await waitForTransaction({
+      await waitForTransaction({
         hash: withdrawSent
       })
 
@@ -526,14 +526,14 @@ const Admin = () => {
       updatePopup(true);
 
       const { request: requestRenounce } = await prepareWriteContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'submitTransaction',
-        args: ['renounceOwnership', RWAR.address, RWAR.address, 0]
+        args: ['renounceOwnership', RDS.address, RDS.address, 0]
       });
       let { hash: renounceSent } = await writeContract(requestRenounce)
 
-      const dataRenounce = await waitForTransaction({
+      await waitForTransaction({
         hash: renounceSent
       })
 
@@ -559,8 +559,8 @@ const Admin = () => {
 
       //SC Token
       const { request: requestChangeOwner1 } = await prepareWriteContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'submitTransaction',
         args: ['changeOwner1', addressNewOwner1, 0],
       });
@@ -634,8 +634,8 @@ const Admin = () => {
 
       //SC Token
       const { request: requestChangeOwner2 } = await prepareWriteContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'submitTransaction',
         args: ['changeOwner2', addressNewOwner2, 0],
       });
@@ -714,7 +714,7 @@ const Admin = () => {
       });
       let { hash: SendYieldSent } = await writeContract(requestSendYield)
 
-      const dataSendYield = await waitForTransaction({
+      await waitForTransaction({
         hash: SendYieldSent
       })
 
@@ -735,16 +735,16 @@ const Admin = () => {
       updateLoading(true);
       updatePopup(true);
 
-      const { request: requestChangeRWARWalletAddressPool1 } = await prepareWriteContract({
+      const { request: requestChangeRDSWalletAddressPool1 } = await prepareWriteContract({
         address: Pool1.address,
         abi: Pool1.abi,
         functionName: 'submitTransaction',
         args: ['changeSafeRDSWalletAddress', Pool1.address, newSafeRDSWalletAddressPool1, 0]
       });
-      let { hash: changeRWARWalletAddressPool1Sent } = await writeContract(requestChangeRWARWalletAddressPool1)
+      let { hash: changeRDSWalletAddressPool1Sent } = await writeContract(requestChangeRDSWalletAddressPool1)
 
-      const dataChangeRWARWalletAddressPool1 = await waitForTransaction({
-        hash: changeRWARWalletAddressPool1Sent
+      await waitForTransaction({
+        hash: changeRDSWalletAddressPool1Sent
       })
 
       updateLoading(false);
@@ -772,7 +772,7 @@ const Admin = () => {
       });
       let { hash: withdrawSentPool1 } = await writeContract(requestWithdrawPool1)
 
-      const dataWithdrawPool1 = await waitForTransaction({
+      await waitForTransaction({
         hash: withdrawSentPool1
       })
 
@@ -800,7 +800,7 @@ const Admin = () => {
       });
       let { hash: renouncePool1Sent } = await writeContract(requestRenouncePool1)
 
-      const dataRenouncePool1 = await waitForTransaction({
+      await waitForTransaction({
         hash: renouncePool1Sent
       })
 
@@ -830,7 +830,7 @@ const Admin = () => {
       });
       let { hash: SendYieldSent } = await writeContract(requestSendYield)
 
-      const dataSendYield = await waitForTransaction({
+      waitForTransaction({
         hash: SendYieldSent
       })
 
@@ -850,16 +850,16 @@ const Admin = () => {
       updateLoading(true);
       updatePopup(true);
 
-      const { request: requestChangeRWARWalletAddressPool2 } = await prepareWriteContract({
+      const { request: requestChangeRDSWalletAddressPool2 } = await prepareWriteContract({
         address: Pool2.address,
         abi: Pool2.abi,
         functionName: 'submitTransaction',
         args: ['changeSafeRDSWalletAddress', Pool2.address, newSafeRDSWalletAddressPool2, 0]
       });
-      let { hash: changeRWARWalletAddressPool2Sent } = await writeContract(requestChangeRWARWalletAddressPool2)
+      let { hash: changeRDSWalletAddressPool2Sent } = await writeContract(requestChangeRDSWalletAddressPool2)
 
-      const dataChangeRWARWalletAddressPool2 = await waitForTransaction({
-        hash: changeRWARWalletAddressPool2Sent
+      await waitForTransaction({
+        hash: changeRDSWalletAddressPool2Sent
       })
 
       updateLoading(false);
@@ -887,7 +887,7 @@ const Admin = () => {
       });
       let { hash: withdrawSentPool2 } = await writeContract(requestWithdrawPool2)
 
-      const dataWithdrawPool2 = await waitForTransaction({
+      waitForTransaction({
         hash: withdrawSentPool2
       })
 
@@ -915,7 +915,7 @@ const Admin = () => {
       });
       let { hash: renouncePool2Sent } = await writeContract(requestRenouncePool2)
 
-      const dataRenouncePool2 = await waitForTransaction({
+      waitForTransaction({
         hash: renouncePool2Sent
       })
 
@@ -945,7 +945,7 @@ const Admin = () => {
       });
       let { hash: SendYieldSent } = await writeContract(requestSendYield)
 
-      const dataSendYield = await waitForTransaction({
+      await waitForTransaction({
         hash: SendYieldSent
       })
 
@@ -965,16 +965,16 @@ const Admin = () => {
       updateLoading(true);
       updatePopup(true);
 
-      const { request: requestChangeRWARWalletAddressPool3 } = await prepareWriteContract({
+      const { request: requestChangeRDSWalletAddressPool3 } = await prepareWriteContract({
         address: Pool3.address,
         abi: Pool3.abi,
         functionName: 'submitTransaction',
         args: ['changeSafeRDSWalletAddress', Pool3.address, newSafeRDSWalletAddressPool3, 0]
       });
-      let { hash: changeRWARWalletAddressPool3Sent } = await writeContract(requestChangeRWARWalletAddressPool3)
+      let { hash: changeRDSWalletAddressPool3Sent } = await writeContract(requestChangeRDSWalletAddressPool3)
 
-      const dataChangeRWARWalletAddressPool3 = await waitForTransaction({
-        hash: changeRWARWalletAddressPool3Sent
+      await waitForTransaction({
+        hash: changeRDSWalletAddressPool3Sent
       })
 
       updateLoading(false);
@@ -1002,7 +1002,7 @@ const Admin = () => {
       });
       let { hash: withdrawSentPool3 } = await writeContract(requestWithdrawPool3)
 
-      const dataWithdrawPool3 = await waitForTransaction({
+      waitForTransaction({
         hash: withdrawSentPool3
       })
 
@@ -1030,7 +1030,7 @@ const Admin = () => {
       });
       let { hash: renouncePool3Sent } = await writeContract(requestRenouncePool3)
 
-      const dataRenouncePool3 = await waitForTransaction({
+      waitForTransaction({
         hash: renouncePool3Sent
       })
 
@@ -1076,8 +1076,8 @@ const Admin = () => {
 
       //totalSupply
       const readTotalSupply = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'getTotalSupply',
       })
       const getTotalSupply = ethers.utils.formatEther(readTotalSupply, 18);
@@ -1085,84 +1085,84 @@ const Admin = () => {
 
       //MaxSupply
       const readMaxSupply = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: '_initial_supply',
       })
       const getMaxSupply = ethers.utils.formatEther(readMaxSupply, 18);
       updateMaxSupply(getMaxSupply);
       
 
-      //Address owner 1 of RWAR SC
+      //Address owner 1 of RDS SC
       const readAddressOwner1 = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'owners',
         args: [0],
       })
       updateOwnerAddress1(readAddressOwner1);
 
-      //Address owner 2 of RWAR SC
+      //Address owner 2 of RDS SC
       const readAddressOwner2 = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'owners',
         args: [1],
       })
       updateOwnerAddress2(readAddressOwner2);
 
-      //Address owner 3 of RWAR SC
+      //Address owner 3 of RDS SC
       const readAddressOwner3 = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'owners',
         args: [2],
       })
       updateOwnerAddress3(readAddressOwner3);
 
-      //Address owner 4 of RWAR SC
+      //Address owner 4 of RDS SC
       const readAddressOwner4 = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'owners',
         args: [3],
       })
       updateOwnerAddress4(readAddressOwner4);
 
       //Development
-      const readBalanceOfRWARDevelopmentSafeWallet = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+      const readBalanceOfRDSDevelopmentSafeWallet = await readContract({
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'balanceOf',
         args: [addressDevelopmentSafeWallet],
       })
-      const balanceOfRWARDevelopmentSafeWallet = ethers.utils.formatEther(readBalanceOfRWARDevelopmentSafeWallet, 18);
-      updateRdsDevelopmentWalletSafe(balanceOfRWARDevelopmentSafeWallet);
+      const balanceOfRDSDevelopmentSafeWallet = ethers.utils.formatEther(readBalanceOfRDSDevelopmentSafeWallet, 18);
+      updateRdsDevelopmentWalletSafe(balanceOfRDSDevelopmentSafeWallet);
 
       //Team
-      const readBalanceOfRWARTeamSafeWallet = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+      const readBalanceOfRDSTeamSafeWallet = await readContract({
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'balanceOf',
         args: [addressTeamSafeWallet],
       })
-      const balanceOfRWARTeamSafeWallet = ethers.utils.formatEther(readBalanceOfRWARTeamSafeWallet, 18);
-      updateRdsTeamWalletSafe(balanceOfRWARTeamSafeWallet);
+      const balanceOfRDSTeamSafeWallet = ethers.utils.formatEther(readBalanceOfRDSTeamSafeWallet, 18);
+      updateRdsTeamWalletSafe(balanceOfRDSTeamSafeWallet);
 
       //Marketing
-      const readBalanceOfRWARMarketingSafeWallet = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+      const readBalanceOfRDSMarketingSafeWallet = await readContract({
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'balanceOf',
         args: [addressMarketingSafeWallet],
       })
-      const balanceOfRWARMarketingSafeWallet = ethers.utils.formatEther(readBalanceOfRWARMarketingSafeWallet, 18);
-      updateRdsMarketingWalletSafe(balanceOfRWARMarketingSafeWallet);
+      const balanceOfRDSMarketingSafeWallet = ethers.utils.formatEther(readBalanceOfRDSMarketingSafeWallet, 18);
+      updateRdsMarketingWalletSafe(balanceOfRDSMarketingSafeWallet);
       //Pool 1
       //SafeRDSPool1 RDS
       const readBalanceOfRDSSafeRDSPool1Wallet = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'balanceOf',
         args: [safeRDSWalletAddressPool1],
       })
@@ -1171,8 +1171,8 @@ const Admin = () => {
 
       //SafeRWAPool1 RDS
       const readBalanceOfRDSSafeRWAPool1Wallet = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'balanceOf',
         args: [addressSafeRWAPool1Wallet],
       })
@@ -1193,8 +1193,8 @@ const Admin = () => {
       //Pool 2
       //SafeRDSPool2 RDS
       const readBalanceOfRDSSafeRDSPool2Wallet = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'balanceOf',
         args: [safeRDSWalletAddressPool2],
       })
@@ -1203,8 +1203,8 @@ const Admin = () => {
 
       //SafeRWAPool2 RDS
       const readBalanceOfRDSSafeRWAPool2Wallet = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'balanceOf',
         args: [addressSafeRWAPool2Wallet],
       })
@@ -1224,8 +1224,8 @@ const Admin = () => {
       //Pool 3
       //SafeRDSPool3 RDS
       const readBalanceOfRDSSafeRDSPool3Wallet = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'balanceOf',
         args: [safeRDSWalletAddressPool3],
       })
@@ -1234,8 +1234,8 @@ const Admin = () => {
 
       //SafeRWAPool3 RDS
       const readBalanceOfRDSSafeRWAPool3Wallet = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'balanceOf',
         args: [addressSafeRWAPool3Wallet],
       })
@@ -1252,15 +1252,15 @@ const Admin = () => {
       const balanceOfUSDTSafeRWAPool3Wallet = ethers.utils.formatEther(readBalanceOfUSDTSafeRWAPool3Wallet, 18);
       updateUsdtSafeRWAPool3Wallet(balanceOfUSDTSafeRWAPool3Wallet);
 
-      //Balance RWAR of the Pool 1
-      const readRWARTotal = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+      //Balance RDS of the Pool 1
+      const readRDSTotal = await readContract({
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'balanceOf',
         args: [Pool1.address],
       })
-      const balanceOfRWARPool1 = ethers.utils.formatEther(readRWARTotal, 18);
-      updateBalanceRWARPool1(balanceOfRWARPool1);
+      const balanceOfRDSPool1 = ethers.utils.formatEther(readRDSTotal, 18);
+      updateBalanceRDSPool1(balanceOfRDSPool1);
 
       //Total Stacked of the Pool 1
       const readTotalStacked = await readContract({
@@ -1269,7 +1269,7 @@ const Admin = () => {
         functionName: 'totalStacked',
       })
       const readTotalStackedPool1 = ethers.utils.formatEther(readTotalStacked, 18);
-      updateRWARTotalStackedPool1(readTotalStackedPool1);
+      updateRDSTotalStackedPool1(readTotalStackedPool1);
 
       //Total Stacked 7 Days of the Pool 1
       const readTotalStacked7Days = await readContract({
@@ -1280,15 +1280,15 @@ const Admin = () => {
       const getTotalStacked7DaysPool1 = ethers.utils.formatEther(readTotalStacked7Days, 18);
       updateTotalStacked7DaysPool1(getTotalStacked7DaysPool1);
 
-      //Balance RWAR of the Pool 2
-      const readRWARTotalPool2 = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+      //Balance RDS of the Pool 2
+      const readRDSTotalPool2 = await readContract({
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'balanceOf',
         args: [Pool2.address],
       })
-      const balanceOfRWARPool2 = ethers.utils.formatEther(readRWARTotalPool2, 18);
-      updateBalanceRWARPool2(balanceOfRWARPool2);
+      const balanceOfRDSPool2 = ethers.utils.formatEther(readRDSTotalPool2, 18);
+      updateBalanceRDSPool2(balanceOfRDSPool2);
 
       //Total Stacked of the Pool 2
       const readTotalStackedPool2 = await readContract({
@@ -1297,7 +1297,7 @@ const Admin = () => {
         functionName: 'totalStacked',
       })
       const totalStackedPool2 = ethers.utils.formatEther(readTotalStackedPool2, 18);
-      updateRWARTotalStackedPool2(totalStackedPool2);
+      updateRDSTotalStackedPool2(totalStackedPool2);
 
       //Total Stacked 7 Days of the Pool 2
       const readTotalStacked7DaysPool2 = await readContract({
@@ -1308,15 +1308,15 @@ const Admin = () => {
       const getTotalStacked7DaysPool2 = ethers.utils.formatEther(readTotalStacked7DaysPool2, 18);
       updateTotalStacked7DaysPool2(getTotalStacked7DaysPool2);
 
-      //Balance RWAR of the Pool 3
-      const readRWARTotalPool3 = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+      //Balance RDS of the Pool 3
+      const readRDSTotalPool3 = await readContract({
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'balanceOf',
         args: [Pool3.address],
       })
-      const balanceOfRWARPool3 = ethers.utils.formatEther(readRWARTotalPool3, 18);
-      updateBalanceRWARPool3(balanceOfRWARPool3);
+      const balanceOfRDSPool3 = ethers.utils.formatEther(readRDSTotalPool3, 18);
+      updateBalanceRDSPool3(balanceOfRDSPool3);
 
       //Total Stacked of the Pool 3
       const readTotalStackedPool3 = await readContract({
@@ -1325,7 +1325,7 @@ const Admin = () => {
         functionName: 'totalStacked',
       })
       const totalStackedPool3 = ethers.utils.formatEther(readTotalStackedPool3, 18);
-      updateRWARTotalStackedPool3(totalStackedPool3);
+      updateRDSTotalStackedPool3(totalStackedPool3);
 
       //Total Stacked 7 Days of the Pool 3
       const readTotalStacked7DaysPool3 = await readContract({
@@ -1336,18 +1336,18 @@ const Admin = () => {
       const getTotalStacked7DaysPool3 = ethers.utils.formatEther(readTotalStacked7DaysPool3, 18);
       updateTotalStacked7DaysPool3(getTotalStacked7DaysPool3);
 
-      //List transactions to be confirmed for RWAR SC
+      //List transactions to be confirmed for RDS SC
       const readTransactionToBeConf = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'getTransactionsToBeConfirmed',
         args: [address]
       })
 
-      //List submited transactions for RWAR SC
+      //List submited transactions for RDS SC
       const readSubmitedTransaction = await readContract({
-        address: RWAR.address,
-        abi: RWAR.abi,
+        address: RDS.address,
+        abi: RDS.abi,
         functionName: 'getSubmitedTransactions',
         args: [address]
       })
@@ -1489,7 +1489,7 @@ const Admin = () => {
         <div className='admin_info_container_part'>
           <div className='admin_info'>
             <p className='admin_info_title'>Smart Contract Address</p>
-            <p className='admin_info_number'>{RWAR.address}</p>
+            <p className='admin_info_number'>{RDS.address}</p>
           </div>
         </div>
         
@@ -1539,12 +1539,12 @@ const Admin = () => {
         <div className='admin_info_container_part'>
           <div className='admin_info'>
             <p className='admin_info_title'>Balance of RDS</p>
-            <p className='admin_info_number'>{balanceRWARPool1}</p>
+            <p className='admin_info_number'>{balanceRDSPool1}</p>
           </div>
 
           <div className='admin_info'>
             <p className='admin_info_title'>Total stacked</p>
-            <p className='admin_info_number'>{rwarTotalStackedPool1}</p>
+            <p className='admin_info_number'>{RDSTotalStackedPool1}</p>
           </div>
 
           <div className='admin_info'>
@@ -1601,12 +1601,12 @@ const Admin = () => {
         <div className='admin_info_container_part'>
           <div className='admin_info'>
             <p className='admin_info_title'>Balance of RDS</p>
-            <p className='admin_info_number'>{balanceRWARPool2}</p>
+            <p className='admin_info_number'>{balanceRDSPool2}</p>
           </div>
 
           <div className='admin_info'>
             <p className='admin_info_title'>Total stacked</p>
-            <p className='admin_info_number'>{rwarTotalStackedPool2}</p>
+            <p className='admin_info_number'>{RDSTotalStackedPool2}</p>
           </div>
 
           <div className='admin_info'>
@@ -1662,12 +1662,12 @@ const Admin = () => {
         <div className='admin_info_container_part'>
           <div className='admin_info'>
             <p className='admin_info_title'>Balance of RDS</p>
-            <p className='admin_info_number'>{balanceRWARPool3}</p>
+            <p className='admin_info_number'>{balanceRDSPool3}</p>
           </div>
 
           <div className='admin_info'>
             <p className='admin_info_title'>Total stacked</p>
-            <p className='admin_info_number'>{rwarTotalStackedPool3}</p>
+            <p className='admin_info_number'>{RDSTotalStackedPool3}</p>
           </div>
 
           <div className='admin_info'>
@@ -1748,7 +1748,7 @@ const Admin = () => {
         <Popup loading={loading} number={mintRDSTokens+' RDS tokens!'} action='submit: mint' updatePopup={updatePopup} updateBoolSubmitMint={updateBoolSubmitMint} >
         </Popup>
         :popup && boolSubmitBurn ? 
-        <Popup loading={loading} number={burnRWARTokens+' RDS tokens!'} action='submit: burn' updatePopup={updatePopup} updateBoolSubmitBurn={updateBoolSubmitBurn} >
+        <Popup loading={loading} number={burnRDSTokens+' RDS tokens!'} action='submit: burn' updatePopup={updatePopup} updateBoolSubmitBurn={updateBoolSubmitBurn} >
         </Popup>
         :popup && boolSubmitWithdraw ? 
         <Popup loading={loading} number={withdrawTokens+' tokens!'} action='submit: withdraw' updatePopup={updatePopup} updateBoolSubmitWithdraw={updateBoolSubmitWithdraw} >
@@ -1890,7 +1890,7 @@ const Admin = () => {
         </div>
         <br></br>
         <div className='admin_input_container'>
-        <input className="admin_input" id="Tokens" type="address" placeholder="Destination address" value={addressMintRDSTokens} onChange={e => updateAddressMintRDSTokens(e.target.value)}></input>
+        <input className="admin_input" id="Tokens" type="string" placeholder="Destination address" value={addressMintRDSTokens} onChange={e => updateAddressMintRDSTokens(e.target.value)}></input>
           <p>Address Destination</p>
         </div>
         <button className="admin_button" onClick={() => mint()}>
@@ -1903,7 +1903,7 @@ const Admin = () => {
       <div className='admin_section'>
         <p className='admin_title'>Burn RDS Tokens</p>
         <div className='admin_input_container'>
-        <input className="admin_input" id="RWAR" type="number" placeholder="Number of tokens" value={burnRWARTokens} onChange={e => updateBurnRWARTokens(e.target.value)}></input>
+        <input className="admin_input" id="RDS" type="number" placeholder="Number of tokens" value={burnRDSTokens} onChange={e => updateBurnRDSTokens(e.target.value)}></input>
           <p>RDS Token</p>
         </div>
         <button className="admin_button" onClick={() => burn()}>
@@ -1921,12 +1921,12 @@ const Admin = () => {
         </div>
         <br></br>
         <div className='admin_input_container'>
-        <input className="admin_input" id="Tokens" type="address" placeholder="Address of the token" value={withdrawAddressToken} onChange={e => updateWithdrawAddressToken(e.target.value)}></input>
+        <input className="admin_input" id="Tokens" type="string" placeholder="Address of the token" value={withdrawAddressToken} onChange={e => updateWithdrawAddressToken(e.target.value)}></input>
           <p>Address Tokens</p>
         </div>
         <br></br>
         <div className='admin_input_container'>
-        <input className="admin_input" id="Tokens" type="address" placeholder="Destination address" value={withdrawTo} onChange={e => updateWithdrawTo(e.target.value)}></input>
+        <input className="admin_input" id="Tokens" type="string" placeholder="Destination address" value={withdrawTo} onChange={e => updateWithdrawTo(e.target.value)}></input>
           <p>Address Destination</p>
         </div>
         <button className="admin_button" onClick={() => withdraw()}>
@@ -1979,12 +1979,12 @@ const Admin = () => {
         </div>
         <br></br>
         <div className='admin_input_container'>
-        <input className="admin_input" id="Tokens" type="address" placeholder="Address of the token" value={withdrawAddressTokenPool1} onChange={e => updateWithdrawAddressTokenPool1(e.target.value)}></input>
+        <input className="admin_input" id="Tokens" type="string" placeholder="Address of the token" value={withdrawAddressTokenPool1} onChange={e => updateWithdrawAddressTokenPool1(e.target.value)}></input>
           <p>Address Tokens</p>
         </div>
         <br></br>
         <div className='admin_input_container'>
-        <input className="admin_input" id="Tokens" type="address" placeholder="Destination address" value={withdrawToPool1} onChange={e => updateWithdrawToPool1(e.target.value)}></input>
+        <input className="admin_input" id="Tokens" type="string" placeholder="Destination address" value={withdrawToPool1} onChange={e => updateWithdrawToPool1(e.target.value)}></input>
           <p>Address Destination</p>
         </div>
         <button className="admin_button" onClick={() => withdrawPool1()}>
@@ -2037,12 +2037,12 @@ const Admin = () => {
         </div>
         <br></br>
         <div className='admin_input_container'>
-        <input className="admin_input" id="Tokens" type="address" placeholder="Address of the token" value={withdrawAddressTokenPool2} onChange={e => updateWithdrawAddressTokenPool2(e.target.value)}></input>
+        <input className="admin_input" id="Tokens" type="string" placeholder="Address of the token" value={withdrawAddressTokenPool2} onChange={e => updateWithdrawAddressTokenPool2(e.target.value)}></input>
           <p>Address Tokens</p>
         </div>
         <br></br>
         <div className='admin_input_container'>
-        <input className="admin_input" id="Tokens" type="address" placeholder="Destination address" value={withdrawToPool2} onChange={e => updateWithdrawToPool2(e.target.value)}></input>
+        <input className="admin_input" id="Tokens" type="string" placeholder="Destination address" value={withdrawToPool2} onChange={e => updateWithdrawToPool2(e.target.value)}></input>
           <p>Address Destination</p>
         </div>
         <button className="admin_button" onClick={() => withdrawPool2()}>
@@ -2095,12 +2095,12 @@ const Admin = () => {
         </div>
         <br></br>
         <div className='admin_input_container'>
-        <input className="admin_input" id="Tokens" type="address" placeholder="Address of the token" value={withdrawAddressTokenPool3} onChange={e => updateWithdrawAddressTokenPool3(e.target.value)}></input>
+        <input className="admin_input" id="Tokens" type="string" placeholder="Address of the token" value={withdrawAddressTokenPool3} onChange={e => updateWithdrawAddressTokenPool3(e.target.value)}></input>
           <p>Address Tokens</p>
         </div>
         <br></br>
         <div className='admin_input_container'>
-        <input className="admin_input" id="Tokens" type="address" placeholder="Destination address" value={withdrawToPool3} onChange={e => updateWithdrawToPool3(e.target.value)}></input>
+        <input className="admin_input" id="Tokens" type="string" placeholder="Destination address" value={withdrawToPool3} onChange={e => updateWithdrawToPool3(e.target.value)}></input>
           <p>Address Destination</p>
         </div>
         <button className="admin_button" onClick={() => withdrawPool3()}>

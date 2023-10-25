@@ -2,7 +2,7 @@ import React from 'react';
 import './Stack.css';
 import { useState, useEffect } from "react";
 import polygon from '../img/Polygon.png';
-import RWAR from "../RWAR.json";
+import RDS from "../RDS.json";
 import Pool1 from "../Pool1.json";
 import Pool2 from "../Pool2.json";
 import Pool3 from "../Pool3.json";
@@ -17,8 +17,6 @@ const Stack = () => {
 
   const cookies = new Cookies(null, { path: '/' });
   
-  const [checkbox, updateCheckbox] = React.useState('');
-  
   const params = useParams();
   const PoolNb = params.name;
   const addressMarketingSafeWallet = "0x671bbd03D1fbcA8A2aB46eC1a250B19a224Bbf82";
@@ -31,7 +29,7 @@ const Stack = () => {
   const [dflTokens, updatedflTokens] = useState(0);
   const [myStack, updateMyStack] = useState(0);
   const [totalStacked, updateTotalStacked] = useState(0);
-  const [maxStack, updateMaxStack] = useState(0);
+  //const [maxStack, updateMaxStack] = useState(0);
   const [data, updateData] = useState(false);
   const [loading, updateLoading] = useState(false);
   const [popup, updatePopup] = useState(false);
@@ -46,8 +44,8 @@ const Stack = () => {
       try {
 
         const readBalanceOfMyDflTokens = await readContract({
-          address: RWAR.address,
-          abi: RWAR.abi,
+          address: RDS.address,
+          abi: RDS.abi,
           functionName: 'balanceOf',
           args: [address],
         })
@@ -69,14 +67,14 @@ const Stack = () => {
         })
         const totalStacked = ethers.utils.formatEther(readTotalStacked, 18);
         updateTotalStacked(totalStacked);
-
+/*
         const readMaxStack = await readContract({
           address: Pool1.address,
           abi: Pool1.abi,
           functionName: 'maxStack',
         })
         const maxStack = ethers.utils.formatEther(readMaxStack, 18);
-        updateMaxStack(maxStack);
+        updateMaxStack(maxStack);*/
 
         updateData(true);
       } catch (error) {
@@ -89,8 +87,8 @@ const Stack = () => {
       try {
 
         const readBalanceOfMyDflTokens = await readContract({
-          address: RWAR.address,
-          abi: RWAR.abi,
+          address: RDS.address,
+          abi: RDS.abi,
           functionName: 'balanceOf',
           args: [address],
         })
@@ -112,14 +110,14 @@ const Stack = () => {
         })
         const totalStacked = ethers.utils.formatEther(readTotalStacked, 18);
         updateTotalStacked(totalStacked);
-
+/*
         const readMaxStack = await readContract({
           address: Pool2.address,
           abi: Pool2.abi,
           functionName: 'maxStack',
         })
         const maxStack = ethers.utils.formatEther(readMaxStack, 18);
-        updateMaxStack(maxStack);
+        updateMaxStack(maxStack);*/
 
         updateData(true);
       } catch (error) {
@@ -131,8 +129,8 @@ const Stack = () => {
       try {
 
         const readBalanceOfMyDflTokens = await readContract({
-          address: RWAR.address,
-          abi: RWAR.abi,
+          address: RDS.address,
+          abi: RDS.abi,
           functionName: 'balanceOf',
           args: [address],
         })
@@ -154,14 +152,14 @@ const Stack = () => {
         })
         const totalStacked = ethers.utils.formatEther(readTotalStacked, 18);
         updateTotalStacked(totalStacked);
-
+/*
         const readMaxStack = await readContract({
           address: Pool3.address,
           abi: Pool3.abi,
           functionName: 'maxStack',
         })
         const maxStack = ethers.utils.formatEther(readMaxStack, 18);
-        updateMaxStack(maxStack);
+        updateMaxStack(maxStack);*/
 
         updateData(true);
       } catch (error) {
@@ -184,8 +182,8 @@ const Stack = () => {
             updatePopup(true);
       
             const { request: config } = await prepareWriteContract({
-              address: RWAR.address,
-              abi: RWAR.abi,
+              address: RDS.address,
+              abi: RDS.abi,
               functionName: 'approve',
               args: [Pool1.address, ethers.utils.parseUnits(formParams.dfl)],
             });
@@ -223,8 +221,8 @@ const Stack = () => {
             updatePopup(true);
       
             const { request: config } = await prepareWriteContract({
-              address: RWAR.address,
-              abi: RWAR.abi,
+              address: RDS.address,
+              abi: RDS.abi,
               functionName: 'approve',
               args: [Pool2.address, ethers.utils.parseUnits(formParams.dfl)],
             });
@@ -262,8 +260,8 @@ const Stack = () => {
             updatePopup(true);
       
             const { request: config } = await prepareWriteContract({
-              address: RWAR.address,
-              abi: RWAR.abi,
+              address: RDS.address,
+              abi: RDS.abi,
               functionName: 'approve',
               args: [Pool3.address, ethers.utils.parseUnits(formParams.dfl)],
             });
@@ -327,7 +325,7 @@ const Stack = () => {
               </div>
               <div className='stack_description_line'>
                 <p className='stack_info_title'>Stacked</p>
-                <p className='stack_info_number'>{totalStacked}/{maxStack}</p>
+                <p className='stack_info_number'>{totalStacked}</p>
               </div>
               <div className='stack_description_line'>
                 <p className='stack_info_title'>My stacks</p>
@@ -353,16 +351,17 @@ const Stack = () => {
           </div>
           <br></br>
           <div className='stack_input_container'>
-            <input className="stack_input" id="addr" type="address" placeholder="Affiliate address" value={formParams.addr} onChange={e => updateFormParams({...formParams, addr: e.target.value})}></input>
+            <input className="stack_input" id="addr" type="string" placeholder="Affiliate address" value={formParams.addr} onChange={e => updateFormParams({...formParams, addr: e.target.value})}></input>
             <p>Affiliate address</p>
           </div>
           <br></br>
+          <p className='invest_info_title'>You cannot enter more than 15 digits after the decimal point.</p>
           <p className='invest_info_title'>After making a deposit, your tokens are locked in for a period of 30 days. This means you cannot unstake or withdraw them during this time.</p>
           <p className='invest_info_title'>3% tax go to the marketing, the affiliate address and the reserve.</p>
         </div>
         
         {popup ? 
-        <Popup loading={loading} number={(formParams.dfl*97/100).toString() +' DFLT!'} action='stacked' updatePopup={updatePopup}>
+        <Popup loading={loading} number={(formParams.dfl*97/100).toString() +' RDS!'} action='stacked' updatePopup={updatePopup}>
         </Popup>
         : data ?
           <button className="stack_button_exchange" onClick={() => stack()}>
