@@ -83,7 +83,7 @@
   color: grey;
 }
 .admin_info_number{
-  font-size: 22px;
+  font-size: 18px;
   color: black;
 }
 .admin_info_address_little{
@@ -115,19 +115,19 @@
 }
 
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1700px) {
   .admin_container {
     padding: 10rem 10%;
   }
 }
 
-@media screen and (max-width: 1100px) {
+@media screen and (max-width: 1300px) {
   .admin_container {
     padding: 10rem 3%;
   }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1100px) {
   .admin_container {
     color: black;
     width: 100%;
@@ -163,6 +163,9 @@
   .admin_title {
     font-size: 25px;
     margin-bottom: 20px;
+  }
+  .admin_info {
+    margin-top: 10px;
   }
   .admin_info_number{
     font-size: 18px;
@@ -201,5 +204,12 @@
     border-radius: 25px;
     box-shadow: 2px 3px #008AFF;
     margin-top: 20px;
+  }
+}
+
+
+@media screen and (max-height: 750px) {
+  .admin_container {
+    height: 1300vh;
   }
 }

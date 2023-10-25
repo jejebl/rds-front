@@ -243,3 +243,10 @@
     margin-right: 5px;
   }
 }
+
+
+@media screen and (max-height: 750px) {
+  .poolpage_container {
+    height: 300vh;
+  }
+}
