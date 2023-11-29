@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import {HashRouter} from "react-router-dom";
 import {StrictMode} from 'react';
-import App from './App';
+import App from './App.js';
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { Web3Modal } from '@web3modal/react'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { polygon, polygonMumbai, goerli } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 
-const projectId = 'c53ed903de007696850dc87b8825c82f'
+const projectId = 'db5c024ee3fdfeff82ef8e7875616465'
 const alchemyProviderId = 'gMY5GGqB2XD7zwh3zA6hnSOwEFEWW8bv'
 
 const { chains, publicClient } = configureChains([polygonMumbai], [w3mProvider({ projectId }), alchemyProvider({ apiKey: alchemyProviderId })]);

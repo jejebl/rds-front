@@ -195,8 +195,8 @@ useEffect(() => {
             <p className='profile_address'>{address}</p>
             <div className='profile_info_container'>
               <div className='profile_description_line'>
-                <p className='profile_info_title'>My Renditus</p>
-                <p className='profile_info_number'>{dflTokens} RDS</p>
+                <p className='profile_info_title'>My DFL</p>
+                <p className='profile_info_number'>{dflTokens} DFL</p>
               </div>
             </div>
             
@@ -232,16 +232,16 @@ useEffect(() => {
               <div className='profile_info_container_Affiliate'>
                 <div className='profile_description_line_affiliate'>
                   <a href='profile'>
-                    <p className='profile_info_title'>RDS with affiliation Pool 1</p>
+                    <p className='profile_info_title'>DFL with affiliation Pool 1</p>
                     <p className='profile_info_number'>{amountRDSAffiliate1}</p>
                   </a>
                 </div>
                 <div className='profile_description_line_affiliate'>
-                  <p className='profile_info_title'>RDS with affiliation Pool 2</p>
+                  <p className='profile_info_title'>DFL with affiliation Pool 2</p>
                   <p className='profile_info_number'>{amountRDSAffiliate2}</p>
                 </div>
                 <div className='profile_description_line_affiliate'>
-                  <p className='profile_info_title'>RDS with affiliation Pool 3</p>
+                  <p className='profile_info_title'>DFL with affiliation Pool 3</p>
                   <p className='profile_info_number'>{amountRDSAffiliate3}</p>
                 </div>
               </div>

@@ -6,8 +6,8 @@ import RDS from "../RDS.json";
 import Pool1 from "../Pool1.json";
 import Pool2 from "../Pool2.json";
 import Pool3 from "../Pool3.json";
-import PopupUnstack from "./PopupUnstack";
-import Alert from "./Alert";
+import PopupUnstack from "./PopupUnstack.js";
+import Alert from "./Alert.js";
 import { useAccount } from 'wagmi';
 import { readContract, writeContract, prepareWriteContract, waitForTransaction } from '@wagmi/core';
 import { useParams } from 'react-router-dom';
@@ -301,7 +301,7 @@ const Remove = () => {
                 <p className='stack_info_number'>{myStack}</p>
               </div>
               <div className='stack_description_line'>
-                <p className='stack_info_title'>My RDS</p>
+                <p className='stack_info_title'>My DFL</p>
                 <p className='stack_info_number'>{rdsTokens}</p>
               </div>
             </div>
@@ -315,7 +315,7 @@ const Remove = () => {
         <div className='stack_exchange_container'>
           <div className='stack_input_container'>
             <input className="stack_input" id="rds" type="number" placeholder="Number of tokens" value={formParams.rds} onChange={e => updateFormParams({...formParams, rds: e.target.value})}></input>
-            <p>Renditus</p>
+            <p>DFL</p>
           </div>
           <br></br>
           <p className='invest_info_title'>After making a deposit, your tokens are locked in for a period of 30 days. This means you cannot unstake or withdraw them during this time.</p>
@@ -332,7 +332,7 @@ const Remove = () => {
         }
 
         {alert ? 
-        <Alert action="You don't have enough RDS stacked!" updatePopup={updatePopup} updateLoading={updateLoading} updateAlert={updateAlert}>
+        <Alert action="You don't have enough DFL stacked!" updatePopup={updatePopup} updateLoading={updateLoading} updateAlert={updateAlert}>
         </Alert>
         : ""
         }

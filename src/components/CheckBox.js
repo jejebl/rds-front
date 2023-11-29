@@ -23,14 +23,7 @@ const CheckBox = (props) => {
           <div className='checkbox_description'>
             <p className='checkbox_title'>{page}</p>
             <p className='checkbox_text'>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-              Integer diam sem, ullamcorper in semper ac, bibendum venenatis nibh. Ut interdum blandit odio ac laoreet. 
-              Nunc iaculis odio ac nisl semper mollis. Vivamus at urna eu dolor placerat placerat. 
-              Curabitur nibh tortor, semper a faucibus at, dapibus ut erat. In massa lacus, convallis convallis velit ac, hendrerit sagittis metus. 
-              Maecenas nec placerat felis. Etiam sed neque sit amet lorem pretium gravida nec a dolor. Ut eu maximus mauris, sit amet venenatis quam. 
-              Fusce rhoncus sed orci ut dignissim. Vestibulum faucibus, nibh lacinia aliquet dapibus, lorem erat pretium nisl, in scelerisque ex magna in mauris. 
-              Proin interdum quam gravida varius eleifend. Nam eu sem et massa dignissim finibus non varius ante. Nullam sagittis dui non scelerisque dapibus. 
-              Praesent viverra at magna sit amet pretium. Nunc condimentum neque nec libero sollicitudin lobortis.
+              By checking this box, you accept the risks, you know what you're doing and you understand what you're staking your tokens in.
             </p>
             <div className='checkbox_linecheck'>
               <input type="checkbox" id="check" checked={checked} onChange={handleChange} />

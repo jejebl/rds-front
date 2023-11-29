@@ -6,8 +6,8 @@ import RDS from "../RDS.json";
 import Pool1 from "../Pool1.json";
 import Pool2 from "../Pool2.json";
 import Pool3 from "../Pool3.json";
-import Popup from "./Popup";
-import Alert from "./Alert";
+import Popup from "./Popup.js";
+import Alert from "./Alert.js";
 import { useAccount } from 'wagmi';
 import { readContract, writeContract, prepareWriteContract, waitForTransaction } from '@wagmi/core';
 import { useParams } from 'react-router-dom';
@@ -332,7 +332,7 @@ const Stack = () => {
                 <p className='stack_info_number'>{myStack}</p>
               </div>
               <div className='stack_description_line'>
-                <p className='stack_info_title'>My RDS</p>
+                <p className='stack_info_title'>My DFL</p>
                 <p className='stack_info_number'>{dflTokens}</p>
               </div>
             </div>
@@ -347,7 +347,7 @@ const Stack = () => {
         <div className='stack_exchange_container'>
           <div className='stack_input_container'>
             <input className="stack_input" id="dfl" type="number" placeholder="Number of tokens" value={formParams.dfl} onChange={e => updateFormParams({...formParams, dfl: e.target.value})}></input>
-            <p>Renditus</p>
+            <p>DFL</p>
           </div>
           <br></br>
           <div className='stack_input_container'>
@@ -361,7 +361,7 @@ const Stack = () => {
         </div>
         
         {popup ? 
-        <Popup loading={loading} number={(formParams.dfl*97/100).toString() +' RDS!'} action='stacked' updatePopup={updatePopup}>
+        <Popup loading={loading} number={(formParams.dfl*97/100).toString() +' DFL!'} action='stacked' updatePopup={updatePopup}>
         </Popup>
         : data ?
           <button className="stack_button_exchange" onClick={() => stack()}>
@@ -371,7 +371,7 @@ const Stack = () => {
         }
 
         {alert ? 
-        <Alert action="You don't have enough RDS tokens!" updatePopup={updatePopup} updateLoading={updateLoading} updateAlert={updateAlert}>
+        <Alert action="You don't have enough DFL tokens!" updatePopup={updatePopup} updateLoading={updateLoading} updateAlert={updateAlert}>
         </Alert>
         : ""
         }

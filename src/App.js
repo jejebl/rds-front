@@ -4,16 +4,16 @@ import {
   Route,
   useLocation
 } from "react-router-dom";
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Pools from './components/Pools';
-import Docs from './components/Docs';
-import Profile from './components/Profile';
-import PoolPage from './components/PoolPage';
-import Admin from './components/Admin';
-import Stack from './components/Stack';
-import Remove from './components/Remove';
-import Claim from './components/Claim';
+import Navbar from './components/Navbar.js';
+import Footer from './components/Footer.js';
+import Pools from './components/Pools.js';
+import Docs from './components/Docs.js';
+import Profile from './components/Profile.js';
+import PoolPage from './components/PoolPage.js';
+import Admin from './components/Admin.js';
+import Stack from './components/Stack.js';
+import Remove from './components/Remove.js';
+import Claim from './components/Claim.js';
 import { useEffect } from 'react';
 
 function App() {

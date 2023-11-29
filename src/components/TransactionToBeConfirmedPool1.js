@@ -26,7 +26,7 @@ const TransactionToBeConfirmedPool1 = (data) => {
             {data.data.name==='sendYield' && !data.data.executed && !data.data.deleted ? 
             <>
             <div className='confirmed_info'>
-              <p>{data.data.name + ' '  + ethers.utils.formatEther(data.data.value, 18) + ' RDS to Pool 1 : ' + data.data.destination}</p>
+              <p>{data.data.name + ' '  + ethers.utils.formatEther(data.data.value, 18) + ' DFL to Pool 1 : ' + data.data.destination}</p>
             </div>
             <div className='confirmed_button_container'>
               <button className="confirmed_button" onClick={() => data.confirmTransactionPool1(data.data.id)}>

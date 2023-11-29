@@ -2,7 +2,7 @@ import {
   Link
 } from "react-router-dom";
 import './Navbar.css';
-import RDS from '../img/logoRDS.png';
+import RDS from '../img/rds.png';
 import { Web3Button } from '@web3modal/react'
 
 const Navbar = () => {
@@ -12,7 +12,7 @@ const Navbar = () => {
       
       <div className="navbar_icon_container">
         <div className="navbar_dfl">
-          <img alt='RWAR' src={RDS}></img>
+          <img alt='DFL' src={RDS}></img>
         </div>
       </div>
 

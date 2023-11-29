@@ -6,8 +6,8 @@ import RDS from "../RDS.json";
 import Pool1 from "../Pool1.json";
 import Pool2 from "../Pool2.json";
 import Pool3 from "../Pool3.json";
-import Popup from "./Popup";
-import Alert from "./Alert";
+import Popup from "./Popup.js";
+import Alert from "./Alert.js";
 import { useAccount } from 'wagmi';
 import { readContract, writeContract, prepareWriteContract, waitForTransaction } from '@wagmi/core';
 import { useParams } from 'react-router-dom';
@@ -270,15 +270,15 @@ const Remove = () => {
 
         <div className='stack_exchange_container'>
           <div className='stack_input_container'>
-            <input className="stack_input" id="usdt" type="number" placeholder="Renditus" value={formParams.usdt} onChange={e => updateFormParams({usdt: e.target.value})}></input>
-            <p>Renditus</p>
+            <input className="stack_input" id="usdt" type="number" placeholder="DFL" value={formParams.usdt} onChange={e => updateFormParams({usdt: e.target.value})}></input>
+            <p>DFL</p>
           </div>
           <br></br>
-          <p className='invest_info_title'>Every 2 weeks you can claim your yields in RDS tokens.</p>
+          <p className='invest_info_title'>Every 2 weeks you can claim your yields in DFL tokens.</p>
         </div>
         
         {popup ? 
-        <Popup loading={loading} number={'some Renditus!'} action='claimed' updatePopup={updatePopup}>
+        <Popup loading={loading} number={'some DFL!'} action='claimed' updatePopup={updatePopup}>
         </Popup>
         : data ?
           <button className="stack_button_exchange" onClick={() => claim()}>

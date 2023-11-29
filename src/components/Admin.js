@@ -2,7 +2,7 @@ import React from 'react'
 import './Admin.css';
 import { useState, useEffect } from "react";
 import RDS from "../RDS.json";
-import Popup from "./Popup";
+import Popup from "./Popup.js";
 import TransactionToBeConfirmed from './TransactionToBeConfirmed';
 import TransactionToBeConfirmedPool1 from './TransactionToBeConfirmedPool1';
 import SubmitedTransactionsPool1 from './SubmitedTransactionsPool1';
@@ -1431,28 +1431,28 @@ const Admin = () => {
 
         <div className='admin_info_container_part'>
           <div className='admin_info'>
-            <p className='admin_info_title'>Total Supply RDS</p>
+            <p className='admin_info_title'>Total Supply DFL</p>
             <p className='admin_info_number'>{totalSupply}/{maxSupply}</p>
           </div>
         </div>
 
         <div className='admin_info_container_part'>
           <div className='admin_info'>
-            <p className='admin_info_title'>RDS of Marketing Wallet</p>
+            <p className='admin_info_title'>DFL of Marketing Wallet</p>
             <p className='admin_info_address_little'>{addressMarketingSafeWallet}</p>
-            <p className='admin_info_number'>{rdsMarketingWalletSafe} RDS</p>
+            <p className='admin_info_number'>{rdsMarketingWalletSafe} DFL</p>
           </div>
           
           <div className='admin_info'>
-            <p className='admin_info_title'>RDS of Development Wallet</p>
+            <p className='admin_info_title'>DFL of Development Wallet</p>
             <p className='admin_info_address_little'>{addressDevelopmentSafeWallet}</p>
-            <p className='admin_info_number'>{rdsDevelopmentWalletSafe} RDS</p>
+            <p className='admin_info_number'>{rdsDevelopmentWalletSafe} DFL</p>
           </div>
 
           <div className='admin_info'>
-            <p className='admin_info_title'>RDS of Team Wallet</p>
+            <p className='admin_info_title'>DFL of Team Wallet</p>
             <p className='admin_info_address_little'>{addressTeamSafeWallet}</p>
-            <p className='admin_info_number'>{rdsTeamWalletSafe} RDS</p>
+            <p className='admin_info_number'>{rdsTeamWalletSafe} DFL</p>
           </div>
         </div>
           
@@ -1484,7 +1484,7 @@ const Admin = () => {
           </div>
         </div>
 
-        <p className='admin_title'>RDS</p>
+        <p className='admin_title'>DFL</p>
 
         <div className='admin_info_container_part'>
           <div className='admin_info'>
@@ -1504,7 +1504,7 @@ const Admin = () => {
 
         <div className='admin_info_container_part'>
           <div className='admin_info'>
-            <p className='admin_info_title'>SafeRDS Wallet address</p>
+            <p className='admin_info_title'>SafeDFL Wallet address</p>
             <p className='admin_info_number'>{showSafeRDSWalletAddressPool1}</p>
           </div>
         </div>
@@ -1512,9 +1512,9 @@ const Admin = () => {
         <div className='admin_info_container_part'>
           
           <div className='admin_info'>
-            <p className='admin_info_title'>RDS of SafeRDS Wallet</p>
+            <p className='admin_info_title'>DFL of SafeDFL Wallet</p>
             <p className='admin_info_address_little'>{showSafeRDSWalletAddressPool1}</p>
-            <p className='admin_info_number'>{rdsSafeRDSPool1Wallet} RDS</p>
+            <p className='admin_info_number'>{rdsSafeRDSPool1Wallet} DFL</p>
           </div>
 
         </div>
@@ -1523,9 +1523,9 @@ const Admin = () => {
         <div className='admin_info_container_part'>
 
           <div className='admin_info'>
-            <p className='admin_info_title'>RDS of SafeRWA Wallet</p>
+            <p className='admin_info_title'>DFL of SafeRWA Wallet</p>
             <p className='admin_info_address_little'>{addressSafeRWAPool1Wallet}</p>
-            <p className='admin_info_number'>{rdsSafeRWAPool1Wallet} RDS</p>
+            <p className='admin_info_number'>{rdsSafeRWAPool1Wallet} DFL</p>
           </div>
 
           <div className='admin_info'>
@@ -1538,7 +1538,7 @@ const Admin = () => {
 
         <div className='admin_info_container_part'>
           <div className='admin_info'>
-            <p className='admin_info_title'>Balance of RDS</p>
+            <p className='admin_info_title'>Balance of DFL</p>
             <p className='admin_info_number'>{balanceRDSPool1}</p>
           </div>
 
@@ -1566,7 +1566,7 @@ const Admin = () => {
 
         <div className='admin_info_container_part'>
           <div className='admin_info'>
-            <p className='admin_info_title'>SafeRDS Wallet address</p>
+            <p className='admin_info_title'>SafeDFL Wallet address</p>
             <p className='admin_info_number'>{showSafeRDSWalletAddressPool2}</p>
           </div>
         </div>
@@ -1574,9 +1574,9 @@ const Admin = () => {
         <div className='admin_info_container_part'>
           
           <div className='admin_info'>
-            <p className='admin_info_title'>RDS of SafeRDS Wallet</p>
+            <p className='admin_info_title'>DFL of SafeDFL Wallet</p>
             <p className='admin_info_address_little'>{showSafeRDSWalletAddressPool2}</p>
-            <p className='admin_info_number'>{rdsSafeRDSPool2Wallet} RDS</p>
+            <p className='admin_info_number'>{rdsSafeRDSPool2Wallet} DFL</p>
           </div>
 
         </div>
@@ -1585,9 +1585,9 @@ const Admin = () => {
         <div className='admin_info_container_part'>
 
           <div className='admin_info'>
-            <p className='admin_info_title'>RDS of SafeRWA Wallet</p>
+            <p className='admin_info_title'>DFL of SafeRWA Wallet</p>
             <p className='admin_info_address_little'>{addressSafeRWAPool2Wallet}</p>
-            <p className='admin_info_number'>{rdsSafeRWAPool2Wallet} RDS</p>
+            <p className='admin_info_number'>{rdsSafeRWAPool2Wallet} DFL</p>
           </div>
 
           <div className='admin_info'>
@@ -1600,7 +1600,7 @@ const Admin = () => {
 
         <div className='admin_info_container_part'>
           <div className='admin_info'>
-            <p className='admin_info_title'>Balance of RDS</p>
+            <p className='admin_info_title'>Balance of DFL</p>
             <p className='admin_info_number'>{balanceRDSPool2}</p>
           </div>
 
@@ -1627,7 +1627,7 @@ const Admin = () => {
 
         <div className='admin_info_container_part'>
           <div className='admin_info'>
-            <p className='admin_info_title'>SafeRDS Wallet address</p>
+            <p className='admin_info_title'>SafeDFL Wallet address</p>
             <p className='admin_info_number'>{showSafeRDSWalletAddressPool3}</p>
           </div>
         </div>
@@ -1635,9 +1635,9 @@ const Admin = () => {
         <div className='admin_info_container_part'>
           
           <div className='admin_info'>
-            <p className='admin_info_title'>RDS of SafeRDS Wallet</p>
+            <p className='admin_info_title'>DFL of SafeDFL Wallet</p>
             <p className='admin_info_address_little'>{showSafeRDSWalletAddressPool3}</p>
-            <p className='admin_info_number'>{rdsSafeRDSPool3Wallet} RDS</p>
+            <p className='admin_info_number'>{rdsSafeRDSPool3Wallet} DFL</p>
           </div>
 
         </div>
@@ -1646,9 +1646,9 @@ const Admin = () => {
         <div className='admin_info_container_part'>
 
           <div className='admin_info'>
-            <p className='admin_info_title'>RDS of SafeRWA Wallet</p>
+            <p className='admin_info_title'>DFL of SafeRWA Wallet</p>
             <p className='admin_info_address_little'>{addressSafeRWAPool3Wallet}</p>
-            <p className='admin_info_number'>{rdsSafeRWAPool3Wallet} RDS</p>
+            <p className='admin_info_number'>{rdsSafeRWAPool3Wallet} DFL</p>
           </div>
 
           <div className='admin_info'>
@@ -1661,7 +1661,7 @@ const Admin = () => {
 
         <div className='admin_info_container_part'>
           <div className='admin_info'>
-            <p className='admin_info_title'>Balance of RDS</p>
+            <p className='admin_info_title'>Balance of DFL</p>
             <p className='admin_info_number'>{balanceRDSPool3}</p>
           </div>
 
@@ -1742,13 +1742,13 @@ const Admin = () => {
 
 
       {popup && boolSubmitMintForTeam ? 
-        <Popup loading={loading} number={' RDS tokens!'} action='submit: mintForTeam' updatePopup={updatePopup} updateBoolSubmitMintForTeam={updateBoolSubmitMintForTeam} >
+        <Popup loading={loading} number={' DFL tokens!'} action='submit: mintForTeam' updatePopup={updatePopup} updateBoolSubmitMintForTeam={updateBoolSubmitMintForTeam} >
         </Popup>
         :popup && boolSubmitMint ? 
-        <Popup loading={loading} number={mintRDSTokens+' RDS tokens!'} action='submit: mint' updatePopup={updatePopup} updateBoolSubmitMint={updateBoolSubmitMint} >
+        <Popup loading={loading} number={mintRDSTokens+' DFL tokens!'} action='submit: mint' updatePopup={updatePopup} updateBoolSubmitMint={updateBoolSubmitMint} >
         </Popup>
         :popup && boolSubmitBurn ? 
-        <Popup loading={loading} number={burnRDSTokens+' RDS tokens!'} action='submit: burn' updatePopup={updatePopup} updateBoolSubmitBurn={updateBoolSubmitBurn} >
+        <Popup loading={loading} number={burnRDSTokens+' DFL tokens!'} action='submit: burn' updatePopup={updatePopup} updateBoolSubmitBurn={updateBoolSubmitBurn} >
         </Popup>
         :popup && boolSubmitWithdraw ? 
         <Popup loading={loading} number={withdrawTokens+' tokens!'} action='submit: withdraw' updatePopup={updatePopup} updateBoolSubmitWithdraw={updateBoolSubmitWithdraw} >
@@ -1782,10 +1782,10 @@ const Admin = () => {
         <Popup loading={loading} number={''} action={'submit: change the pool 1 owner 2 address to '+ newOwner2AddressPool1} updatePopup={updatePopup} updateBoolSubmitChangeOwner2AddressPool1={updateBoolSubmitChangeOwner2AddressPool1} >
         </Popup>*/
         :popup && boolSubmitChangeSafeRDSWalletAddressPool1 ? 
-        <Popup loading={loading} number={''} action={'submit: change the SafeRDS Wallet address of the pool 1 to '+ newSafeRDSWalletAddressPool1} updatePopup={updatePopup} updateBoolSubmitChangeSafeRDSWalletAddressPool1={updateBoolSubmitChangeSafeRDSWalletAddressPool1} >
+        <Popup loading={loading} number={''} action={'submit: change the SafeDFL Wallet address of the pool 1 to '+ newSafeRDSWalletAddressPool1} updatePopup={updatePopup} updateBoolSubmitChangeSafeRDSWalletAddressPool1={updateBoolSubmitChangeSafeRDSWalletAddressPool1} >
         </Popup>
         :popup && boolSendYieldPool1? 
-        <Popup loading={loading} number={sendYieldPool1 +' RDS to the stackers of Pool 1'} action='submit: send ' updatePopup={updatePopup} updateBoolsendYieldPool1={updateBoolsendYieldPool1}>
+        <Popup loading={loading} number={sendYieldPool1 +' DFL to the stackers of Pool 1'} action='submit: send ' updatePopup={updatePopup} updateBoolsendYieldPool1={updateBoolsendYieldPool1}>
         </Popup>
         :popup && boolSubmitWithdrawPool1 ? 
         <Popup loading={loading} number={withdrawTokensPool1+' tokens!'} action='submit: withdraw Pool 1' updatePopup={updatePopup} updateBoolSubmitWithdrawPool1={updateBoolSubmitWithdrawPool1} >
@@ -1806,10 +1806,10 @@ const Admin = () => {
         <Popup loading={loading} number={''} action={'submit: change the pool 2 owner 2 address to '+ newOwner2AddressPool2} updatePopup={updatePopup} updateBoolSubmitChangeOwner2AddressPool2={updateBoolSubmitChangeOwner2AddressPool2} >
         </Popup>*/
         :popup && boolSubmitChangeSafeRDSWalletAddressPool2 ? 
-        <Popup loading={loading} number={''} action={'submit: change the SafeRDS Wallet address of the pool 2 to '+ newSafeRDSWalletAddressPool2} updatePopup={updatePopup} updateBoolSubmitChangeSafeRDSWalletAddressPool2={updateBoolSubmitChangeSafeRDSWalletAddressPool2} >
+        <Popup loading={loading} number={''} action={'submit: change the SafeDFL Wallet address of the pool 2 to '+ newSafeRDSWalletAddressPool2} updatePopup={updatePopup} updateBoolSubmitChangeSafeRDSWalletAddressPool2={updateBoolSubmitChangeSafeRDSWalletAddressPool2} >
         </Popup>
         :popup && boolSendYieldPool2? 
-        <Popup loading={loading} number={sendYieldPool2 +' RDS to the stackers of Pool 2'} action='submit: send ' updatePopup={updatePopup} updateBoolsendYieldPool2={updateBoolsendYieldPool2}>
+        <Popup loading={loading} number={sendYieldPool2 +' DFL to the stackers of Pool 2'} action='submit: send ' updatePopup={updatePopup} updateBoolsendYieldPool2={updateBoolsendYieldPool2}>
         </Popup>
         :popup && boolSubmitWithdrawPool2 ? 
         <Popup loading={loading} number={withdrawTokensPool2+' tokens!'} action='submit: withdraw Pool 2' updatePopup={updatePopup} updateBoolSubmitWithdrawPool2={updateBoolSubmitWithdrawPool2} >
@@ -1830,10 +1830,10 @@ const Admin = () => {
         <Popup loading={loading} number={''} action={'submit: change the pool 3 owner 2 address to '+ newOwner2AddressPool3} updatePopup={updatePopup} updateBoolSubmitChangeOwner2AddressPool3={updateBoolSubmitChangeOwner2AddressPool3} >
         </Popup>*/
         :popup && boolSubmitChangeSafeRDSWalletAddressPool3 ? 
-        <Popup loading={loading} number={''} action={'submit: change the SafeRDS Wallet address of the pool 3 to '+ newSafeRDSWalletAddressPool3} updatePopup={updatePopup} updateBoolSubmitChangeSafeRDSWalletAddressPool3={updateBoolSubmitChangeSafeRDSWalletAddressPool3} >
+        <Popup loading={loading} number={''} action={'submit: change the SafeDFL Wallet address of the pool 3 to '+ newSafeRDSWalletAddressPool3} updatePopup={updatePopup} updateBoolSubmitChangeSafeRDSWalletAddressPool3={updateBoolSubmitChangeSafeRDSWalletAddressPool3} >
         </Popup>
         :popup && boolSendYieldPool3? 
-        <Popup loading={loading} number={sendYieldPool3 +' RDS to the stackers of Pool 3'} action='submit: send ' updatePopup={updatePopup} updateBoolsendYieldPool3={updateBoolsendYieldPool3}>
+        <Popup loading={loading} number={sendYieldPool3 +' DFL to the stackers of Pool 3'} action='submit: send ' updatePopup={updatePopup} updateBoolsendYieldPool3={updateBoolsendYieldPool3}>
         </Popup>
         :popup && boolSubmitWithdrawPool3 ? 
         <Popup loading={loading} number={withdrawTokensPool3+' tokens!'} action='submit: withdraw Pool 3' updatePopup={updatePopup} updateBoolSubmitWithdrawPool3={updateBoolSubmitWithdrawPool3} >
@@ -1874,7 +1874,7 @@ const Admin = () => {
 
     <div className='admin'>
       <div className='admin_section'>
-        <p className='admin_title'>Mint RDS Tokens for the Team</p>
+        <p className='admin_title'>Mint DFL Tokens for the Team</p>
         <button className="admin_button" onClick={() => mintForTeam()}>
           Submit Mint Tokens
         </button>
@@ -1883,7 +1883,7 @@ const Admin = () => {
 
     <div className='admin'>
       <div className='admin_section'>
-        <p className='admin_title'>Mint RDS Tokens</p>
+        <p className='admin_title'>Mint DFL Tokens</p>
         <div className='admin_input_container'>
         <input className="admin_input" id="Tokens" type="number" placeholder="Number of tokens" value={mintRDSTokens} onChange={e => updateMintRDSTokens(e.target.value)}></input>
           <p>Amount Tokens</p>
@@ -1901,10 +1901,10 @@ const Admin = () => {
     
     <div className='admin'>
       <div className='admin_section'>
-        <p className='admin_title'>Burn RDS Tokens</p>
+        <p className='admin_title'>Burn DFL Tokens</p>
         <div className='admin_input_container'>
         <input className="admin_input" id="RDS" type="number" placeholder="Number of tokens" value={burnRDSTokens} onChange={e => updateBurnRDSTokens(e.target.value)}></input>
-          <p>RDS Token</p>
+          <p>DFL Token</p>
         </div>
         <button className="admin_button" onClick={() => burn()}>
           Submit Burn tokens
@@ -1946,13 +1946,13 @@ const Admin = () => {
 
     <div className='admin'>
       <div className='admin_section'>
-        <p className='admin_title'>Pool 1 Change SafeRDS Wallet Address</p>
+        <p className='admin_title'>Pool 1 Change SafeDFL Wallet Address</p>
         <div className='admin_input_container'>
           <input className="admin_input" id="address" type="string" placeholder="New Address" value={newSafeRDSWalletAddressPool1} onChange={e => updateNewSafeRDSWalletAddressPool1(e.target.value)}></input>
-          <p>New SafeRDS Wallet's address</p>
+          <p>New SafeDFL Wallet's address</p>
         </div>
         <button className="admin_button" onClick={() => changeSafeRDSWalletAddressPool1()}>
-          Submit change SafeRDS Wallet Address
+          Submit change SafeDFL Wallet Address
         </button>
       </div>
     </div>
@@ -1961,8 +1961,8 @@ const Admin = () => {
       <div className='admin_section'>
         <p className='admin_title'>Pool 1 Send Yield</p>
         <div className='admin_input_container'>
-          <input className="admin_input" id="token" type="number" placeholder="Amount in RDS" value={sendYieldPool1} onChange={e => updateSendYieldPool1(e.target.value)}></input>
-          <p>RDS</p>
+          <input className="admin_input" id="token" type="number" placeholder="Amount in DFL" value={sendYieldPool1} onChange={e => updateSendYieldPool1(e.target.value)}></input>
+          <p>DFL</p>
         </div>
         <button className="admin_button" onClick={() => sendYieldToPool1()}>
           Submit Send Yield
@@ -2004,13 +2004,13 @@ const Admin = () => {
 
     <div className='admin'>
       <div className='admin_section'>
-        <p className='admin_title'>Pool 2 Change SafeRDS Wallet Address</p>
+        <p className='admin_title'>Pool 2 Change SafeDFL Wallet Address</p>
         <div className='admin_input_container'>
           <input className="admin_input" id="address" type="string" placeholder="New Address" value={newSafeRDSWalletAddressPool2} onChange={e => updateNewSafeRDSWalletAddressPool2(e.target.value)}></input>
-          <p>New SafeRDS Wallet's address</p>
+          <p>New SafeDFL Wallet's address</p>
         </div>
         <button className="admin_button" onClick={() => changeSafeRDSWalletAddressPool2()}>
-          Submit change SafeRDS Wallet Address
+          Submit change SafeDFL Wallet Address
         </button>
       </div>
     </div>
@@ -2019,8 +2019,8 @@ const Admin = () => {
       <div className='admin_section'>
         <p className='admin_title'>Pool 2 Send Yield</p>
         <div className='admin_input_container'>
-          <input className="admin_input" id="token" type="number" placeholder="Amount in RDS" value={sendYieldPool2} onChange={e => updateSendYieldPool2(e.target.value)}></input>
-          <p>RDS</p>
+          <input className="admin_input" id="token" type="number" placeholder="Amount in DFL" value={sendYieldPool2} onChange={e => updateSendYieldPool2(e.target.value)}></input>
+          <p>DFL</p>
         </div>
         <button className="admin_button" onClick={() => sendYieldToPool2()}>
           Submit Send Yield
@@ -2062,13 +2062,13 @@ const Admin = () => {
 
     <div className='admin'>
       <div className='admin_section'>
-        <p className='admin_title'>Pool 3 Change SafeRDS Wallet Address</p>
+        <p className='admin_title'>Pool 3 Change SafeDFL Wallet Address</p>
         <div className='admin_input_container'>
           <input className="admin_input" id="address" type="string" placeholder="New Address" value={newSafeRDSWalletAddressPool3} onChange={e => updateNewSafeRDSWalletAddressPool3(e.target.value)}></input>
-          <p>New SafeRDS Wallet's address</p>
+          <p>New SafeDFL Wallet's address</p>
         </div>
         <button className="admin_button" onClick={() => changeSafeRDSWalletAddressPool3()}>
-          Submit change SafeRDS Wallet Address
+          Submit change SafeDFL Wallet Address
         </button>
       </div>
     </div>
@@ -2077,8 +2077,8 @@ const Admin = () => {
       <div className='admin_section'>
         <p className='admin_title'>Pool 3 Send Yield</p>
         <div className='admin_input_container'>
-          <input className="admin_input" id="token" type="number" placeholder="Amount in RDS" value={sendYieldPool3} onChange={e => updateSendYieldPool3(e.target.value)}></input>
-          <p>RDS</p>
+          <input className="admin_input" id="token" type="number" placeholder="Amount in DFL" value={sendYieldPool3} onChange={e => updateSendYieldPool3(e.target.value)}></input>
+          <p>DFL</p>
         </div>
         <button className="admin_button" onClick={() => sendYieldToPool3()}>
           Submit Send Yield
